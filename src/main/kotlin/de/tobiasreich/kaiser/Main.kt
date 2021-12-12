@@ -26,10 +26,10 @@ class Main : Application() {
 
         //root.top = menuBar
         ScreenController.main = startGameScene
-        ScreenController.addScreen(ScreenController.SCREENS.START_SCREEN, FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml")))
-        ScreenController.addScreen(ScreenController.SCREENS.GAME, FXMLLoader.load(javaClass.getResource("scene-game-view.fxml")))
-        ScreenController.addScreen(ScreenController.SCREENS.NEXT_PLAYER, FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml")))
-        ScreenController.activate(ScreenController.SCREENS.START_SCREEN)
+        ScreenController.addScreen(ScreenController.SCREEN_NAME.START_SCREEN, FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml")))
+        ScreenController.addScreen(ScreenController.SCREEN_NAME.GAME, FXMLLoader.load(javaClass.getResource("scene-game-view.fxml")))
+        ScreenController.addScreen(ScreenController.SCREEN_NAME.NEXT_PLAYER, FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml")))
+        ScreenController.activate(ScreenController.SCREEN_NAME.START_SCREEN)
 
         stage.title = "Kaiser III"
         stage.scene = startGameScene

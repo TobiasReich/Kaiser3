@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser.game
 
+import de.tobiasreich.kaiser.NextPlayerScreenUIController
 import de.tobiasreich.kaiser.ScreenController
 
 object Game {
@@ -26,7 +27,8 @@ object Game {
         val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
         currentPlayer = players[nextPlayerIndex]
         currentPlayer.startNewTurn()
-        ScreenController.activate(ScreenController.SCREENS.NEXT_PLAYER)
+        ScreenController.activate(ScreenController.SCREEN_NAME.NEXT_PLAYER)
+        //NextPlayerScreenUIController.showPlayerNews()
     }
 
 }

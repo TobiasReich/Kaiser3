@@ -3,18 +3,17 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
-import javafx.scene.Scene
+import javafx.scene.Node
 import javafx.scene.layout.BorderPane
-import javafx.stage.Modality
-import javafx.stage.Stage
+import javafx.scene.layout.Pane
+import javafx.scene.layout.VBox
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
 class NextPlayerScreenUIController {
 
 
     @FXML
-    private lateinit var rootBorderPane: BorderPane
+    private lateinit var messageView: BorderPane
 
     /********************************************
      *
@@ -22,24 +21,39 @@ class NextPlayerScreenUIController {
      *
      *******************************************/
 
+    // Ugly but this keeps track of which message was shown to the user
+    private var newsNumber = 0
 
-    fun onStartTurnClick(actionEvent: ActionEvent) {
-        // Show all upcoming events and results
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"))
-        val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
-
-        // For all Messages of the player, show a message
-        Game.currentPlayer.messageList.forEachIndexed { index, message ->
-
-            val stage = Stage()
-            stage.initModality(Modality.APPLICATION_MODAL)
-            stage.title = "Ereigniss!"
-            stage.scene = taxScene
-            stage.show()
-        }
-
-        // Once done, show the game screen
-        //TODO: This should not be shown directly but only when the last message is read.
-        ScreenController.activate(ScreenController.SCREENS.GAME)
+    fun onNewsButtonClick(actionEvent: ActionEvent) {
+        println("onNewsButtonClick")
+        showNextPlayerNews()
+        newsNumber++
     }
+
+    private fun showNextPlayerNews() {
+        println("showNextPlayerNews")
+        println("playerNewsNumber: $newsNumber")
+
+        val messages = Game.currentPlayer.messageList
+
+        if (newsNumber >= messages.size){
+            println("This was the last news message. Showing game")
+
+            // This was the last news message. Show the game view now
+            newsNumber = 0 // reset the news counter before showing the game
+            ScreenController.activate(ScreenController.SCREEN_NAME.GAME)
+
+        } else {
+            println("Showing next message" )
+            val message = messages[newsNumber]
+            println("Showing next message: $message in messageView: $messageView" )
+            val fxmlLoader = message.getView()
+            val view : Node = fxmlLoader.load()
+            println("View to show: $view in MessageView: $messageView" )
+            messageView.center = view
+            println("View got added. State of the MessageView: $messageView" )
+        }
+    }
+
+
 }

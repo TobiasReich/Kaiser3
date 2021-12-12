@@ -10,7 +10,8 @@ module de.tobiasreich.kaiser {
             requires org.kordamp.ikonli.javafx;
             requires org.kordamp.bootstrapfx.core;
             requires eu.hansolo.tilesfx;
-    
+    requires jdk.javadoc;
+
     opens de.tobiasreich.kaiser to javafx.fxml;
     exports de.tobiasreich.kaiser;
 }
