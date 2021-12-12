@@ -6,19 +6,25 @@ import javafx.scene.layout.Pane
 
 object ScreenController {
 
-        var main: Scene? = null
+    enum class SCREENS {
+        START_SCREEN,
+        GAME,
+        NEXT_PLAYER
+    }
 
-        private val screenMap = HashMap<String, Pane>()
+    var main: Scene? = null
 
-        fun addScreen(name: String, pane: Pane) {
-            screenMap[name] = pane
-        }
+    private val screenMap = HashMap<SCREENS, Pane>()
 
-        fun removeScreen(name: String) {
-            screenMap.remove(name)
-        }
+    fun addScreen(name: SCREENS, pane: Pane) {
+        screenMap[name] = pane
+    }
 
-        fun activate(name: String) {
-            main!!.root = screenMap[name]
-        }
+    fun removeScreen(name: SCREENS) {
+        screenMap.remove(name)
+    }
+
+    fun activate(name: SCREENS) {
+        main!!.root = screenMap[name]
+    }
 }

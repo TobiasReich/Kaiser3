@@ -4,6 +4,8 @@ import de.tobiasreich.kaiser.game.data.country.Buildings
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.player.CountryName
+import de.tobiasreich.kaiser.game.data.player.EventMessage
+import de.tobiasreich.kaiser.game.data.player.HarvestEvent
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
 
@@ -16,19 +18,6 @@ import de.tobiasreich.kaiser.game.data.population.Population
  */
 class Player(val name : String, val isMale : Boolean, val countryName : CountryName) {
 
-    /** This processes the decisions of the player for the upcoming year
-     *  This includes
-     *  - calculate population growth / shrinking
-     *  - calculate health
-     *  - calculate work output
-     *  - calculate taxes
-     *  - calculate educational changes
-     *  - calculate mood
-     *  - ...
-     */
-    fun processPlayer() {
-        population.processPopulationChange()
-    }
 
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
@@ -50,11 +39,19 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
             field = value
         }
 
+
+    /** A list of messages arriving at the beginning of a year (turn) */
+    val messageList = mutableListOf<EventMessage>()
+
+
     /** Defines the current harvest condition this year -> Defining the wheat price */
     var harvestCondition = HarvestCondition.NORMAL_HARVEST
 
-    fun setNewHarvestCondition(){
+
+    /** Sets the new harvest condition for this year */
+    private fun setNewHarvestCondition() : HarvestEvent {
         harvestCondition = HarvestCondition.values().random()
+        return HarvestEvent(harvestCondition)
     }
 
     // ------------------------------------------------------------------------
@@ -87,7 +84,39 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         return true
     }
 
+    /** This starts a new turn for the given player.
+     *  That includes:
+     *  - Set a new harvest condition
+     *  ...
+     *
+     *  Then processes the decisions of the player of the last year
+     *  This includes
+     *  - calculate population growth / shrinking
+     *  - calculate health
+     *  - calculate work output
+     *  - calculate taxes
+     *  - calculate educational changes
+     *  - calculate mood
+     *  - ...
+    */
+    fun startNewTurn() {
+        messageList.clear()
 
+        messageList.add(setNewHarvestCondition())
+
+        //population.processFood()
+        messageList.add(population.processPopulationChange())
+
+        //...
+
+    }
+
+    /** Processes the food for the upcoming year
+     *  (This has to be done before the turn ends since the new turn would change the harvest and granary states)  */
+    fun processFood() {
+        // TODO: Implement this!
+        // ...
+    }
 
 
     //</editor-fold>

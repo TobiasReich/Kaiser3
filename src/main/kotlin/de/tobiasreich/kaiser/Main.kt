@@ -16,8 +16,8 @@ class Main : Application() {
 
     override fun start(stage: Stage) {
 
-        //val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view.fxml"))
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("start-screen.fxml"))
+        //val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-game-view.fxml"))
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-start-screen.fxml"))
         val startGameScene = Scene(fxmlLoader.load(), 800.0, 600.0)
 
         //val root = scene.lookup("#rootBorderPane") as BorderPane
@@ -26,9 +26,10 @@ class Main : Application() {
 
         //root.top = menuBar
         ScreenController.main = startGameScene
-        ScreenController.addScreen("start", FXMLLoader.load(javaClass.getResource("start-screen.fxml")))
-        ScreenController.addScreen("game", FXMLLoader.load(javaClass.getResource("game-view.fxml")))
-        ScreenController.activate("start")
+        ScreenController.addScreen(ScreenController.SCREENS.START_SCREEN, FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml")))
+        ScreenController.addScreen(ScreenController.SCREENS.GAME, FXMLLoader.load(javaClass.getResource("scene-game-view.fxml")))
+        ScreenController.addScreen(ScreenController.SCREENS.NEXT_PLAYER, FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml")))
+        ScreenController.activate(ScreenController.SCREENS.START_SCREEN)
 
         stage.title = "Kaiser III"
         stage.scene = startGameScene

@@ -1,5 +1,7 @@
 package de.tobiasreich.kaiser.game.data.population
 
+import de.tobiasreich.kaiser.game.data.player.PopulationEvent
+
 /** Data object representing a whole country population */
 class Population {
 
@@ -40,15 +42,17 @@ class Population {
         }
     }
 
-    /** This calculates how many babies are added to the population
-     *
+    /** This calculates how many babies are added to the population,
+     *  how many died
+     *  and migration aspects
      */
-    fun processPopulationChange() {
-        processAging()
-        processBirth()
-        processHealth()
-        processImmigration()
-        processEmigration()
+    fun processPopulationChange() : PopulationEvent {
+        val diedOfAge = processAging()
+        val born = processBirth()
+        val diedOfHealth = processHealth()
+        val immigrated = processImmigration()
+        val emigrated = processEmigration()
+        return PopulationEvent(born, diedOfAge, diedOfHealth, immigrated, emigrated)
     }
 
 
@@ -57,7 +61,7 @@ class Population {
      *
      *  Do first the old so we don't process younger ones twice when moving to another group
      */
-    private fun processAging() {
+    private fun processAging() : Int {
         val changedPersons = mutableListOf<Person>()
 
         old.forEach {
@@ -67,6 +71,7 @@ class Population {
                 changedPersons.add(it)
             }
         }
+        var diedOfAge = changedPersons.size
         old.removeAll(changedPersons)
         changedPersons.clear()
 
@@ -88,6 +93,8 @@ class Population {
         }
         children.removeAll(changedPersons)
         adults.addAll(changedPersons)
+
+        return diedOfAge
     }
 
     /** This processes the health of the population.
@@ -96,19 +103,21 @@ class Population {
      *  - how much money is spent on health system
      *  - ...
      */
-    private fun processHealth() {
+    private fun processHealth() : Int{
         //TODO: Implement
+        return 0
     }
 
     /** Processes how many babies are born this year.
      *  TODO: This should include health, wealth etc.
      */
-    private fun processBirth() {
-        val birthfactor = BIRTH_FACTOR
+    private fun processBirth() : Int {
+        val birthfactor = BIRTH_FACTOR //TODO add other aspects like health
         val amountNewBorn = (adults.size * birthfactor).toInt()
         for (i in 0..amountNewBorn){
             children.add(Person())
         }
+        return amountNewBorn
     }
 
 
@@ -118,8 +127,9 @@ class Population {
      *  - Wheat distribution
      *  - ...
      */
-    private fun processImmigration() {
+    private fun processImmigration() : Int {
         //TODO: Implement this
+        return 0
     }
 
 
@@ -131,8 +141,7 @@ class Population {
      *  - Tax hight
      *  - ...
      */
-    private fun processEmigration() {
-
-
+    private fun processEmigration() : Int {
+        return 0
     }
 }

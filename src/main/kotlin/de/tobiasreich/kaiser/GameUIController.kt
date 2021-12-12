@@ -85,9 +85,13 @@ class GameUIController {
     @FXML
     private fun onEndTurnClick() {
         // Game.End Turn
-        Game.processPlayer()
+        //Game.processPlayer()
         // Update Views
-        updateAllViews()
+        // updateAllViews()
+
+        // Store player values but do not process. This comes at the beginning of the year
+
+        Game.endTurn()
     }
 
 

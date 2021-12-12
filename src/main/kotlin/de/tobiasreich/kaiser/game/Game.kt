@@ -1,5 +1,7 @@
 package de.tobiasreich.kaiser.game
 
+import de.tobiasreich.kaiser.ScreenController
+
 object Game {
 
     private lateinit var players : List<Player>
@@ -11,9 +13,20 @@ object Game {
         this.currentPlayer = players[0]
     }
 
-    /** This processes the player's decisions for this year */
-    fun processPlayer() {
-        currentPlayer.processPlayer()
+
+    /** Finishes the turn of the current player, proceeds with the next player and shows the News Screen
+     *
+     */
+    fun endTurn(){
+        // Process Food distribution
+        currentPlayer.processFood()
+
+        // Switch to the next player
+
+        val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
+        currentPlayer = players[nextPlayerIndex]
+        currentPlayer.startNewTurn()
+        ScreenController.activate(ScreenController.SCREENS.NEXT_PLAYER)
     }
 
 }

@@ -26,7 +26,7 @@ class StartScreenUIController {
         //...
         Game.setupGame(mutableListOf(player1, player2))
 
-        ScreenController.activate("game")
+        ScreenController.activate(ScreenController.SCREENS.GAME)
     }
 
 }
