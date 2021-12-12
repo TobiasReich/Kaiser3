@@ -3,15 +3,12 @@ package de.tobiasreich.kaiser
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
 import javafx.scene.chart.XYChart.Series
 import javafx.scene.control.Button
-import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
-import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
 
@@ -111,12 +108,12 @@ class GameUIController {
 
     fun onWheatButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-wheat.fxml"))
-        val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
+        val wheatScene = Scene(fxmlLoader.load(), 630.0, 300.0)
 
         val stage = Stage()
         stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Steuern"
-        stage.scene = taxScene
+        stage.title = "Getreide"
+        stage.scene = wheatScene
         stage.show()
     }
 
