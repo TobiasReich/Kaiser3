@@ -5,9 +5,7 @@ import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import javafx.fxml.FXMLLoader
 
 interface EventMessage{
-
     fun getView(): FXMLLoader
-
 }
 
 /** Population changes (birth, death, migration...) */

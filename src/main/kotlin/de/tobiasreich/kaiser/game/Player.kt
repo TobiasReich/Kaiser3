@@ -41,7 +41,8 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
-    val messageList = mutableListOf<EventMessage>()
+    private val messageList = mutableListOf<EventMessage>()
+
 
 
     /** Defines the current harvest condition this year -> Defining the wheat price */
@@ -122,4 +123,15 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
     //</editor-fold>
+
+
+    /** Returns the next News for this player (EventMessage)
+     *  and removes it from the list of outstanding messages
+     *  That way you can easily pull them without the need
+     *  to care about deleting or counting them. */
+    fun getNextNews() : EventMessage?{
+        val message = messageList.firstOrNull()
+        messageList.remove(message)
+        return message
+    }
 }

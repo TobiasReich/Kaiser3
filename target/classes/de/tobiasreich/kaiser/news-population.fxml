@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" style="-fx-background-color: #FFFF00;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.NextPlayerScreenUIController">
+<VBox alignment="CENTER" style="-fx-background-color: #FFFF00;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.MessagePopulationUIController">
    <children>
-      <Label text="Die Bevölkerung wächst" />
+      <Label fx:id="playerIntroLabel" text="Die Bevölkerung wächst" />
       <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter" />
    </children>
 </VBox>

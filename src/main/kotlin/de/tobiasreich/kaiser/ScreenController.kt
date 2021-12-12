@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser
 
+import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 
@@ -28,5 +29,10 @@ object ScreenController {
     fun activate(name: SCREEN_NAME) {
         val screen = screenMap[name]
         main!!.root = screen
+    }
+
+    /** This shows a certain screen (used for the news) */
+    fun showView(view: Pane) {
+        main!!.root = view
     }
 }

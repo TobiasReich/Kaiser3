@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.fxml.Initializable
 import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.chart.BarChart
@@ -15,9 +16,11 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
+import java.net.URL
+import java.util.*
 
 
-class GameUIController {
+class GameUIController : Initializable {
 
     @FXML
     private val wheatButton: Button? = null
@@ -156,6 +159,12 @@ class GameUIController {
         stage.title = "Steuern"
         stage.scene = taxScene
         stage.show()
+    }
+
+
+    @FXML
+    override fun initialize(p0: URL?, p1: ResourceBundle?) {
+        println("init Game Controller")
     }
 
 }

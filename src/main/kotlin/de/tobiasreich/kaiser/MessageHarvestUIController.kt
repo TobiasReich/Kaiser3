@@ -1,16 +1,19 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.Node
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
+import javafx.scene.paint.Color
 import java.net.URL
 import java.util.*
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
-class NextPlayerScreenUIController : Initializable{
+class MessageHarvestUIController : Initializable{
 
     @FXML
     private lateinit var playerIntroLabel: Label

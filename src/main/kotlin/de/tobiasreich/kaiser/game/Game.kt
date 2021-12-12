@@ -1,6 +1,5 @@
 package de.tobiasreich.kaiser.game
 
-import de.tobiasreich.kaiser.NextPlayerScreenUIController
 import de.tobiasreich.kaiser.ScreenController
 
 object Game {
@@ -29,6 +28,11 @@ object Game {
         currentPlayer.startNewTurn()
         ScreenController.activate(ScreenController.SCREEN_NAME.NEXT_PLAYER)
         //NextPlayerScreenUIController.showPlayerNews()
+    }
+
+    // The year is basically the turn number
+    fun getYear(): Int{
+        return 1400
     }
 
 }
