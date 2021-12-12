@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser
 
+import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -23,7 +24,7 @@ class GameUIController {
 
     // Chat showing the age and the population amount in this category
     @FXML
-    private lateinit var populationChart: BarChart<String, Float>
+    private lateinit var populationChart: BarChart<String, Int>
 
     /********************************************
      *
@@ -81,8 +82,13 @@ class GameUIController {
     @FXML
     private fun onEndTurnClick() {
         // Game.End Turn
+        //Game.processPlayer()
         // Update Views
-        updateAllViews()
+        // updateAllViews()
+
+        // Store player values but do not process. This comes at the beginning of the year
+
+        Game.endTurn()
     }
 
 
@@ -95,16 +101,26 @@ class GameUIController {
     private fun updateAllViews(){
         populationChart.data.clear()
 
-        val amountChildren = (Math.random() * 20).toFloat()
-        val amountAdult = (Math.random() * 80).toFloat()
-        val amountOld = 100f - amountChildren - amountAdult
+        val population = Game.currentPlayer.population
 
-        val series = Series<String?, Float?>()
-        series.data.add(XYChart.Data<String?, Float?>("Children", amountChildren))
-        series.data.add(XYChart.Data<String?, Float?>("Adult", amountAdult))
-        series.data.add(XYChart.Data<String?, Float?>("Old", amountOld))
+        val amountChildren = population.children.size
+        val amountAdult = population.adults.size
+        val amountOld = population.old.size
+
+        val series = Series<String, Int>()
+        series.data.add(XYChart.Data<String, Int>("Children", amountChildren))
+        series.data.add(XYChart.Data<String, Int>("Adult", amountAdult))
+        series.data.add(XYChart.Data<String, Int>("Old", amountOld))
         populationChart.data.add(series)
     }
+
+
+    /********************************************
+     *
+     *             Button Clicks
+     *
+     *******************************************/
+
 
     fun onWheatButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-wheat.fxml"))

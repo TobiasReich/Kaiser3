@@ -8,7 +8,7 @@ package de.tobiasreich.kaiser.game.data.player
  *                  Baden      Franken
  *                      Bayern
  */
-enum class Country {
+enum class CountryName {
 
     HOLSTEIN,
     WESTPHALIA, SAXONY, PRUSSIA,

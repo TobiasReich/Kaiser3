@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="messageView" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FF0000;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.NextPlayerScreenUIController">
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+           <children>
+               <Label contentDisplay="CENTER" text="Wir schreiben das Jahr..." textAlignment="CENTER" />
+               <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Nächster Spieler" />
+           </children>
+        </VBox>
+    </center>
+</BorderPane>
