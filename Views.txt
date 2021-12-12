@@ -1,0 +1,382 @@
+Korn
+
+    Verkauf
+    -10 0000
+    - 10 000
+    -   1000
+    -    100
+    > benötigt
+    > Maximum
+    
+    
+    Ankauf
+    +10 0000
+    + 10 000
+    +   1000
+    +    100
+    benötigt
+     Maximum
+    
+    
+    Einwohner: 29084
+    Kapazität: xxxxx
+    Kornmenge: yyyyy
+    
+    Minimum:   15900
+    Benötigt: 145400
+    Maximum:  154200
+    
+    Taler 
+    Preis a gros (20..400??)
+    
+    Kornzuteilung  |<---->|
+    
+    Bier brauer
+    
+    -> Ankauf setzt Slider automatisch zu entsprechendem Wert
+        
+    
+
+Land
+ Verkauf
+    - 10 000
+    -   1000
+    -    100
+    -     10
+    -      1
+    
+    Ankauf
+    + 10 000
+    +   1000
+    +    100
+    +     10
+    +      1
+    
+    Taler
+    Land ha
+    verfügbar
+    Preis a 10 ha (20..??)
+    
+
+
+Bauwerke
+
+    Marktplatz 1000 Taler
+    Kornmühle   2000 Taler
+    Kornspeicher 2500 Taler (+10000 Kornspeicher)
+    Palast 5000 Taler (12 Benötigt für König)
+    Kathedrale 9000 Taler (12 Benötigt für Kaiser)
+    Lagerhalle 4000 Taler (+ 1000 Lagerplatz)
+    
+Güter Verkaufen
+
+    Salz
+    Bier
+    Wein
+    Waffen
+    
+    Lagerkapazität!!
+    Prokurist = Auto Verkauf
+    
+
+----- Innenpolitik -----
+    
+Steuern
+
+    Steuern (Lasch / Gierig)
+    Justiz (Lasch / Justiz)
+    Asylrecht (Gnädig / Brutal)
+    
+    Einnahmen Maximieren
+    
+    -> Gesetze ??
+
+        Schulpflicht?
+        Gesundheitsvorsorge?
+        Wehrpflicht?
+        Polizei?
+        Counter-/Spionage?
+        ...
+
+        
+Religion??
+
+    Staats-Religion?
+    Kirchensteuer?
+    
+    Kirchen bauen?
+    
+    
+        
+----- Diplomatie / Außenpolitik -----
+        
+        
+Spenden
+    Spenden an Spieler X
+        Taler
+        Ländereien
+        Truppen
+        Sklaven (Bevölkerung)
+        
+        
+    
+Verträge:
+    Vertrag mit Spieler X
+        Friedensvertrag
+        Handelsabkommen
+        Handelsabkommen kündigen
+            Dauer: 5-50 Jahre
+                Besser: Bis Kündigung?
+                
+        Was macht das??
+        
+
+Tribut Forderung
+    Taler
+    Ländereien
+    Sklaven
+    Handelsvertrag
+    Frieden
+    
+    
+
+Sabotage
+    Sabotiere Spieler X
+        Kosten je nach Titel
+        
+    Warum nicht Politik: Spionage statt dessen?
+    
+    -> Schlimme Dinge passieren
+        
+        
+----- Militär -----
+
+
+Truppen Aufstellen
+    
+    Heer (Normaler Kampf)
+    Garde (Verteidigt Hauptstadt)
+    
+    Rekrutieren
+    Tauschen
+    
+    Tauschen wirklich nötig? Könnte unnötig sein.
+    Techtree für Truppen-Typen? Keule..Artillerie...
+    
+    Kosten / Sold
+    
+Manöver abhalten
+
+    Kostet Geld, kreiert Initiativpunkte
+    
+    
+
+Kriegserklärung
+
+                Holstein
+    Westfahlen  Sachsen     Preußen
+    Hessen      Thüringen   Böhmen
+            Baden      Franken
+                Bayern
+                
+    Benötigte Initiativpunkte
+    
+
+----- Zusammenfassung -----
+
+    
+Demographie
+
+    Einwohner
+    Zufriedenheit
+    Geburtenrate
+    Sterberate
+    Immigrationsrate
+    Emigrationsrate
+    
+    Stimmung im Lande
+    
+
+Aufstellung der erwarteten Einnahmen und Ausgaben
+    Gewinne der Märkte und Kornmühlen
+    Handelsbilanz
+    Steuereinnahmen
+    Justiz
+    Militär
+    Zinsen / Lagervermierung
+    
+    Insgesamt
+    
+    Neuer Stand der Schatzkammer
+    
+
+Karriereberatung
+
+    Einwohnerzahl
+    Zufriedenheit
+    Ländereien
+    Taler
+    Armeestärke
+    Palast
+    Kathedrale
+    
+
+
+Dossiers von heuer:
+
+    Spieler X
+    
+    Einwohner
+    Landbesitz in ha
+    Mühlen und Märkte
+    
+    Letztes Einkommen
+    Schatzkammer
+    
+    Armeestärke
+    Leichte Artillerie
+    Schwere Artillerie
+    
+    Saboteure
+    Handelsabkommen
+    Friedensvertrag
+    
+
+----- Statistiken -----
+
+Erträge und Aufwendungen
+
+    Resourcen
+        Korn
+        Land
+        Gebäude
+        Steuern und Justiz
+      
+    Militär
+        Aushebungskosten
+        Soldzahlungen
+        Manöverkosten
+        Kriegsbeute
+        
+    Diplomatie
+        Entwicklungshilfe
+        Handelsverträge
+        Tribute
+        Sabotagekosten
+        
+    Handel mit Gütern
+    Zinsen
+    Überraschungen
+    
+    Bilanz (total)
+    
+
+Kriegs-Zusammenfassung
+
+    Schlachten      gewonnen verloren   Quote
+    Angriff         x        y          z
+    Verteidigung
+    Marodeure
+    Gesamt:
+    
+    Eigene Verluste
+    Erschlagen:     
+    Desertiert
+    Entlassen
+    
+    Feindliche Verluste
+    
+    Manöver pro Jahr
+    
+    
+Leistungen im Vergleich:
+    Karriere
+    Bevölkerung
+    Ländereien
+    Ausbauten
+    Armeestärke
+    Schatzkammer
+    
+    
+    
+    
+    
+----- Zusammenfassung -----
+
+
+Titel
+Spielername
+Land name
+Jahr
+
+Einwohner
+Zufriedenheit
+
+Landbesitz
+Bauland (Wie viel ist bebaut / frei) (z.B. Marktplatz = 1000 Ha)
+Landpreis
+
+Marktplätze
+Kornmühlen
+
+Salz
+Bier
+Wein
+Waffen
+
+Ruhm (Truppenloyalität...)
+Initiativpunkte
+
+Taler
+
+(About)
+    
+    
+    
+----- Einheiten (Kaiser 2) -----
+    
+Kämpfer (Freiherr)
+Bogenschütze (Graf)
+Infanterie (Landgraf)
+Musketiere (Markgraf)
+Kavallerie (Herzog)
+Artillerie (Erzherzog)
+Ritter (Fürst)
+Kreuzritter (Kurfürst)
+Held (König)
+
+Alchemist
+Assasinen
+Berserker
+Brandschützen
+Bukkaniere
+Knappen
+Knochenflicker
+Kriegsknechte
+Mönche
+Nomaden
+Nordmänner
+Randaleure
+Samurai
+Sarazenen
+Schwarze Ritter
+Schützen
+Tataren
+Templer
+Wachen
+Waldläufer
+Walküren
+Wölfe
+
+Miliz
+Paladine (Pietät)
+Vampire (Terror)
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.GameUIController">
+
+    <left>
+        <VBox fillWidth="false" style="-fx-background-color: #FFFF00;" BorderPane.alignment="CENTER">
+            <children>
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onWheatButtonClick" prefWidth="110.0" text="Getreide">
+                    <graphic>
+                        <ImageView fx:id="wheatButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_wheat.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onLandButtonClick" prefWidth="110.0" text="Land">
+                    <graphic>
+                        <ImageView fx:id="landButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_land.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                    <graphic>
+                        <ImageView fx:id="taxButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+            <Separator prefWidth="200.0" />
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Militär">
+                    <graphic>
+                        <ImageView fx:id="militaryButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                    <graphic>
+                        <ImageView fx:id="sabotageButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                    <graphic>
+                        <ImageView fx:id="maneuverButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+            </children>
+        </VBox>
+    </left>
+
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="_Game">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuNewGameClick" text="New Game" />
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuLoadGameClick" text="Load" />
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuSaveGameClick" text="Save" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Settings">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuPreferencesClick" text="Preferences" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuAboutClick" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuHelpClick" text="Help" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <right>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" minHeight="200.0" prefHeight="250.0" title="Population">
+                    <xAxis>
+                        <CategoryAxis animated="false" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis animated="false" side="LEFT" />
+                    </yAxis>
+                </BarChart>
+            </children>
+        </VBox>
+    </right>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+            <children>
+                <Button mnemonicParsing="false" onAction="#onEndTurnClick" text="End Turn" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
