@@ -103,10 +103,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     fun startNewTurn() {
         messageList.clear()
 
-
         //population.processFood()
-        messageList.add(population.processPopulationChange())
-
         messageList.add(population.processPopulationChange())
 
         messageList.add(setNewHarvestCondition())

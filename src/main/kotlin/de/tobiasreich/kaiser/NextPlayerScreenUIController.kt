@@ -5,7 +5,6 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
-import javafx.scene.layout.BorderPane
 import java.net.URL
 import java.util.*
 
@@ -28,7 +27,7 @@ class NextPlayerScreenUIController : Initializable{
         val message = Game.currentPlayer.getNextNews()
 
         if (message == null){
-            ScreenController.activate(ScreenController.SCREEN_NAME.GAME)
+            ScreenController.showScene(ScreenController.SCENE_NAME.GAME)
         } else {
             ScreenController.showView(message.getView().load())
         }
@@ -36,8 +35,7 @@ class NextPlayerScreenUIController : Initializable{
 
     @FXML
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        //playerIntroLabel.text = "Willkommen ${Game.currentPlayer.name}. Es ist das Jahr ${Game.getYear()}."
-        playerIntroLabel.text = "Willkommen. Es ist das Jahr ${Game.getYear()}."
+        playerIntroLabel.text = "Willkommen ${Game.currentPlayer.name}. Es ist das Jahr ${Game.getYear()}."
     }
 
 }

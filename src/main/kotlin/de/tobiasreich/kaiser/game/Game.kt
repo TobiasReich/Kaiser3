@@ -26,7 +26,7 @@ object Game {
         val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
         currentPlayer = players[nextPlayerIndex]
         currentPlayer.startNewTurn()
-        ScreenController.activate(ScreenController.SCREEN_NAME.NEXT_PLAYER)
+        ScreenController.showScene(ScreenController.SCENE_NAME.NEXT_PLAYER)
         //NextPlayerScreenUIController.showPlayerNews()
     }
 

@@ -1,13 +1,13 @@
 package de.tobiasreich.kaiser
 
-import javafx.scene.Node
+import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 
 object ScreenController {
 
     @Suppress("ClassName")
-    enum class SCREEN_NAME {
+    enum class SCENE_NAME {
         START_SCREEN,
         GAME,
         NEXT_PLAYER
@@ -15,20 +15,13 @@ object ScreenController {
 
     var main: Scene? = null
 
-    private val screenMap = HashMap<SCREEN_NAME, Pane>()
-
-    fun addScreen(name: SCREEN_NAME, pane: Pane) {
-        screenMap[name] = pane
-    }
-
-    fun removeScreen(name: SCREEN_NAME) {
-        screenMap.remove(name)
-    }
-
     /** This shows a certain screen*/
-    fun activate(name: SCREEN_NAME) {
-        val screen = screenMap[name]
-        main!!.root = screen
+    fun showScene(sceneName: SCENE_NAME) {
+        main!!.root = when (sceneName){
+            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml")) }
+            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml")) }
+            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml")) }
+        }
     }
 
     /** This shows a certain screen (used for the news) */
