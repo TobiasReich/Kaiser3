@@ -8,7 +8,7 @@ import javafx.fxml.FXML
 import javafx.scene.layout.BorderPane
 
 
-class StartScreenUIController {
+class UIControllerStartScreen {
 
     @FXML
     private lateinit var rootBorderPane: BorderPane
@@ -26,7 +26,7 @@ class StartScreenUIController {
         //...
         Game.setupGame(mutableListOf(player1, player2))
 
-        ScreenController.showScene(ScreenController.SCENE_NAME.GAME)
+        ViewController.showScene(ViewController.SCENE_NAME.GAME)
     }
 
 }

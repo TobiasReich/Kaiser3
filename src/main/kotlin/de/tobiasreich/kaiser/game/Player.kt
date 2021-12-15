@@ -4,8 +4,8 @@ import de.tobiasreich.kaiser.game.data.country.Buildings
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.player.CountryName
-import de.tobiasreich.kaiser.game.data.player.EventMessage
-import de.tobiasreich.kaiser.game.data.player.HarvestEvent
+import de.tobiasreich.kaiser.game.data.player.ReportMessage
+import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
 
@@ -41,7 +41,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
-    private val messageList = mutableListOf<EventMessage>()
+    private val messageList = mutableListOf<ReportMessage>()
 
 
 
@@ -50,9 +50,9 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
     /** Sets the new harvest condition for this year */
-    private fun setNewHarvestCondition() : HarvestEvent {
+    private fun setNewHarvestCondition() : HarvestReport {
         harvestCondition = HarvestCondition.values().random()
-        return HarvestEvent(harvestCondition)
+        return HarvestReport(harvestCondition)
     }
 
     // ------------------------------------------------------------------------
@@ -126,7 +126,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *  and removes it from the list of outstanding messages
      *  That way you can easily pull them without the need
      *  to care about deleting or counting them. */
-    fun getNextNews() : EventMessage?{
+    fun getNextMessage() : ReportMessage?{
         val message = messageList.firstOrNull()
         messageList.remove(message)
         return message

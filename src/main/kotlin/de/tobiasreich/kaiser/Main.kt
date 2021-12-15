@@ -25,7 +25,7 @@ class Main : Application() {
         //val menuBar = prepareMenu()
 
         //root.top = menuBar
-        ScreenController.main = startGameScene
+        ViewController.main = startGameScene
 
         stage.title = "Kaiser III"
         stage.scene = startGameScene

@@ -4,7 +4,8 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 
-object ScreenController {
+/** Manager for setting views to the stage */
+object ViewController {
 
     @Suppress("ClassName")
     enum class SCENE_NAME {

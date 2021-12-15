@@ -1,24 +1,24 @@
 package de.tobiasreich.kaiser.game.data.population
 
-import de.tobiasreich.kaiser.game.data.player.PopulationEvent
+import de.tobiasreich.kaiser.game.data.player.PopulationReport
 
 /** Data object representing a whole country population */
 class Population {
 
     companion object{
-        val AGE_ADULT = 14  // When a child became adult in 1400
-        val AGE_OLD = 50    // When someone was old in 1400
-        val MAX_AGE = 70    // When most people died in around 1400
+        //TODO Consider laws where children are counted adult earlier (e.g. for more work force but sadness/education)
+        const val AGE_ADULT = 14  // When a child became adult in 1400
+        const val AGE_OLD = 50    // When someone was old in 1400
+        const val MAX_AGE = 70    // When most people died in around 1400
 
-        val BIRTH_FACTOR = 0.05 // Default value for birth (independent of mood, health etc.)
+        const val BASE_BIRTH_FACTOR = 0.05 // Default value for birth (independent of mood, health etc.)
     }
 
     val children = mutableListOf<Person>()
     val adults = mutableListOf<Person>()
     val old = mutableListOf<Person>()
 
-
-
+    //TODO Implement jobs
     val farmers = mutableListOf<Person>()
     val merchants = mutableListOf<Person>()
     val soldiers = mutableListOf<Person>()
@@ -38,7 +38,7 @@ class Population {
             adults.add(Person((Math.random() *  AGE_OLD).toInt()))
         }
         for (i in 0..10000){
-            old.add(Person((Math.random() *  MAX_AGE).toInt()))
+            old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
     }
 
@@ -46,13 +46,15 @@ class Population {
      *  how many died
      *  and migration aspects
      */
-    fun processPopulationChange() : PopulationEvent {
+    fun processPopulationChange() : PopulationReport {
         val diedOfAge = processAging()
         val born = processBirth()
         val diedOfHealth = processHealth()
         val immigrated = processImmigration()
         val emigrated = processEmigration()
-        return PopulationEvent(born, diedOfAge, diedOfHealth, immigrated, emigrated)
+
+        val totalChange = born + immigrated - diedOfAge - diedOfHealth - emigrated
+        return PopulationReport(born, diedOfAge, diedOfHealth, immigrated, emigrated, totalChange)
     }
 
 
@@ -71,7 +73,7 @@ class Population {
                 changedPersons.add(it)
             }
         }
-        var diedOfAge = changedPersons.size
+        val diedOfAge = changedPersons.size
         old.removeAll(changedPersons)
         changedPersons.clear()
 
@@ -112,7 +114,7 @@ class Population {
      *  TODO: This should include health, wealth etc.
      */
     private fun processBirth() : Int {
-        val birthfactor = BIRTH_FACTOR //TODO add other aspects like health
+        val birthfactor = BASE_BIRTH_FACTOR //TODO add other aspects like health
         val amountNewBorn = (adults.size * birthfactor).toInt()
         for (i in 0..amountNewBorn){
             children.add(Person())
