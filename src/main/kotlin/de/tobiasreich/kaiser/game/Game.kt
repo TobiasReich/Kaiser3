@@ -38,7 +38,6 @@ object Game {
         }
 
         currentPlayer = players[nextPlayerIndex]
-        currentPlayer.startNewTurn()
         ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
         //NextPlayerScreenUIController.showPlayerNews()
     }

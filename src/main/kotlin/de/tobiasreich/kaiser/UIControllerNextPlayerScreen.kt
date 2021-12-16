@@ -25,7 +25,9 @@ class UIControllerNextPlayerScreen : Initializable {
 
 
     @FXML
-    fun onNewsButtonClick(actionEvent: ActionEvent) {
+    fun onNextPlayerButtonClick(actionEvent: ActionEvent) {
+        Game.currentPlayer.startNewTurn()
+
         val message = Game.currentPlayer.getNextMessage()
 
         if (message == null){
