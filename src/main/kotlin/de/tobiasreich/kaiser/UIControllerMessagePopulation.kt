@@ -66,9 +66,7 @@ class UIControllerMessagePopulation : Initializable, IMessageController{
 
     @FXML
     override fun initialize(p0: URL?, resources: ResourceBundle?) {
-        bundle = resources
-        println(bundle)
-        println(bundle?.getString("key1"))
+
     }
 
     override fun setMessage(message: ReportMessage) {

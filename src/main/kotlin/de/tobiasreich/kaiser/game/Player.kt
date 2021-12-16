@@ -23,7 +23,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     val population = Population()   // The standard population at start
     val buildings = Buildings()     // The standard population at start
 
-    var wheat = 1000                // the resources (how much wheat is in the granaries)
+    var storedFood = 1000                // the resources (how much wheat is in the granaries)
         get(){
             return field
         }
@@ -31,7 +31,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
             field = value
         }
 
-    var wheatPrice = 50             // the current wheat price for this player
+    var foodPrice = 50             // the current wheat price for this player
         get(){
             return field
         }
@@ -74,14 +74,14 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *  A player can not sell more wheat than all that's left in the granary
      */
     fun addWheat(amount : Int) : Boolean{
-        if (wheat + amount > getMaxWheatStorage()){
+        if (storedFood + amount > getMaxWheatStorage()){
             return false
         }
-        if (wheat + amount < 0){
+        if (storedFood + amount < 0){
             return false
         }
 
-        wheat += amount
+        storedFood += amount
         return true
     }
 
@@ -103,7 +103,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     fun startNewTurn() {
         messageList.clear()
 
-        //population.processFood()
+        population.processFood(storedFood)
         messageList.add(population.processPopulationChange())
 
         messageList.add(setNewHarvestCondition())
