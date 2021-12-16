@@ -9,7 +9,8 @@ interface ReportMessage{
 }
 
 /** Population changes (birth, death, migration...) */
-class PopulationReport(val birth : Int, val diedOfAge : Int, val diedOfHealth : Int, val immigrated : Int, val emigrated : Int, val totalChange : Int) : ReportMessage {
+class PopulationReport(val birth : Int, val diedOfAge : Int, val diedOfHealth : Int, val immigrated : Int,
+                       val emigrated : Int, val starvedToDeath : Int, val totalChange : Int) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-population.fxml"))
     }

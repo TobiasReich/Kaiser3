@@ -126,15 +126,16 @@ class Population {
      *  how many died
      *  and migration aspects
      */
-    fun processPopulationChange() : PopulationReport {
+    fun processPopulationChange(amountFood : Int) : PopulationReport {
+        val starvedToDeath = processFood(amountFood)
         val diedOfAge = processAging()
         val born = processBirth()
         val diedOfHealth = processHealth()
         val immigrated = processImmigration()
         val emigrated = processEmigration()
 
-        val totalChange = born + immigrated - diedOfAge - diedOfHealth - emigrated
-        return PopulationReport(born, diedOfAge, diedOfHealth, immigrated, emigrated, totalChange)
+        val totalChange = born + immigrated - diedOfAge - diedOfHealth - emigrated - starvedToDeath
+        return PopulationReport(born, diedOfAge, diedOfHealth, immigrated, emigrated, starvedToDeath, totalChange)
     }
 
 

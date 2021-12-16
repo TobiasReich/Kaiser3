@@ -37,6 +37,9 @@ class UIControllerMessagePopulation : Initializable, IMessageController{
     private lateinit var newsMessageEmigratedLabel: Label
 
     @FXML
+    private lateinit var newsMessageStarvedToDeathLabel: Label
+
+    @FXML
     private lateinit var newsMessageTotalChange: Label
 
 
@@ -78,6 +81,7 @@ class UIControllerMessagePopulation : Initializable, IMessageController{
         newsMessageDiedBadHealthLabel.text = String.format(Game.stringsBundle.getString("message_died_bad_health"), popMsg.diedOfHealth)
         newsMessageImmimigratedLabel.text = String.format(Game.stringsBundle.getString("message_immigrated"), popMsg.immigrated)
         newsMessageEmigratedLabel.text = String.format(Game.stringsBundle.getString("message_emigrated"), popMsg.emigrated)
+        newsMessageStarvedToDeathLabel.text = String.format(Game.stringsBundle.getString("message_starved_to_death"), popMsg.starvedToDeath)
 
         if (popMsg.totalChange > 0){
             populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_grows")
