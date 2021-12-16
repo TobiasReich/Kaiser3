@@ -1,8 +1,8 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
-import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.PopulationReport
+import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -10,6 +10,7 @@ import javafx.scene.control.Label
 import javafx.scene.layout.Pane
 import java.net.URL
 import java.util.*
+
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
 class UIControllerMessagePopulation : Initializable, IMessageController{
@@ -61,40 +62,37 @@ class UIControllerMessagePopulation : Initializable, IMessageController{
         }
     }
 
+    private var bundle: ResourceBundle? = null
 
     @FXML
-    override fun initialize(p0: URL?, p1: ResourceBundle?) {
-
+    override fun initialize(p0: URL?, resources: ResourceBundle?) {
+        bundle = resources
+        println(bundle)
+        println(bundle?.getString("key1"))
     }
 
     override fun setMessage(message: ReportMessage) {
         this.messge = message
         val popMsg = messge as PopulationReport
 
+        newsMessageBornLabel.text = String.format(Game.stringsBundle.getString("message_born_children"), popMsg.birth)
+        newsMessageDiedAgeLabel.text = String.format(Game.stringsBundle.getString("message_died_age"), popMsg.diedOfAge)
+        newsMessageDiedBadHealthLabel.text = String.format(Game.stringsBundle.getString("message_died_bad_health"), popMsg.diedOfHealth)
+        newsMessageImmimigratedLabel.text = String.format(Game.stringsBundle.getString("message_immigrated"), popMsg.immigrated)
+        newsMessageEmigratedLabel.text = String.format(Game.stringsBundle.getString("message_emigrated"), popMsg.emigrated)
 
-        newsMessageBornLabel.text = "Dieses Jahr sind ${popMsg.birth} Kinder geboren."
-        newsMessageDiedAgeLabel.text = "Dieses Jahr sind ${popMsg.diedOfAge} alte Menschen gestorben."
-        newsMessageDiedBadHealthLabel.text = "Dieses Jahr sind ${popMsg.diedOfHealth} Menschen an schlechter Gesundheit gestorben."
-        newsMessageImmimigratedLabel.text = "${popMsg.immigrated} Einwanderer kamen ins Land."
-        newsMessageEmigratedLabel.text = "${popMsg.emigrated} eurer Bürger sind ausgewandert."
         if (popMsg.totalChange > 0){
-            populationMessageTitle.text = "Die Bevölkerung wächst!"
-            newsMessageTotalChange.text = "Damit leben jetzt ${popMsg.totalChange} mehr Bürger in eurem Land."
+            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_grows")
+            newsMessageTotalChange.text = String.format(Game.stringsBundle.getString("message_population_difference_grows"), popMsg.totalChange)
+
         } else if (popMsg.totalChange < 0){
-            populationMessageTitle.text = "Keine Veränderung!"
-            newsMessageTotalChange.text = "Damit ist die Bevölkerung um ${popMsg.totalChange*-1} Personen geschrumpft."
+            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_shrinks")
+            newsMessageTotalChange.text = String.format(Game.stringsBundle.getString("message_population_difference_shrinks"), popMsg.totalChange * -1)
+
         } else {
-            populationMessageTitle.text = "Die Bevölkerung schrumpft!"
-            newsMessageTotalChange.text = "Damit bleibt die Bevölkerung stabil."
+            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_stays_constant")
+            newsMessageTotalChange.text = Game.stringsBundle.getString("message_population_difference_stays_constant")
         }
     }
-
-
-//    private lateinit var playerIntroLabel: Label
-//    private lateinit var newsMessageBornLabel: Label
-//    private lateinit var newsMessageDiedAgeLabel: Label
-//    private lateinit var newsMessageDiedBadHealthLabel: Label
-//    private lateinit var newsMessageImmimigratedLabel: Label
-//    private lateinit var newsMessageEmigratedLabel: Label
 
 }

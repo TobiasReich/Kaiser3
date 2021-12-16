@@ -5,7 +5,7 @@
 
 <VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerStartScreen">
    <children>
-      <Label text="Land" />
+      <Label text="%enter_pwd" />
 
       <HBox>
          <children>

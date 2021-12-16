@@ -1,8 +1,12 @@
 package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.ViewController
+import java.util.*
 
 object Game {
+
+    /** Language Bundle for resources */
+    lateinit var stringsBundle : ResourceBundle
 
     private lateinit var players : List<Player>
     lateinit var currentPlayer : Player
