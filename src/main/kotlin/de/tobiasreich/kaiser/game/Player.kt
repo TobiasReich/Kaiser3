@@ -23,21 +23,10 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     val population = Population()   // The standard population at start
     val buildings = Buildings()     // The standard population at start
 
-    var storedFood = 1000                // the resources (how much wheat is in the granaries)
-        get(){
-            return field
-        }
-        private set(value){
-            field = value
-        }
+    var storedFood = 1000           // the resources (how much wheat is in the granaries)
 
-    var foodPrice = 50             // the current wheat price for this player
-        get(){
-            return field
-        }
-        private set(value){
-            field = value
-        }
+    var foodPrice = 50              // the current wheat price for this player
+
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
@@ -103,7 +92,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     fun startNewTurn() {
         messageList.clear()
 
-        val populationChange = population.processPopulationChange(storedFood)
+        val populationChange = population.processPopulationChange(this)
         messageList.add(populationChange)
 
         messageList.add(setNewHarvestCondition())

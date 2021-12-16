@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser.game.data.population
 
+import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.data.player.PopulationReport
 import de.tobiasreich.kaiser.game.data.population.Health.HEALTH_DEAD
 
@@ -49,56 +50,48 @@ class Population {
      *  A person needs FOOD_USE_PER_PERSON units of food per year.
      *  If gotten less their health will decline.
      *
-     *  TODO: add the parameter of distributeFair determines whether all people should get the same amount of food
-     *  or the adults should be fed first, then the children and at last the old ones.
-     *  This will have the result of more old people dying in case of a famine.
+     *  TODO: We might want to add the parameter "DistributeFair" if we want to change priorities.
      *
-     */
-    fun processFood(amountFood : Int) : Int{
-        var died = 0
-        var foodLeft = amountFood
-
-        println("Food left: $foodLeft")
+     *  Calculation of how many people are starving:
+     *  Estimate how much food is left. All people after that starve
+     *  E.g. 5 food per person, 100 food left
+     *  -> 100 / 5 = 20 -> from index[20] on people starve this year */
+    fun processFood(player: Player) : Int{
+        var died = 0 // Counter of how many people died
+        var foodLeft = player.storedFood
 
         if (foodLeft > adults.size){
             foodLeft -= adults.size * FOOD_USE_PER_PERSON
-            println("All adults were fed!")
         } else {
             // Estimate how much food is left. All people after that starve
             // E.g. 5 food per person, 100 food left
             // -> 100 / 5 = 20 -> from index[20] on people starve this year
             val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
             foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
-            println("Adults $peopleStarveIndex to ${adults.size} starve")
             died += declineHealth(adults, peopleStarveIndex, adults.size)
         }
 
         if (foodLeft > children.size){
             foodLeft -= children.size * FOOD_USE_PER_PERSON
-            println("All children were fed!")
         } else {
             // Estimate how much food is left. All people after that starve
             // E.g. 5 food per person, 100 food left
             // -> 100 / 5 = 20 -> from index[20] on people starve this year
             val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
             foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
-            println("Children $peopleStarveIndex to ${children.size} starve")
-            died += declineHealth(children, peopleStarveIndex, adults.size)
-        }
-        if (foodLeft > old.size){
-            foodLeft -= old.size * FOOD_USE_PER_PERSON
-            println("All old were fed!")
-        } else {
-            // Estimate how much food is left. All people after that starve
-            // E.g. 5 food per person, 100 food left
-            // -> 100 / 5 = 20 -> from index[20] on people starve this year
-            val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
-            foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
-            println("Old people $peopleStarveIndex to ${old.size} starve")
-            died += declineHealth(old, peopleStarveIndex, adults.size)
+            died += declineHealth(children, peopleStarveIndex, children.size)
         }
 
-        println("$died people starved to death this year!")
+        if (foodLeft > old.size){
+            foodLeft -= old.size * FOOD_USE_PER_PERSON
+        } else {
+
+            val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
+            foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
+            died += declineHealth(old, peopleStarveIndex, old.size)
+        }
+
+        player.storedFood = foodLeft // Write the leftover food back to the player
 
         return died
     }
@@ -126,8 +119,8 @@ class Population {
      *  how many died
      *  and migration aspects
      */
-    fun processPopulationChange(amountFood : Int) : PopulationReport {
-        val starvedToDeath = processFood(amountFood)
+    fun processPopulationChange(player : Player) : PopulationReport {
+        val starvedToDeath = processFood(player)
         val diedOfAge = processAging()
         val born = processBirth()
         val diedOfHealth = processHealth()
