@@ -109,7 +109,7 @@ class Population {
                 died.add(people[i])
             }
         }
-        println("${died.size} from this group died!")
+        //println("${died.size} from this group died!")
         people.removeAll(died)
         return died.size
     }

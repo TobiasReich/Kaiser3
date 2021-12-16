@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<HBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerStartScreen">
+<HBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerFoodMenu">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -13,9 +13,9 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="25.0" prefWidth="164.0">
                <children>
-                  <Button mnemonicParsing="false" text="+ 10 000" />
-                  <Button mnemonicParsing="false" text="+ 1 000" />
-                  <Button mnemonicParsing="false" text="+ 1000" />
+                  <Button  mnemonicParsing="false"  text="+ 10 000" />
+                  <Button  mnemonicParsing="false"     text="+ 1 000" />
+                  <Button  mnemonicParsing="false"      text="+ 100" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="127.0" prefHeight="25.0" prefWidth="164.0">
@@ -107,8 +107,7 @@
             <HBox>
                <children>
                   <Label text="Einwohner: " />
-                  <Label text="10" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-                  <Label text=" Mio." textAlignment="JUSTIFY" textOverrun="CLIP" />
+                  <Label text="10.000" fx:id="inhabitantsLabel" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
                </children>
             </HBox>
             <HBox>
@@ -121,8 +120,7 @@
             <HBox layoutX="10.0" layoutY="148.0">
                <children>
                   <Label text="Kornmenge: " />
-                  <Label text="10" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-                  <Label text=" Kilo." textAlignment="JUSTIFY" textOverrun="CLIP" />
+                  <Label text="10" fx:id="foodAmountLabel"  textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
                </children>
             </HBox>
             <Separator layoutX="10.0" layoutY="199.0" prefWidth="200.0" />
