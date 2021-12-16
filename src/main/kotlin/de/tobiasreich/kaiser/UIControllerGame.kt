@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.fxml.Initializable
 import javafx.scene.Scene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
@@ -12,9 +13,11 @@ import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 import javafx.stage.Stage
+import java.net.URL
+import java.util.*
 
 
-class GameUIController {
+class UIControllerGame : Initializable {
 
     @FXML
     private val wheatButton: Button? = null
@@ -98,7 +101,7 @@ class GameUIController {
      *
      *******************************************/
 
-    private fun updateAllViews(){
+    private fun updatePopulationGraph(){
         populationChart.data.clear()
 
         val population = Game.currentPlayer.population
@@ -153,6 +156,13 @@ class GameUIController {
         stage.title = "Steuern"
         stage.scene = taxScene
         stage.show()
+    }
+
+
+    @FXML
+    override fun initialize(p0: URL?, p1: ResourceBundle?) {
+        // println("init Game Controller")
+        updatePopulationGraph()
     }
 
 }

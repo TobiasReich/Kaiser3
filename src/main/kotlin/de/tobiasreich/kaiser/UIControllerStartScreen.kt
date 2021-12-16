@@ -8,7 +8,7 @@ import javafx.fxml.FXML
 import javafx.scene.layout.BorderPane
 
 
-class StartScreenUIController {
+class UIControllerStartScreen {
 
     @FXML
     private lateinit var rootBorderPane: BorderPane
@@ -21,12 +21,12 @@ class StartScreenUIController {
 
     @FXML
     fun onStartGameClick(actionEvent: ActionEvent) {
-        val player1 = Player("Player1", true, CountryName.BAVARIA)
-        val player2 = Player("Player2", false, CountryName.HESSE)
+        val player0 = Player("Player0", true, CountryName.BAVARIA)
+        val player1 = Player("Player1", false, CountryName.HESSE)
         //...
-        Game.setupGame(mutableListOf(player1, player2))
+        Game.setupGame(mutableListOf(player0, player1))
 
-        ScreenController.activate(ScreenController.SCREEN_NAME.GAME)
+        ViewController.showScene(ViewController.SCENE_NAME.GAME)
     }
 
 }

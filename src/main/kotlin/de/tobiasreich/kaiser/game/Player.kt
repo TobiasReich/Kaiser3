@@ -1,13 +1,17 @@
 package de.tobiasreich.kaiser.game
 
-import de.tobiasreich.kaiser.game.data.country.Buildings
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
+import de.tobiasreich.kaiser.game.data.country.HarvestEvent
+import de.tobiasreich.kaiser.game.data.country.Land
+import de.tobiasreich.kaiser.game.data.country.Land.Companion.FOOD_HARVESTED_BY_FARMER
+import de.tobiasreich.kaiser.game.data.country.Land.Companion.LAND_USED_PER_FARMER
 import de.tobiasreich.kaiser.game.data.player.CountryName
-import de.tobiasreich.kaiser.game.data.player.EventMessage
-import de.tobiasreich.kaiser.game.data.player.HarvestEvent
+import de.tobiasreich.kaiser.game.data.player.ReportMessage
+import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
+import kotlin.math.min
 
 /** This is the complete configuration and setup of once specific player
  *  A player consists of
@@ -18,40 +22,45 @@ import de.tobiasreich.kaiser.game.data.population.Population
  */
 class Player(val name : String, val isMale : Boolean, val countryName : CountryName) {
 
-
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
-    val buildings = Buildings()     // The standard population at start
+    val land = Land()            // How many ha the user possesses
 
-    var wheat = 1000                // the resources (how much wheat is in the granaries)
-        get(){
-            return field
-        }
-        private set(value){
-            field = value
-        }
+    var storedFood = 1000           // the resources (how much wheat is in the granaries)
 
-    var wheatPrice = 50             // the current wheat price for this player
-        get(){
-            return field
-        }
-        private set(value){
-            field = value
-        }
+    var foodPrice = 50              // the current wheat price for this player
+
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
-    val messageList = mutableListOf<EventMessage>()
+    private val messageList = mutableListOf<ReportMessage>()
 
 
-    /** Defines the current harvest condition this year -> Defining the wheat price */
-    var harvestCondition = HarvestCondition.NORMAL_HARVEST
 
 
-    /** Sets the new harvest condition for this year */
-    private fun setNewHarvestCondition() : HarvestEvent {
-        harvestCondition = HarvestCondition.values().random()
-        return HarvestEvent(harvestCondition)
+    /** Calculates the harvest for this year. */
+    private fun processHarvest(player : Player) : HarvestReport {
+        // Defines the current harvest condition this year -> Defining the wheat price
+        val harvestCondition = HarvestCondition.values().random()
+        val harvestEvent = HarvestEvent.values().random()
+
+        // Now get how many adults work on the field
+        // TODO: Once jobs are implemented, we want to select only farmers
+        val farmer = player.population.adults.size
+
+        val processableLandSlots = player.land.available / LAND_USED_PER_FARMER
+
+        // This determines how many farm land "parcels" will be processed
+        val processedSlots = min(processableLandSlots, farmer)
+
+        val harvestedFood = (FOOD_HARVESTED_BY_FARMER * processedSlots * harvestCondition.harvestRatio).toInt()
+
+        player.storedFood += harvestedFood
+
+        // ----- Work on the HARVEST EFFECTS -----
+        player.storedFood = (player.storedFood * harvestEvent.effect).toInt()
+
+        return HarvestReport(harvestCondition, harvestedFood, harvestEvent)
     }
 
     // ------------------------------------------------------------------------
@@ -64,7 +73,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *    buildings.granaries * GRAIN_PER_GRANARY
      */
     fun getMaxWheatStorage() : Int {
-        return buildings.granaries * GRAIN_PER_GRANARY
+        return land.buildings.granaries * GRAIN_PER_GRANARY
     }
 
     /** This adds / subtracts wheat
@@ -73,14 +82,14 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *  A player can not sell more wheat than all that's left in the granary
      */
     fun addWheat(amount : Int) : Boolean{
-        if (wheat + amount > getMaxWheatStorage()){
+        if (storedFood + amount > getMaxWheatStorage()){
             return false
         }
-        if (wheat + amount < 0){
+        if (storedFood + amount < 0){
             return false
         }
 
-        wheat += amount
+        storedFood += amount
         return true
     }
 
@@ -102,13 +111,10 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
     fun startNewTurn() {
         messageList.clear()
 
+        val populationChange = population.processPopulationChange(this)
+        messageList.add(populationChange)
 
-        //population.processFood()
-        messageList.add(population.processPopulationChange())
-
-        messageList.add(population.processPopulationChange())
-
-        messageList.add(setNewHarvestCondition())
+        messageList.add(processHarvest(this))
         //...
 
     }
@@ -122,4 +128,15 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
     //</editor-fold>
+
+
+    /** Returns the next News for this player (EventMessage)
+     *  and removes it from the list of outstanding messages
+     *  That way you can easily pull them without the need
+     *  to care about deleting or counting them. */
+    fun getNextMessage() : ReportMessage?{
+        val message = messageList.firstOrNull()
+        messageList.remove(message)
+        return message
+    }
 }

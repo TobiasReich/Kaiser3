@@ -1,11 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" style="-fx-background-color: #FFFF00;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.NextPlayerScreenUIController">
+<VBox alignment="CENTER" fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="326.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessagePopulation">
    <children>
-      <Label text="Die Bevölkerung wächst" />
-      <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter" />
+      <Label fx:id="populationMessageTitle" alignment="CENTER" text="Die Bevölkerung wächst">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin></Label>
+      <VBox alignment="CENTER_LEFT" fillWidth="false">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_birth.png">
+                  </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageBornLabel" text="Geboren in diesem Jahr..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_old.png">
+                  </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageDiedAgeLabel" text="Gestorben durch hohes Alter..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_ill.png">
+                  </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageDiedBadHealthLabel" text="Gestorben durch schlechte Gesundheit..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_immigration.png">
+                  </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageImmimigratedLabel" text="Immigriert..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_emigration.png">
+                  </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageEmigratedLabel" text="Ausgewandert..." />
+               </children>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_starving.png">
+                        </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageStarvedToDeathLabel" text="Verhungert..." />
+               </children>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_abacus.png">
+                        </Image>
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="newsMessageTotalChange" text="Veränderung insgesamt..." />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Separator maxWidth="100000.0" prefWidth="100000.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Separator>
+
+      <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Button>
    </children>
 </VBox>

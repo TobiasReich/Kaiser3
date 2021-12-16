@@ -1,12 +1,17 @@
 package de.tobiasreich.kaiser.game
 
-import de.tobiasreich.kaiser.NextPlayerScreenUIController
-import de.tobiasreich.kaiser.ScreenController
+import de.tobiasreich.kaiser.ViewController
+import java.util.*
 
 object Game {
 
+    /** Language Bundle for resources */
+    lateinit var stringsBundle : ResourceBundle
+
     private lateinit var players : List<Player>
     lateinit var currentPlayer : Player
+
+    var currentYear = 1400
 
     /** Creates a new game */
     fun setupGame(players : List<Player>){
@@ -22,13 +27,24 @@ object Game {
         // Process Food distribution
         currentPlayer.processFood()
 
-        // Switch to the next player
+        // Switch to the next player!
 
         val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
+        println("----- NEXT PLAYER (#$nextPlayerIndex -----")
+
+        if (nextPlayerIndex == 0){
+            currentYear++
+            println("----- NEW YEAR -----")
+        }
+
         currentPlayer = players[nextPlayerIndex]
-        currentPlayer.startNewTurn()
-        ScreenController.activate(ScreenController.SCREEN_NAME.NEXT_PLAYER)
+        ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
         //NextPlayerScreenUIController.showPlayerNews()
+    }
+
+    // The year is basically the turn number
+    fun getYear(): Int{
+        return currentYear
     }
 
 }
