@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser.game.data.player
 
 import de.tobiasreich.kaiser.Main
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
+import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import javafx.fxml.FXMLLoader
 
 interface ReportMessage{
@@ -17,7 +18,7 @@ class PopulationReport(val birth : Int, val diedOfAge : Int, val diedOfHealth : 
 }
 
 /** Harvest news. Was it a good or a bad one? */
-class HarvestReport(val harvest: HarvestCondition) : ReportMessage {
+class HarvestReport(val harvest: HarvestCondition, val harvestedFood : Int, val harvestEvent : HarvestEvent) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-harvest.fxml"))
     }

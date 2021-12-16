@@ -1,13 +1,17 @@
 package de.tobiasreich.kaiser.game
 
-import de.tobiasreich.kaiser.game.data.country.Buildings
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
+import de.tobiasreich.kaiser.game.data.country.HarvestEvent
+import de.tobiasreich.kaiser.game.data.country.Land
+import de.tobiasreich.kaiser.game.data.country.Land.Companion.FOOD_HARVESTED_BY_FARMER
+import de.tobiasreich.kaiser.game.data.country.Land.Companion.LAND_USED_PER_FARMER
 import de.tobiasreich.kaiser.game.data.player.CountryName
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
+import kotlin.math.min
 
 /** This is the complete configuration and setup of once specific player
  *  A player consists of
@@ -18,10 +22,9 @@ import de.tobiasreich.kaiser.game.data.population.Population
  */
 class Player(val name : String, val isMale : Boolean, val countryName : CountryName) {
 
-
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
-    val buildings = Buildings()     // The standard population at start
+    val land = Land()            // How many ha the user possesses
 
     var storedFood = 1000           // the resources (how much wheat is in the granaries)
 
@@ -34,14 +37,30 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
 
 
-    /** Defines the current harvest condition this year -> Defining the wheat price */
-    var harvestCondition = HarvestCondition.NORMAL_HARVEST
 
+    /** Calculates the harvest for this year. */
+    private fun processHarvest(player : Player) : HarvestReport {
+        // Defines the current harvest condition this year -> Defining the wheat price
+        val harvestCondition = HarvestCondition.values().random()
+        val harvestEvent = HarvestEvent.values().random()
 
-    /** Sets the new harvest condition for this year */
-    private fun setNewHarvestCondition() : HarvestReport {
-        harvestCondition = HarvestCondition.values().random()
-        return HarvestReport(harvestCondition)
+        // Now get how many adults work on the field
+        // TODO: Once jobs are implemented, we want to select only farmers
+        val farmer = player.population.adults.size
+
+        val processableLandSlots = player.land.available / LAND_USED_PER_FARMER
+
+        // This determines how many farm land "parcels" will be processed
+        val processedSlots = min(processableLandSlots, farmer)
+
+        val harvestedFood = (FOOD_HARVESTED_BY_FARMER * processedSlots * harvestCondition.harvestRatio).toInt()
+
+        player.storedFood += harvestedFood
+
+        // ----- Work on the HARVEST EFFECTS -----
+        player.storedFood = (player.storedFood * harvestEvent.effect).toInt()
+
+        return HarvestReport(harvestCondition, harvestedFood, harvestEvent)
     }
 
     // ------------------------------------------------------------------------
@@ -54,7 +73,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *    buildings.granaries * GRAIN_PER_GRANARY
      */
     fun getMaxWheatStorage() : Int {
-        return buildings.granaries * GRAIN_PER_GRANARY
+        return land.buildings.granaries * GRAIN_PER_GRANARY
     }
 
     /** This adds / subtracts wheat
@@ -95,7 +114,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         val populationChange = population.processPopulationChange(this)
         messageList.add(populationChange)
 
-        messageList.add(setNewHarvestCondition())
+        messageList.add(processHarvest(this))
         //...
 
     }
