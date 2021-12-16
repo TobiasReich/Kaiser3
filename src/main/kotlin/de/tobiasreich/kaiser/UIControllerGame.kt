@@ -126,13 +126,13 @@ class UIControllerGame : Initializable {
 
 
     fun onWheatButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-wheat.fxml"))
-        val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"))
+        val wheatScene = Scene(fxmlLoader.load(), 630.0, 300.0)
 
         val stage = Stage()
         stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Steuern"
-        stage.scene = taxScene
+        stage.title = "Getreide"
+        stage.scene = wheatScene
         stage.show()
     }
 
