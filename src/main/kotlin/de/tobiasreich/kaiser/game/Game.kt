@@ -11,6 +11,8 @@ object Game {
     private lateinit var players : List<Player>
     lateinit var currentPlayer : Player
 
+    var currentYear = 1400
+
     /** Creates a new game */
     fun setupGame(players : List<Player>){
         this.players = players
@@ -25,9 +27,13 @@ object Game {
         // Process Food distribution
         currentPlayer.processFood()
 
-        // Switch to the next player
+        // Switch to the next player!
 
         val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
+        if (nextPlayerIndex == 0){
+            currentYear++
+        }
+
         currentPlayer = players[nextPlayerIndex]
         currentPlayer.startNewTurn()
         ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
@@ -36,7 +42,7 @@ object Game {
 
     // The year is basically the turn number
     fun getYear(): Int{
-        return 1400
+        return currentYear
     }
 
 }
