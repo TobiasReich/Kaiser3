@@ -114,27 +114,6 @@ class UIControllerGame : Initializable {
     }
 
 
-    /********************************************
-     *
-     *             View Updates
-     *
-     *******************************************/
-
-    private fun updatePopulationGraph(){
-        populationChart.data.clear()
-
-        val population = Game.currentPlayer.population
-
-        val amountChildren = population.children.size
-        val amountAdult = population.adults.size
-        val amountOld = population.old.size
-
-        val series = Series<String, Int>()
-        series.data.add(XYChart.Data<String, Int>("Children", amountChildren))
-        series.data.add(XYChart.Data<String, Int>("Adult", amountAdult))
-        series.data.add(XYChart.Data<String, Int>("Old", amountOld))
-        populationChart.data.add(series)
-    }
 
 
     /********************************************
@@ -178,11 +157,18 @@ class UIControllerGame : Initializable {
     }
 
 
+    /********************************************
+     *
+     *             View Updates
+     *
+     *******************************************/
+
     @FXML
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
         // println("init Game Controller")
         updateStatisticsView()
     }
+
 
     /** This updates the statistics (on the right side) of the game view.
      *  Including:
@@ -195,11 +181,26 @@ class UIControllerGame : Initializable {
         updatePopulationGraph()
 
         // Updating statistics "table"
-        gameSummaryMoneyPossessionLabel.text = "1000 Taler"
-        gameSummaryFoodPossessionLabel.text = Game.currentPlayer.storedFood.toString()
-        gameSummaryInhabitantsLabel.text = Game.currentPlayer.population.getAmountPeople().toString()
-        gameSummaryHappinessLabel.text = "75%"
-        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.available} ha"
+        gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.stringsBundle.getString("general_currency")}"
+        gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.stringsBundle.getString("general_food")}"
+        gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.stringsBundle.getString("general_persons")}"
+        gameSummaryHappinessLabel.text = "75 %"
+        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.available} ${Game.stringsBundle.getString("general_hectars")}"
     }
 
+    private fun updatePopulationGraph(){
+        populationChart.data.clear()
+
+        val population = Game.currentPlayer.population
+
+        val amountChildren = population.children.size
+        val amountAdult = population.adults.size
+        val amountOld = population.old.size
+
+        val series = Series<String, Int>()
+        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_children"), amountChildren))
+        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_adult"), amountAdult))
+        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_old"), amountOld))
+        populationChart.data.add(series)
+    }
 }

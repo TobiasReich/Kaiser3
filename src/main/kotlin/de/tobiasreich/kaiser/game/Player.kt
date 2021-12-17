@@ -23,6 +23,8 @@ import kotlin.math.min
  */
 class Player(val name : String, val isMale : Boolean, val countryName : CountryName) {
 
+    var money = 1000                // The amount of money the player has
+
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
     val land = Land()               // How many ha the user possesses
