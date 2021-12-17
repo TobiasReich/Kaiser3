@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser
 
+import de.tobiasreich.kaiser.game.Game
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
@@ -19,9 +20,9 @@ object ViewController {
     /** This shows a certain screen*/
     fun showScene(sceneName: SCENE_NAME) {
         main!!.root = when (sceneName){
-            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml")) }
-            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml")) }
-            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml")) }
+            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml"), Game.stringsBundle) }
+            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.stringsBundle) }
+            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.stringsBundle) }
         }
     }
 

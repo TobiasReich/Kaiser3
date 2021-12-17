@@ -50,13 +50,13 @@ class Population {
 
     @Deprecated("Only used for testing!")
     fun fillDummyPopulation(){
-        for (i in 0..10000){
+        for (i in 0 until 10000){
             children.add(Person((Math.random() *  AGE_ADULT).toInt()))
         }
-        for (i in 0..10000){
+        for (i in 0 until 10000){
             adults.add(Person((Math.random() *  AGE_OLD).toInt()))
         }
-        for (i in 0..10000){
+        for (i in 0 until 10000){
             old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
     }

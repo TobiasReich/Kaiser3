@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="rootBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerGame">
 
@@ -12,7 +14,7 @@
             <children>
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onWheatButtonClick" prefWidth="110.0" text="Getreide">
                     <graphic>
-                        <ImageView fx:id="wheatButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="gameFoodButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_wheat.png">
                                 </Image>
@@ -23,7 +25,7 @@
 
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onLandButtonClick" prefWidth="110.0" text="Land">
                     <graphic>
-                        <ImageView fx:id="landButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="gameLandButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_land.png">
                                 </Image>
@@ -107,9 +109,9 @@
         </MenuBar>
     </top>
     <right>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_RIGHT" BorderPane.alignment="TOP_RIGHT">
             <children>
-                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" minHeight="200.0" prefHeight="250.0" title="Population">
+                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="250.0" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" title="Population">
                     <xAxis>
                         <CategoryAxis animated="false" side="BOTTOM" />
                     </xAxis>
@@ -117,7 +119,64 @@
                         <NumberAxis animated="false" side="LEFT" />
                     </yAxis>
                 </BarChart>
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="%game_summary_title">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <GridPane alignment="TOP_RIGHT" VBox.vgrow="NEVER">
+            
+               <children>
+                   <Label text="%game_summary_money" GridPane.columnIndex="0">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryMoneyPossessionLabel" text="" GridPane.columnIndex="1" />
+
+                   <Label text="%game_summary_food" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                       <GridPane.margin>
+                           <Insets right="10.0" />
+                       </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryFoodPossessionLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                   <Label text="%game_summary_inhabitants" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                       <GridPane.margin>
+                           <Insets right="10.0" />
+                       </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryInhabitantsLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                   <Label text="%game_summary_happyness" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                       <GridPane.margin>
+                           <Insets right="10.0" />
+                       </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryHappinessLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                   <Label text="%game_summary_land_possession" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                       <GridPane.margin>
+                           <Insets right="10.0" />
+                       </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryLandPossessionLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
             </children>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
         </VBox>
     </right>
     <bottom>

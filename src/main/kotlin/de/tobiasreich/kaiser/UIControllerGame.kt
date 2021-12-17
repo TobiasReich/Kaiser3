@@ -9,7 +9,8 @@ import javafx.scene.Scene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
 import javafx.scene.chart.XYChart.Series
-import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 import javafx.stage.Stage
@@ -19,15 +20,33 @@ import java.util.*
 
 class UIControllerGame : Initializable {
 
+    // ------------------------------- Action Buttons (Left panel) -------------------------------
     @FXML
-    private val wheatButton: Button? = null
+    lateinit var gameFoodButton: ImageView
+
+
+    // ------------------------------- Statistics -------------------------------
+    @FXML
+    lateinit var gameSummaryMoneyPossessionLabel: Label
 
     @FXML
-    private lateinit var rootBorderPane: BorderPane
+    lateinit var gameSummaryInhabitantsLabel: Label
+    @FXML
+    lateinit var gameSummaryFoodPossessionLabel: Label
+
+    @FXML
+    lateinit var gameSummaryHappinessLabel: Label
+
+    @FXML
+    lateinit var gameSummaryLandPossessionLabel: Label
+
+
+    @FXML
+    lateinit var rootBorderPane: BorderPane
 
     // Chat showing the age and the population amount in this category
     @FXML
-    private lateinit var populationChart: BarChart<String, Int>
+    lateinit var populationChart: BarChart<String, Int>
 
     /********************************************
      *
@@ -126,7 +145,7 @@ class UIControllerGame : Initializable {
 
 
     fun onWheatButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"))
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.stringsBundle)
         val wheatScene = Scene(fxmlLoader.load(), 630.0, 300.0)
 
         val stage = Stage()
@@ -137,7 +156,7 @@ class UIControllerGame : Initializable {
     }
 
     fun onLandButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"))
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"), Game.stringsBundle)
         val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
 
         val stage = Stage()
@@ -148,7 +167,7 @@ class UIControllerGame : Initializable {
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"))
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"), Game.stringsBundle)
         val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
 
         val stage = Stage()
@@ -162,7 +181,25 @@ class UIControllerGame : Initializable {
     @FXML
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
         // println("init Game Controller")
+        updateStatisticsView()
+    }
+
+    /** This updates the statistics (on the right side) of the game view.
+     *  Including:
+     *  - The population Graph
+     *  - The statistics "table"
+     *  - ...
+     */
+    private fun updateStatisticsView(){
+        // Update population graph
         updatePopulationGraph()
+
+        // Updating statistics "table"
+        gameSummaryMoneyPossessionLabel.text = "1000 Taler"
+        gameSummaryFoodPossessionLabel.text = Game.currentPlayer.storedFood.toString()
+        gameSummaryInhabitantsLabel.text = Game.currentPlayer.population.getAmountPeople().toString()
+        gameSummaryHappinessLabel.text = "75%"
+        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.available} ha"
     }
 
 }

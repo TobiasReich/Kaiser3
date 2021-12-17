@@ -14,29 +14,32 @@ class Main : Application() {
         @JvmStatic fun main(args : Array<String>) {
             launch(Main::class.java)
         }
+
+        const val WIDTH = 1280.0
+        const val HEIGHT = 720.0
     }
 
 
     override fun start(stage: Stage) {
-        //val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-game-view.fxml"))
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-start-screen.fxml"))
-        val startGameScene = Scene(fxmlLoader.load(), 800.0, 600.0)
-
-        // Set the language so all Controllers can use it
+        // Before anything else (e.g. inflating): set the language so all Controllers can use it
         //val locale = Locale("en", "US")
         val locale = Locale("de", "DE")
         //val locale = Locale.getDefault() // Use this one in the end
         val resources = ResourceBundle.getBundle("strings", locale)
         Game.stringsBundle = resources
 
-        //val root = scene.lookup("#rootBorderPane") as BorderPane
+        //TODO We need a game config screen before anything else. Add one here as the first view
+        //val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-game-view.fxml"))
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-start-screen.fxml"), Game.stringsBundle)
+        val startGameScene = Scene(fxmlLoader.load(), WIDTH, HEIGHT)
+
 
         //val menuBar = prepareMenu()
 
         //root.top = menuBar
         ViewController.main = startGameScene
 
-        stage.title = "Kaiser III"
+        stage.title = resources.getString("game_title")
         stage.scene = startGameScene
         stage.show()
    }
