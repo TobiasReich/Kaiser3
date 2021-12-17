@@ -14,3 +14,4 @@ class Person(var age: Int = 0,
              var health: Int = HEALT_GOOD,
              var mood : Int = 100 // Ranging from 100 (perfect) to 0 (will riot for sure)
 )
+

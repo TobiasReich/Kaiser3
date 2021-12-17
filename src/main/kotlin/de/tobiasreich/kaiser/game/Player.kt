@@ -11,6 +11,7 @@ import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
+import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
 import kotlin.math.min
 
 /** This is the complete configuration and setup of once specific player
@@ -24,19 +25,38 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
 
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
-    val land = Land()            // How many ha the user possesses
+    val land = Land()               // How many ha the user possesses
 
-    var storedFood = 1000           // the resources (how much wheat is in the granaries)
-
-    var foodPrice = 50              // the current wheat price for this player
-
+    var storedFood = 1000           // The resources (how much wheat is in the granaries)
+    var foodForDistribution = 1000  // Amount of food to be distributed (i.e. how much do they get for that year)
+    var foodPrice = 50              // The current wheat price for this player this year
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
     private val messageList = mutableListOf<ReportMessage>()
 
 
+    // ---------------------------- FOOD ----------------------------
 
+    // ------------------------------------------------------------------------
+    //<editor-fold desc="Food Management">
+    // ------------------------------------------------------------------------
+
+    /** Returns how much food is required in order to feed every person */
+    fun getNeededFoodAmount() : Int {
+        return population.getAmountPeople() * FOOD_USE_PER_PERSON
+    }
+
+    /** Returns the MAXIMUM amount of food that is required in order to feed every person.
+     *  Excessive food beyond that won't give a bonus. */
+    fun getMaxFoodAmount() : Int {
+        return (population.getAmountPeople() * FOOD_USE_PER_PERSON * Population.MAX_FOOD_USE_PER_PERSON_FACTOR).toInt()
+    }
+
+    /** Returns the MINIMUM amount of food that is required in order to feed every person */
+    fun getMinFoodAmount() : Int {
+        return (population.getAmountPeople() * FOOD_USE_PER_PERSON * Population.MIN_FOOD_USE_PER_PERSON_FACTOR).toInt()
+    }
 
     /** Calculates the harvest for this year. */
     private fun processHarvest(player : Player) : HarvestReport {
@@ -63,10 +83,6 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         return HarvestReport(harvestCondition, harvestedFood, harvestEvent)
     }
 
-    // ------------------------------------------------------------------------
-    //<editor-fold desc="Wheat Management">
-    // ------------------------------------------------------------------------
-
     /** Convenience method determining how much grain can be stored in
      *  the countries granaries (in total)
      *  This is defined as:
@@ -81,7 +97,7 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *  A player can not buy more wheat than there is capacitiy in the granaries
      *  A player can not sell more wheat than all that's left in the granary
      */
-    fun addWheat(amount : Int) : Boolean{
+    fun addFood(amount : Int) : Boolean{
         if (storedFood + amount > getMaxWheatStorage()){
             return false
         }
@@ -92,6 +108,22 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         storedFood += amount
         return true
     }
+
+
+    /** Processes the food for the upcoming year
+     *  (This has to be done before the turn ends since the new turn would change the harvest and granary states)  */
+    fun processFood() {
+        // TODO: Implement this!
+        // ...
+    }
+
+
+    //</editor-fold>
+
+
+    // ------------------------------------------------------------------------
+    //<editor-fold desc="Turn logic">
+    // ------------------------------------------------------------------------
 
     /** This starts a new turn for the given player.
      *  That includes:
@@ -107,27 +139,21 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      *  - calculate educational changes
      *  - calculate mood
      *  - ...
-    */
+     */
     fun startNewTurn() {
         messageList.clear()
 
-        val populationChange = population.processPopulationChange(this)
-        messageList.add(populationChange)
+        messageList.add(population.processPopulationChange(this))
 
         messageList.add(processHarvest(this))
         //...
-
     }
-
-    /** Processes the food for the upcoming year
-     *  (This has to be done before the turn ends since the new turn would change the harvest and granary states)  */
-    fun processFood() {
-        // TODO: Implement this!
-        // ...
-    }
-
 
     //</editor-fold>
+
+    // ------------------------------------------------------------------------
+    //<editor-fold desc="Message Management">
+    // ------------------------------------------------------------------------
 
 
     /** Returns the next News for this player (EventMessage)
@@ -139,4 +165,6 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         messageList.remove(message)
         return message
     }
+
+    //</editor-fold>
 }

@@ -15,7 +15,22 @@ class Population {
 
         const val FOOD_USE_PER_PERSON = 5  // How much food a person needs per year
 
-        const val BASE_BIRTH_FACTOR = 0.05 // Default value for birth (independent of mood, health etc.)
+        /* This is the factor for the MAXIMUM food that can be distributed.
+         * It is useful since excessive food distribution increases the reproduction in the country
+         * TODO: And also the happiness */
+        const val MAX_FOOD_USE_PER_PERSON_FACTOR = 1.1f
+
+        /* This is the factor for the MINIMUM food that can be distributed.
+         * The rule is that at least 20% of the wheat has to stay as seed for the next year. Thus it is not possible to
+         * give less.
+         *
+         * TODO: This rule was already obsolete in the original Kaiser which also copied it from another game without
+         * stating the reason. I don't see this as a need. It might however make more sense to allow actually all of
+         * it to be distributed but then warn that wheat is required for planting in the next year. So the user has a
+         * greater freedom in strategy (sacrifice all now and speculate for cheap corn prices) */
+        const val MIN_FOOD_USE_PER_PERSON_FACTOR = 0.2f
+
+        const val BASE_BIRTH_FACTOR = 0.05f // Default value for birth (independent of mood, health etc.)
     }
 
     val children = mutableListOf<Person>()
@@ -44,6 +59,12 @@ class Population {
         for (i in 0..10000){
             old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
+    }
+
+
+    /** Helper Method returning how many people live in this country */
+    fun getAmountPeople() : Int {
+        return adults.size + children.size + old.size
     }
 
     /** This processes the food given to the population
