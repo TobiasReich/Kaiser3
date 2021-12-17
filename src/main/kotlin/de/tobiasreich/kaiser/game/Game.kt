@@ -30,7 +30,7 @@ object Game {
         // Switch to the next player!
 
         val nextPlayerIndex = (players.indexOf(currentPlayer) + 1) % players.size
-        println("----- NEXT PLAYER (#$nextPlayerIndex -----")
+        println("----- NEXT PLAYER (#$nextPlayerIndex) -----")
 
         if (nextPlayerIndex == 0){
             currentYear++

@@ -60,34 +60,33 @@ class Population {
         var died = 0 // Counter of how many people died
         var foodLeft = player.storedFood
 
-        if (foodLeft > adults.size){
-            foodLeft -= adults.size * FOOD_USE_PER_PERSON
+        println("Food left: $foodLeft")
+
+        val foodNeededAdults    = adults.size * FOOD_USE_PER_PERSON
+        val foodNeededChildren  = children.size * FOOD_USE_PER_PERSON
+        val foodNeededOld       = old.size * FOOD_USE_PER_PERSON
+
+        if (foodLeft >= foodNeededAdults){
+            foodLeft -= foodNeededAdults
         } else {
-            // Estimate how much food is left. All people after that starve
-            // E.g. 5 food per person, 100 food left
-            // -> 100 / 5 = 20 -> from index[20] on people starve this year
             val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
-            foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
+            foodLeft = 0 //All food is used
             died += declineHealth(adults, peopleStarveIndex, adults.size)
         }
 
-        if (foodLeft > children.size){
-            foodLeft -= children.size * FOOD_USE_PER_PERSON
+        if (foodLeft > foodNeededChildren){
+            foodLeft -= foodNeededChildren
         } else {
-            // Estimate how much food is left. All people after that starve
-            // E.g. 5 food per person, 100 food left
-            // -> 100 / 5 = 20 -> from index[20] on people starve this year
             val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
-            foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
+            foodLeft = 0 //All food is used
             died += declineHealth(children, peopleStarveIndex, children.size)
         }
 
-        if (foodLeft > old.size){
-            foodLeft -= old.size * FOOD_USE_PER_PERSON
+        if (foodLeft > foodNeededOld){
+            foodLeft -= foodNeededOld
         } else {
-
             val peopleStarveIndex = foodLeft / FOOD_USE_PER_PERSON
-            foodLeft -= peopleStarveIndex * FOOD_USE_PER_PERSON
+            foodLeft = 0 //All food is used
             died += declineHealth(old, peopleStarveIndex, old.size)
         }
 
