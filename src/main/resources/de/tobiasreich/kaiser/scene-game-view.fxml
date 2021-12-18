@@ -83,31 +83,6 @@
             </children>
         </VBox>
     </left>
-
-    <top>
-        <MenuBar BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="_Game">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuNewGameClick" text="New Game" />
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuLoadGameClick" text="Load" />
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuSaveGameClick" text="Save" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Settings">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuPreferencesClick" text="Preferences" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuAboutClick" text="About" />
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuHelpClick" text="Help" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-    </top>
     <right>
         <VBox alignment="TOP_RIGHT" prefWidth="250.0" BorderPane.alignment="TOP_RIGHT">
             <children>
