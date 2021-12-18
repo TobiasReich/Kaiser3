@@ -12,7 +12,7 @@
     <left>
         <VBox fillWidth="false" style="-fx-background-color: #FFFF00;" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onWheatButtonClick" prefWidth="110.0" text="Getreide">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="110.0" text="Getreide">
                     <graphic>
                         <ImageView fx:id="gameFoodButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>

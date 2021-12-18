@@ -12,7 +12,7 @@
     <left>
         <VBox fillWidth="false" style="-fx-background-color: #FFFF00;" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onWheatButtonClick" prefWidth="110.0" text="Getreide">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="110.0" text="Getreide">
                     <graphic>
                         <ImageView fx:id="gameFoodButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -111,7 +111,7 @@
     <right>
         <VBox alignment="TOP_RIGHT" prefWidth="250.0" BorderPane.alignment="TOP_RIGHT">
             <children>
-                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" title="Population">
+                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" title="%game_summary_population_title">
                     <xAxis>
                         <CategoryAxis animated="false" side="BOTTOM" />
                     </xAxis>

@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
@@ -123,7 +124,7 @@ class UIControllerGame : Initializable {
      *******************************************/
 
 
-    fun onWheatButtonClick(actionEvent: ActionEvent) {
+    fun onFoodButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.stringsBundle)
         val wheatScene = Scene(fxmlLoader.load(), 630.0, 300.0)
 
@@ -131,6 +132,12 @@ class UIControllerGame : Initializable {
         stage.initModality(Modality.APPLICATION_MODAL)
         stage.title = "Getreide"
         stage.scene = wheatScene
+
+        // When this dialog is closed, update the views!
+        // For testing use this: adding 1000 to the users money.
+        //TODO: Remove this once testing works fine. This is just so we see the view gets updated again
+        Game.currentPlayer.money += 1000
+        stage.onCloseRequest = EventHandler { updateViews() }
         stage.show()
     }
 
@@ -142,6 +149,7 @@ class UIControllerGame : Initializable {
         stage.initModality(Modality.APPLICATION_MODAL)
         stage.title = "Steuern"
         stage.scene = taxScene
+        stage.onCloseRequest = EventHandler { updateViews() }
         stage.show()
     }
 
@@ -153,6 +161,7 @@ class UIControllerGame : Initializable {
         stage.initModality(Modality.APPLICATION_MODAL)
         stage.title = "Steuern"
         stage.scene = taxScene
+        stage.onCloseRequest = EventHandler { updateViews() }
         stage.show()
     }
 
@@ -165,8 +174,7 @@ class UIControllerGame : Initializable {
 
     @FXML
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        // println("init Game Controller")
-        updateStatisticsView()
+        updateViews()
     }
 
 
@@ -176,7 +184,7 @@ class UIControllerGame : Initializable {
      *  - The statistics "table"
      *  - ...
      */
-    private fun updateStatisticsView(){
+    private fun updateViews(){
         // Update population graph
         updatePopulationGraph()
 
