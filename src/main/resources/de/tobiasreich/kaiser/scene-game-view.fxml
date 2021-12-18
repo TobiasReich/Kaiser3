@@ -136,17 +136,6 @@
                    </Label>
                    <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
             </GridPane>
             </children>
          <padding>
