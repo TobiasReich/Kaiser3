@@ -12,6 +12,7 @@ import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
+import javafx.scene.paint.Color
 import java.util.*
 import kotlin.math.min
 
@@ -22,7 +23,7 @@ import kotlin.math.min
  *  - a population -> Representing all the people living in the players reign
  *  - wheat -> The amount of wheat that is stored in the players granary
  */
-class Player(val name : String, val isMale : Boolean, val countryName : CountryName) {
+class Player(val name : String, val isMale : Boolean, val countryName : CountryName, val playerColor : Color) {
 
     var money = 1000                // The amount of money the player has
 

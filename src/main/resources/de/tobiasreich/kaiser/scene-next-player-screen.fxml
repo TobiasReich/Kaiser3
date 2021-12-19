@@ -3,21 +3,35 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER" prefHeight="156.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerNextPlayerScreen">
    <children>
+       <Line fx:id="nextPlayerTopLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+           <VBox.margin>
+               <Insets bottom="25.0" top="25.0" />
+           </VBox.margin>
+       </Line>
        <Label fx:id="nextPlayerAddress" contentDisplay="CENTER" text="Herr X aus Y" textAlignment="CENTER">
          <font>
-            <Font size="24.0" />
+            <Font size="36.0" />
          </font>
          <VBox.margin>
             <Insets bottom="25.0" />
          </VBox.margin></Label>
        <Label fx:id="nextPlayerInfo" contentDisplay="CENTER" text="Wir schreiben das Jahr..." textAlignment="CENTER">
          <VBox.margin>
-            <Insets bottom="25.0" />
-         </VBox.margin></Label>
-       <Button mnemonicParsing="false" onAction="#onNextPlayerButtonClick"  text="%next_player_start_turn" />
+            <Insets />
+         </VBox.margin>
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Line fx:id="nextPlayerBottomLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+       <Button fx:id="nextPlayerNextTurnButton" mnemonicParsing="false" onAction="#onNextPlayerButtonClick" text="%next_player_start_turn" />
    </children>
 </VBox>

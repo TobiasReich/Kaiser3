@@ -23,7 +23,7 @@ object Game {
     /** This creates the player objects from the PlayerConfig when setupGame is called */
     private fun createPlayers(players : List<PlayerConfig>) : List<Player>{
         return players.map {
-            Player(it.name, it.male, it.country)
+            Player(it.name, it.male, it.country, it.color)
         }
     }
 
