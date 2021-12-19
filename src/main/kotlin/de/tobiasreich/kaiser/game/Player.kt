@@ -12,6 +12,7 @@ import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
+import java.util.*
 import kotlin.math.min
 
 /** This is the complete configuration and setup of once specific player
@@ -92,6 +93,21 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
      */
     fun getMaxWheatStorage() : Int {
         return land.buildings.granaries * GRAIN_PER_GRANARY
+    }
+
+    /** This returns the title of the player depending on the set gender.
+     *  E.g. "King" (male) or "Queen" (female) */
+    fun getGenderTitle(bundle: ResourceBundle) : String {
+        return if(isMale){
+            bundle.getString(playerTitle.resourceNameMale)
+        } else {
+            bundle.getString(playerTitle.resourceNameMale)
+        }
+    }
+
+    /** This returns the name of the players Country localized */
+    fun getCountryName(bundle: ResourceBundle) : String {
+       return bundle.getString(countryName.nameResource)
     }
 
     /** This adds / subtracts wheat

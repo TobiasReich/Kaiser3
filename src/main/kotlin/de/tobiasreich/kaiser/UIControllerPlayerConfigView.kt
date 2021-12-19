@@ -8,13 +8,12 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.*
-import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.layout.VBox
 import java.io.IOException
 
 
-class UIControllerPlayerConfigView(val playerConfig : PlayerConfig, val callback : IPlayerConfigChange) : VBox() {
+class UIControllerPlayerConfigView(private val playerConfig : PlayerConfig, private val callback : IPlayerConfigChange) : VBox() {
 
     @FXML
     lateinit var playerConfigCountryLabel: Label

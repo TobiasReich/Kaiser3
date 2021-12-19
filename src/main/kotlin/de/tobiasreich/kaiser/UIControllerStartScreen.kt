@@ -54,12 +54,8 @@ class UIControllerStartScreen : Initializable, IPlayerConfigChange {
 
     @FXML
     fun onStartGameClick(actionEvent: ActionEvent) {
-        // TODO: Get this from the config instead of hard coded
-        //val player0 = Player("Player0", true, CountryName.BAVARIA)
-
         Game.setupGame(getGameConfiguration().players)
-
-        ViewController.showScene(ViewController.SCENE_NAME.GAME)
+        ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
     }
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {

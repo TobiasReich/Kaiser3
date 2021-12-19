@@ -14,7 +14,10 @@ import java.util.*
 class UIControllerNextPlayerScreen : Initializable {
 
     @FXML
-    private lateinit var playerIntroLabel: Label
+    private lateinit var nextPlayerAddress: Label
+
+    @FXML
+    private lateinit var nextPlayerInfo: Label
 
 
     /********************************************
@@ -42,8 +45,10 @@ class UIControllerNextPlayerScreen : Initializable {
     }
 
     @FXML
-    override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        playerIntroLabel.text = "Willkommen ${Game.currentPlayer.name}. Es ist das Jahr ${Game.getYear()}."
+    override fun initialize(p0: URL?, bundle: ResourceBundle) {
+        val player = Game.currentPlayer
+        nextPlayerAddress.text = String.format(bundle.getString("next_player_address"), player.getGenderTitle(bundle), player.name, player.getCountryName(bundle))
+        nextPlayerInfo.text = String.format(bundle.getString("next_player_info"), Game.getYear())
     }
 
 }
