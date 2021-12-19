@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane
 import java.net.URL
 import java.util.*
 
-/** Controller, specific for the Food menu */
-class UIControllerFoodMenu : Initializable {
+/** Controller, specific for the Land actions */
+class UIControllerActionLand : Initializable {
 
     @FXML
     private lateinit var rootBorderPane: BorderPane
