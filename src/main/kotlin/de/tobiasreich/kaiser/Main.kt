@@ -42,7 +42,7 @@ class Main : Application() {
         ViewController.rootPane = borderPane
 
         // Now load a subScene view which will be shown in the Center
-        val subViewLoader = FXMLLoader(Main::class.java.getResource("scene-start-screen.fxml"), Game.stringsBundle)
+        val subViewLoader = FXMLLoader(Main::class.java.getResource("scene-game-config-screen.fxml"), Game.stringsBundle)
         val subScene = Scene(subViewLoader.load(), WIDTH, HEIGHT)
 
         // Set this view as the "start screen"

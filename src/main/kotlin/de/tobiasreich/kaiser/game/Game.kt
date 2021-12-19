@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.ViewController
+import de.tobiasreich.kaiser.config.PlayerConfig
 import java.util.*
 
 object Game {
@@ -14,11 +15,17 @@ object Game {
     var currentYear = 1400
 
     /** Creates a new game */
-    fun setupGame(players : List<Player>){
-        this.players = players
-        this.currentPlayer = players[0]
+    fun setupGame(players : List<PlayerConfig>){
+        this.players = createPlayers(players)
+        this.currentPlayer = this.players[0]
     }
 
+    /** This creates the player objects from the PlayerConfig when setupGame is called */
+    private fun createPlayers(players : List<PlayerConfig>) : List<Player>{
+        return players.map {
+            Player(it.name, it.male, it.country)
+        }
+    }
 
     /** Finishes the turn of the current player, proceeds with the next player and shows the News Screen
      *

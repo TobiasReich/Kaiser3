@@ -24,7 +24,7 @@ object ViewController {
     fun showScene(sceneName: SCENE_NAME) {
         //main!!.root = when (sceneName){
         val viewToShow : Parent = when (sceneName){
-            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-start-screen.fxml"), Game.stringsBundle) }
+            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-game-config-screen.fxml"), Game.stringsBundle) }
             SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.stringsBundle) }
             SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.stringsBundle) }
         }
