@@ -8,8 +8,7 @@ package de.tobiasreich.kaiser.game.data.player
  *                  Baden      Franken
  *                      Bayern
  */
-enum class CountryName(val nameResource: String) {
-
+enum class Country(val nameResource: String) {
     HOLSTEIN("game_country_holstein"),
     WESTPHALIA("game_country_westphalia"), SAXONY("game_country_saxony"), PRUSSIA("game_country_prussia"),
     HESSE("game_country_hesse"), THURINGIA("game_country_thuringia"), BOHEMIA("game_country_bohemia"),

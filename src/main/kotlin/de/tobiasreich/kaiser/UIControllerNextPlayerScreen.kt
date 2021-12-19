@@ -60,7 +60,7 @@ class UIControllerNextPlayerScreen : Initializable {
     @FXML
     override fun initialize(p0: URL?, bundle: ResourceBundle) {
         val player = Game.currentPlayer
-        nextPlayerAddress.text = String.format(bundle.getString("next_player_address"), player.getGenderTitle(bundle), player.name, player.getCountryName(bundle))
+        nextPlayerAddress.text = String.format(bundle.getString("next_player_address"), player.getGenderTitle(bundle), player.name, bundle.getString(player.country.nameResource))
         nextPlayerInfo.text = String.format(bundle.getString("next_player_info"), Game.getYear())
 
         //Colorize the "next turn" button in the color of the player for better UX

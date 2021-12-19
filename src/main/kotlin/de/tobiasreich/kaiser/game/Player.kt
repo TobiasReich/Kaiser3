@@ -1,12 +1,13 @@
 package de.tobiasreich.kaiser.game
 
+import de.tobiasreich.kaiser.config.PlayerConfig
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
 import de.tobiasreich.kaiser.game.data.country.Land.Companion.FOOD_HARVESTED_BY_FARMER
 import de.tobiasreich.kaiser.game.data.country.Land.Companion.LAND_USED_PER_FARMER
-import de.tobiasreich.kaiser.game.data.player.CountryName
+import de.tobiasreich.kaiser.game.data.player.Country
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.Title
@@ -23,7 +24,25 @@ import kotlin.math.min
  *  - a population -> Representing all the people living in the players reign
  *  - wheat -> The amount of wheat that is stored in the players granary
  */
-class Player(val name : String, val isMale : Boolean, val countryName : CountryName, val playerColor : Color) {
+class Player{
+
+    constructor(playerConfig: PlayerConfig){
+        this.name = playerConfig.name
+        this.isMale = playerConfig.male
+        this.country = playerConfig.country
+        this.playerColor = playerConfig.color
+        this.isAI = playerConfig.isAI
+        this.difficulty = playerConfig.difficulty
+        this.skipUpdate = true
+    }
+
+    val name :String            // The players name without title
+    val isMale: Boolean         // Gender of the player (only used for the title, no game difference)
+    val country: Country        // Country ruled by the player
+    val playerColor : Color     // Player's color for better UX
+    val isAI : Boolean          // Defines whether it is an AI player (no visible turn is made by that player)
+    val difficulty : Int        // Unused for now. Could define harvest and events
+    val skipUpdate : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
 
     var money = 1000                // The amount of money the player has
 
@@ -104,11 +123,6 @@ class Player(val name : String, val isMale : Boolean, val countryName : CountryN
         } else {
             bundle.getString(playerTitle.resourceNameMale)
         }
-    }
-
-    /** This returns the name of the players Country localized */
-    fun getCountryName(bundle: ResourceBundle) : String {
-       return bundle.getString(countryName.nameResource)
     }
 
     /** This adds / subtracts wheat

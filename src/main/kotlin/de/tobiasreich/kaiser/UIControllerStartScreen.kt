@@ -4,8 +4,7 @@ import de.tobiasreich.kaiser.config.GameConfiguration
 import de.tobiasreich.kaiser.config.IPlayerConfigChange
 import de.tobiasreich.kaiser.config.PlayerConfig
 import de.tobiasreich.kaiser.game.Game
-import de.tobiasreich.kaiser.game.Player
-import de.tobiasreich.kaiser.game.data.player.CountryName
+import de.tobiasreich.kaiser.game.data.player.Country
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -22,18 +21,17 @@ class UIControllerStartScreen : Initializable, IPlayerConfigChange {
 
         // This is the config at start of the game.
         val defaultPlayerList = listOf(
-            PlayerConfig(0, CountryName.HOLSTEIN  , "Archbald Winnipuddle", Color.RED         ,true, false, true, 0),
-            PlayerConfig(1, CountryName.WESTPHALIA, "", Color.YELLOW      ,false, true, false,0),
-            PlayerConfig(2, CountryName.SAXONY    , "", Color.ORANGE      ,false, true, false,0),
-            PlayerConfig(3, CountryName.PRUSSIA   , "", Color.GREEN       ,false, true, false,0),
-            PlayerConfig(4, CountryName.HESSE     , "", Color.DARKCYAN    ,false, true, false,0),
-            PlayerConfig(5, CountryName.THURINGIA , "", Color.TURQUOISE   ,false, true, false,0),
-            PlayerConfig(6, CountryName.BOHEMIA   , "", Color.LIGHTBLUE   ,false, true, false,0),
-            PlayerConfig(7, CountryName.BADEN     , "", Color.BLUE        ,false, true, false,0),
-            PlayerConfig(8, CountryName.FRANCONIA , "", Color.BLUEVIOLET  ,false, true, false,0),
-            PlayerConfig(9, CountryName.BAVARIA   , "", Color.VIOLET      ,false, true, false,0),
+            PlayerConfig(0, Country.HOLSTEIN  , "Archbald Winnipuddle", Color.RED         ,true, false, true, 0),
+            PlayerConfig(1, Country.WESTPHALIA, "", Color.YELLOW      ,false, true, false,0),
+            PlayerConfig(2, Country.SAXONY    , "", Color.ORANGE      ,false, true, false,0),
+            PlayerConfig(3, Country.PRUSSIA   , "", Color.GREEN       ,false, true, false,0),
+            PlayerConfig(4, Country.HESSE     , "", Color.DARKCYAN    ,false, true, false,0),
+            PlayerConfig(5, Country.THURINGIA , "", Color.TURQUOISE   ,false, true, false,0),
+            PlayerConfig(6, Country.BOHEMIA   , "", Color.LIGHTBLUE   ,false, true, false,0),
+            PlayerConfig(7, Country.BADEN     , "", Color.BLUE        ,false, true, false,0),
+            PlayerConfig(8, Country.FRANCONIA , "", Color.BLUEVIOLET  ,false, true, false,0),
+            PlayerConfig(9, Country.BAVARIA   , "", Color.VIOLET      ,false, true, false,0),
         )
-
     }
 
 
