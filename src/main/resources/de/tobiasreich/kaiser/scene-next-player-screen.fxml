@@ -32,6 +32,9 @@
             <Insets bottom="25.0" top="25.0" />
          </VBox.margin>
       </Line>
-       <Button fx:id="nextPlayerNextTurnButton" mnemonicParsing="false" onAction="#onNextPlayerButtonClick" text="%next_player_start_turn" />
+       <Button fx:id="nextPlayerNextTurnButton" mnemonicParsing="false" onAction="#onNextPlayerButtonClick" text="%next_player_start_turn">
+         <tooltip>
+            <Tooltip text="%tooltip_next_turn_button" />
+         </tooltip></Button>
    </children>
 </VBox>

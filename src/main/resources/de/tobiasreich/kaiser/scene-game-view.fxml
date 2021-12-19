@@ -10,74 +10,300 @@
 <BorderPane fx:id="rootBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerGame">
 
     <left>
-        <VBox fillWidth="false" style="-fx-background-color: #FFFF00;" BorderPane.alignment="CENTER">
+        <VBox fillWidth="false" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="110.0" text="Getreide">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="125.0"  text="Getreide">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_food_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="gameFoodButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="gameFoodButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_wheat.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onLandButtonClick" prefWidth="110.0" text="Land">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onLandButtonClick" prefWidth="125.0" text="Land">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_land_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="gameLandButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="gameLandButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_land.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Gebäude">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_buildings_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="taxButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="buildingsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_coin.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Handel">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_trade_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="tradeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Steuern">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_tax_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="taxButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
             <Separator />
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Militär">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Spenden">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_donation_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="militaryButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="donationButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_coin.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Verträge">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_diplomacy_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="diplomacyButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                <Separator />
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Tribute">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_tribute_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="sabotageButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="tributeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_coin.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="110.0" text="Steuern">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Sabotage">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_sabotage_button" />
+                    </tooltip>
                     <graphic>
-                        <ImageView fx:id="maneuverButton" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="tributeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_coin.png">
                                 </Image>
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Militär">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_military_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="militaryButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Krieg">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_war_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="warButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Separator />
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Demographie">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_demographics_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="demographicsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Finanzen">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_finances_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="financesButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Karriere">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_career_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="careerButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Dossiers">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_dossiers_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="dossiersButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Ressourcen">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_resources_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="resourcesButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
+                </Button>
+
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Kriegsberichte">
+                    <tooltip>
+                        <Tooltip text="%tooltip_game_action_statistics_war_button" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fx:id="warStatisticsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/icon_coin.png">
+                                </Image>
+                            </image>
+                        </ImageView>
+                    </graphic>
+               <font>
+                  <Font size="11.0" />
+               </font>
                 </Button>
 
             </children>
@@ -136,6 +362,17 @@
                    </Label>
                    <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
             </GridPane>
             </children>
          <padding>
