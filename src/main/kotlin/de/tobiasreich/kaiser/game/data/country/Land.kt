@@ -12,6 +12,10 @@ class Land {
         const val FOOD_HARVESTED_BY_FARMER = 5.0 // How much food can be harvested optimally per farmer
     }
 
+    // This is the size of one tile in the map view, larger values lead to a bigger image
+    // This is a per player setting
+    var zoomLevelImageSize = 40.0
+
     val available : Int = 10000     // How many ha the user possesses
 
     val buildings = Buildings()     // The standard population at start
