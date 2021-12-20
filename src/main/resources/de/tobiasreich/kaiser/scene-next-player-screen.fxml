@@ -15,7 +15,7 @@
        </Line>
        <Label fx:id="nextPlayerAddress" contentDisplay="CENTER" text="Herr X aus Y" textAlignment="CENTER">
          <font>
-            <Font size="36.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
          <VBox.margin>
             <Insets bottom="25.0" />

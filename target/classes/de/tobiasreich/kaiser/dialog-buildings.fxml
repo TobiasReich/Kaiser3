@@ -177,7 +177,7 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
                   <image>
-                      <Image url="@img/icon_school.png" />
+                      <Image url="@img/icon_barn.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
