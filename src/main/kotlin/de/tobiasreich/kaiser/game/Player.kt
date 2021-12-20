@@ -33,7 +33,7 @@ class Player{
         this.playerColor = playerConfig.color
         this.isAI = playerConfig.isAI
         this.difficulty = playerConfig.difficulty
-        this.skipUpdate = true
+        this.firstTurn = true
     }
 
     val name :String            // The players name without title
@@ -42,7 +42,7 @@ class Player{
     val playerColor : Color     // Player's color for better UX
     val isAI : Boolean          // Defines whether it is an AI player (no visible turn is made by that player)
     val difficulty : Int        // Unused for now. Could define harvest and events
-    val skipUpdate : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
+    var firstTurn : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
 
     var money = 1000                // The amount of money the player has
 
@@ -176,10 +176,17 @@ class Player{
     fun startNewTurn() {
         messageList.clear()
 
-        messageList.add(population.processPopulationChange(this))
-
-        messageList.add(processHarvest(this))
-        //...
+        // Only show the update messages if the flag is not true
+        // This is important in order to not show the update to a players first turn (or later when loading a saved game etc.)
+        if (firstTurn){
+            // Set this flag to false so the next turn everything goes as normal
+            firstTurn = false
+        } else {
+            // Since this is not the first turn, calculate updates and show the messages
+            messageList.add(population.processPopulationChange(this))
+            messageList.add(processHarvest(this))
+            //...
+        }
     }
 
     //</editor-fold>
