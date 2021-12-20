@@ -23,6 +23,7 @@ class Land {
         matrix[1][1] = BuildingType.BARN
         matrix[1][2] = BuildingType.BARN
         matrix[14][3] = BuildingType.MARKET
+        matrix[11][12] = BuildingType.MARKET
         return matrix
     }
 }

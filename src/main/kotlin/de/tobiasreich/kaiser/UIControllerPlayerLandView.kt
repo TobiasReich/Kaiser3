@@ -19,16 +19,16 @@ import java.io.IOException
  *  - Troops
  *  - Population?
  */
-class UIControllerPlayerLandView(private val player : Player) : Canvas() {
+class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
 
     companion object{
-        const val FIELD_SIZE = 50.0
-        const val LAND_WIDTH_FIELDS = 15  //15*50 = 750
-        const val LAND_HEIGHT_FIELDS = 10 //10*50 = 500
+        const val FIELD_SIZE = 35.0
+        const val LAND_WIDTH_FIELDS  = 25
+        const val LAND_HEIGHT_FIELDS = 20
     }
 
     @FXML
-    lateinit var playerConfigCountryLabel: Label
+    lateinit var drawCanvas: Canvas
 
     private var imageBarn: Image
     private var imageMarket: Image
@@ -47,26 +47,31 @@ class UIControllerPlayerLandView(private val player : Player) : Canvas() {
         imageBarn = Image(javaClass.getResource("img/icon_barn.png")!!.toExternalForm())
         imageMarket = Image(javaClass.getResource("img/icon_market.png")!!.toExternalForm())
 
+        drawCanvas.width = LAND_WIDTH_FIELDS * FIELD_SIZE
+        drawCanvas.height = LAND_HEIGHT_FIELDS * FIELD_SIZE
+
+        // Can be scaled via
+        //drawCanvas.scaleX = value
+        //drawCanvas.scaleY = value
+
         updateView()
     }
 
 
     private fun updateView(){
-        graphicsContext2D.fill = Color.GREEN
-        graphicsContext2D.fillRect(0.0, 0.0, this.width, this.height)
+        drawCanvas.graphicsContext2D.fill = Color.GREEN
+        drawCanvas.graphicsContext2D.fillRect(0.0, 0.0, drawCanvas.width, drawCanvas.height)
 
         val matrix = Game.currentPlayer.land.getLandViewMatrix()
         matrix.forEachIndexed { indexColumn, column ->
             column.forEachIndexed { indexRow, fieldType ->
                 when(fieldType){
                     BuildingType.FREE -> { /* nothing to do for now */}
-                    BuildingType.MARKET -> { graphicsContext2D.drawImage(imageMarket, indexColumn * FIELD_SIZE, indexRow * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE) }
-                    BuildingType.BARN -> { graphicsContext2D.drawImage(imageBarn, indexColumn * FIELD_SIZE, indexRow * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE) }
+                    BuildingType.MARKET -> { drawCanvas.graphicsContext2D.drawImage(imageMarket, indexColumn * FIELD_SIZE, indexRow * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE) }
+                    BuildingType.BARN -> { drawCanvas.graphicsContext2D.drawImage(imageBarn, indexColumn * FIELD_SIZE, indexRow * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE) }
                 }
             }
         }
-
-
 
     }
 
