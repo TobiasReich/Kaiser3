@@ -46,14 +46,14 @@
                </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Gebäude">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onBuildingsButtonClick" prefWidth="125.0" text="Gebäude">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_buildings_button" />
                     </tooltip>
                     <graphic>
                         <ImageView fx:id="buildingsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_barn.png">
                                 </Image>
                             </image>
                         </ImageView>

@@ -165,6 +165,19 @@ class UIControllerGame : Initializable {
         stage.show()
     }
 
+    fun onBuildingsButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.stringsBundle)
+        val taxScene = Scene(fxmlLoader.load(), 750.0, 600.0)
+
+        val stage = Stage()
+        stage.isResizable = false
+        stage.initModality(Modality.APPLICATION_MODAL)
+        stage.title = "Gebäude"
+        stage.scene = taxScene
+        stage.onCloseRequest = EventHandler { updateViews() }
+        stage.show()
+    }
+
 
     /********************************************
      *

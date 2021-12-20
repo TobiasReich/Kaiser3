@@ -15,9 +15,6 @@ class UIControllerActionBuildings : Initializable {
     @FXML
     private lateinit var rootBorderPane: BorderPane
 
-    @FXML
-    private lateinit var foodAmountLabel: Label
-
 
     @FXML
     fun onButtonSomethingClick(actionEvent: ActionEvent) {
@@ -25,7 +22,6 @@ class UIControllerActionBuildings : Initializable {
     }
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        foodAmountLabel.text = Game.currentPlayer.storedFood.toString()
     }
 
 }
