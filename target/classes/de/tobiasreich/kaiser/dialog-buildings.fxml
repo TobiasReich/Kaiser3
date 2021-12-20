@@ -11,7 +11,10 @@
       <Label text="%buildings_title_buildung">
          <font>
             <Font size="18.0" />
-         </font></Label>
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin></Label>
        
       <GridPane alignment="CENTER">
           <children>
@@ -70,11 +73,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
+              <Button mnemonicParsing="false" onAction="#onBuyMarket" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="1">
+              <Label fx:id="marketsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -87,7 +90,7 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
                   <image>
-                      <Image url="@img/icon_land.png" />
+                      <Image url="@img/icon_windmill.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -100,11 +103,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
+              <Button mnemonicParsing="false" onAction="#onBuyMill" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="2">
+              <Label fx:id="millsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -130,11 +133,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
+              <Button mnemonicParsing="false" onAction="#onBuyGranary" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="3">
+              <Label fx:id="granariesBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -147,12 +150,12 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="4">
                   <image>
-                      <Image url="@img/icon_barn.png" />
+                      <Image url="@img/icon_warehouse.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></ImageView>
-              <Label text="%building_name_storage" GridPane.columnIndex="1" GridPane.rowIndex="4">
+              <Label text="%building_name_warehouses" GridPane.columnIndex="1" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -160,11 +163,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="4">
+              <Button mnemonicParsing="false" onAction="#onBuyWarehouseStorage" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="4">
+              <Label fx:id="warehousesBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -177,7 +180,7 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
                   <image>
-                      <Image url="@img/icon_barn.png" />
+                      <Image url="@img/icon_school.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -190,11 +193,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="5">
+              <Button mnemonicParsing="false" onAction="#onBuySchool" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="5">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="5">
+              <Label fx:id="schoolsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="5">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -208,7 +211,7 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="6">
                   <image>
-                      <Image url="@img/icon_barn.png" />
+                      <Image url="@img/icon_palace.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -221,11 +224,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="6">
+              <Button mnemonicParsing="false" onAction="#onBuyPalace" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="6">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="6">
+              <Label fx:id="palacesBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="6">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -239,7 +242,7 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="7">
                   <image>
-                      <Image url="@img/icon_barn.png" />
+                      <Image url="@img/icon_cathedral.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -252,11 +255,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="7">
+              <Button mnemonicParsing="false" onAction="#onBuyCathedral" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="7">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="7">
+              <Label fx:id="cathedralsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="7">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -264,9 +267,6 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-
-
-
           </children>
          <columnConstraints>
             <ColumnConstraints />

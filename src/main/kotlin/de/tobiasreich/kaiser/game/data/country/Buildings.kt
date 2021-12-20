@@ -7,12 +7,13 @@ class Buildings {
         const val GRAIN_PER_GRANARY = 10000
     }
 
-    var markets = 0
-    var mills = 0
+    var markets = 1
+    var mills = 1
     var granaries = 1
     var palacePieces = 0
     var cathedralPieces = 0
-    var storage = 0
+    var warehouses = 0
+    var schools = 0
 
     // Other buildings:
 
