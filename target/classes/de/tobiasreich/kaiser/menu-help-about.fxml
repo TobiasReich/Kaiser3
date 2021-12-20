@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="%game_title">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="15.0" />
+         </VBox.margin></Label>
+      <Label text="%game_about_text" wrapText="true">
+         <VBox.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </VBox.margin></Label>
+
+      <Label text="%game_about_developed_by" wrapText="true" />
+   </children>
+</VBox>

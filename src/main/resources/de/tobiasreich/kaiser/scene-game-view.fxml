@@ -12,7 +12,7 @@
     <left>
         <VBox fillWidth="false" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="125.0"  text="Getreide">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="125.0" text="Getreide">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_food_button" />
                     </tooltip>
@@ -156,7 +156,7 @@
                         <Tooltip text="%tooltip_game_action_sabotage_button" />
                     </tooltip>
                     <graphic>
-                        <ImageView fx:id="tributeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="sabotageButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/icon_coin.png">
                                 </Image>
@@ -388,6 +388,6 @@
         </HBox>
     </bottom>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #060;" BorderPane.alignment="CENTER" />
+      <AnchorPane maxHeight="500.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: #060;" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

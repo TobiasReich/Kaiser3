@@ -51,8 +51,9 @@ class Main : Application() {
 
         stage.title = resources.getString("game_title")
         stage.scene = rootMenuScene
+        stage.isResizable = false
         stage.show()
-   }
+    }
 
 }
         

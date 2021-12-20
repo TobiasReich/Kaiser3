@@ -186,6 +186,7 @@ class UIControllerGame : Initializable {
      */
     private fun updateViews(){
         // Update population graph
+        updateLandView()
         updatePopulationGraph()
 
         // Updating statistics "table"
@@ -194,6 +195,11 @@ class UIControllerGame : Initializable {
         gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.stringsBundle.getString("general_persons")}"
         gameSummaryHappinessLabel.text = "75 %"
         gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.available} ${Game.stringsBundle.getString("general_hectars")}"
+    }
+
+    private fun updateLandView() {
+        val playerLandView = UIControllerPlayerLandView(Game.currentPlayer)
+        rootBorderPane.center = playerLandView
     }
 
     private fun updatePopulationGraph(){

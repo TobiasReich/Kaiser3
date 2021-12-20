@@ -1,5 +1,8 @@
 package de.tobiasreich.kaiser.game.data.country
 
+import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_HEIGHT_FIELDS
+import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_WIDTH_FIELDS
+
 /** Defines the country and it's buildings. */
 class Land {
 
@@ -12,4 +15,14 @@ class Land {
     val available : Int = 10000     // How many ha the user possesses
 
     val buildings = Buildings()     // The standard population at start
+
+    fun getLandViewMatrix() : Array<Array<BuildingType>>{
+        val matrix = Array(LAND_WIDTH_FIELDS) { Array(LAND_HEIGHT_FIELDS) { BuildingType.FREE } }
+        // 1st parameter is column, 2nd parameter is the row
+        matrix[0][0] = BuildingType.MARKET
+        matrix[1][1] = BuildingType.BARN
+        matrix[1][2] = BuildingType.BARN
+        matrix[14][3] = BuildingType.MARKET
+        return matrix
+    }
 }
