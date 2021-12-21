@@ -185,8 +185,8 @@ class UIControllerActionBuildings : Initializable {
 
     /** When the user clicks the "done" button. Close this window */
     fun onDoneButtonPressed(actionEvent: ActionEvent) {
-        val source: Node = actionEvent.source as Node
-        val stage: Stage = source.scene.window as Stage
-        stage.close()
+//        val source: Node = actionEvent.source as Node
+//        val stage: Stage = source.scene.window as Stage
+//        stage.close()
     }
 }

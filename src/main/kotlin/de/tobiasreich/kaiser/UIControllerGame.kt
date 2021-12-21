@@ -6,8 +6,8 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
-import javafx.geometry.Pos
 import javafx.scene.Scene
+import javafx.scene.SubScene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
 import javafx.scene.chart.XYChart.Series
@@ -16,8 +16,6 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 import javafx.stage.Stage
-import javafx.util.Duration
-import org.controlsfx.control.Notifications
 import java.net.URL
 import java.util.*
 
@@ -129,61 +127,57 @@ class UIControllerGame : Initializable {
 
     fun onFoodButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.stringsBundle)
-        val wheatScene = Scene(fxmlLoader.load(), 630.0, 300.0)
+        val foodScene = SubScene(fxmlLoader.load(), 630.0, 300.0)
+        rootBorderPane.center = foodScene
 
-        val stage = Stage()
-        stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Getreide"
-        stage.scene = wheatScene
-
-        // When this dialog is closed, update the views!
-        // For testing use this: adding 1000 to the users money.
-        //TODO: Remove this once testing works fine. This is just so we see the view gets updated again
-        Game.currentPlayer.money += 1000
-        stage.onCloseRequest = EventHandler { updateViews() }
-        stage.show()
+//        val stage = Stage()
+//        stage.initModality(Modality.APPLICATION_MODAL)
+//        stage.title = "Getreide"
+//        stage.scene = wheatScene
+//
+//        // When this dialog is closed, update the views!
+//        // For testing use this: adding 1000 to the users money.
+//        //TODO: Remove this once testing works fine. This is just so we see the view gets updated again
+//        Game.currentPlayer.money += 1000
+//        stage.onCloseRequest = EventHandler { updateViews() }
+//        stage.show()
     }
 
     fun onLandButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"), Game.stringsBundle)
-        val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
+        val landScene = SubScene(fxmlLoader.load(), 300.0, 200.0)
+        rootBorderPane.center = landScene
 
-        val stage = Stage()
-        stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Steuern"
-        stage.scene = taxScene
-        stage.onCloseRequest = EventHandler { updateViews() }
-        stage.show()
+//        val stage = Stage()
+//        stage.initModality(Modality.APPLICATION_MODAL)
+//        stage.title = "Steuern"
+//        stage.scene = landScene
+//        stage.onCloseRequest = EventHandler { updateViews() }
+//        stage.show()
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"), Game.stringsBundle)
-        val taxScene = Scene(fxmlLoader.load(), 600.0, 400.0)
+        val taxScene = SubScene(fxmlLoader.load(), 600.0, 400.0)
+        rootBorderPane.center = taxScene
 
-        val stage = Stage()
-        stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Steuern"
-        stage.scene = taxScene
-        stage.onCloseRequest = EventHandler { updateViews() }
-        stage.show()
+//        val stage = Stage()
+//        stage.initModality(Modality.APPLICATION_MODAL)
+//        stage.title = "Steuern"
+//        stage.scene = taxScene
+//        stage.onCloseRequest = EventHandler { updateViews() }
+//        stage.show()
     }
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.stringsBundle)
-        val buildingsScene = Scene(fxmlLoader.load(), 750.0, 650.0)
+        val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
         val controller = fxmlLoader.getController<UIControllerActionBuildings>()
         controller.setCallback{
             //Update the view so the user sees the available money
             updateViews()
         }
-
-        val stage = Stage()
-        stage.isResizable = false
-        stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = "Gebäude"
-        stage.scene = buildingsScene
-        stage.onCloseRequest = EventHandler { updateViews() }
-        stage.show()
+        rootBorderPane.center = buildingsScene
     }
 
 
@@ -196,6 +190,7 @@ class UIControllerGame : Initializable {
     @FXML
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
         updateViews()
+        updateLandView()
     }
 
 
@@ -207,7 +202,7 @@ class UIControllerGame : Initializable {
      */
     private fun updateViews(){
         // Update population graph
-        updateLandView()
+       // updateLandView()
         updatePopulationGraph()
 
         // Updating statistics "table"
