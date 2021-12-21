@@ -62,6 +62,7 @@ class Main : Application() {
 /*
         With the new controlsfx library we might add even better controls:
         https://controlsfx.github.io/
+        Features overview here: http://fxexperience.com/controlsfx/features/
 
         val notificationBuilder = Notifications.create()
             .title("Title Text")
