@@ -16,26 +16,54 @@ class UIControllerActionBuildings : Initializable {
     @FXML
     private lateinit var rootBorderPane: BorderPane
 
+    // Amount of build buildings
     @FXML
     private lateinit var marketsBuildLabel: Label
-
     @FXML
     private lateinit var millsBuildLabel: Label
-
     @FXML
     private lateinit var granariesBuildLabel: Label
-
     @FXML
     private lateinit var warehousesBuildLabel: Label
-
     @FXML
     private lateinit var schoolsBuildLabel: Label
-
     @FXML
     private lateinit var palacesBuildLabel: Label
-
     @FXML
     private lateinit var cathedralsBuildLabel: Label
+
+    // Prices
+    @FXML
+    private lateinit var millsPriceLabel: Label
+    @FXML
+    private lateinit var marketsPriceLabel: Label
+    @FXML
+    private lateinit var granariesPriceLabel: Label
+    @FXML
+    private lateinit var warehousesPriceLabel: Label
+    @FXML
+    private lateinit var schoolsPriceLabel: Label
+    @FXML
+    private lateinit var palacePriceLabel: Label
+    @FXML
+    private lateinit var cathedralPriceLabel: Label
+
+    // Space Available
+    @FXML
+    private lateinit var marketsSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var millsSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var granariesSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var warehousesSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var schoolsSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var palaceSpaceAvailableLabel: Label
+    @FXML
+    private lateinit var cathedralSpaceAvailableLabel: Label
+
 
     private lateinit var bundle: ResourceBundle
 
@@ -59,8 +87,11 @@ class UIControllerActionBuildings : Initializable {
     /** This updates the views and sets the buy buttons enabled/disabled */
     private fun updateViews(){
         println("update Views")
-        val buildings = Game.currentPlayer.land.buildings
+        val player = Game.currentPlayer
+        val land = player.land
+        val buildings = land.buildings
 
+        // Amount of built buildings
         marketsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.markets)
         millsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.mills)
         granariesBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.granaries)
@@ -68,6 +99,25 @@ class UIControllerActionBuildings : Initializable {
         schoolsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.schools)
         palacesBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.palacePieces)
         cathedralsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.cathedralPieces)
+
+        // Prices
+        val currencyString = bundle.getString("general_currency")
+        marketsPriceLabel.text = "${player.getPriceForBuilding(BuildingType.MARKET)} $currencyString"
+        millsPriceLabel.text = "${player.getPriceForBuilding(BuildingType.MILL)} $currencyString"
+        granariesPriceLabel.text = "${player.getPriceForBuilding(BuildingType.GRANARY)} $currencyString"
+        warehousesPriceLabel.text = "${player.getPriceForBuilding(BuildingType.WAREHOUSE)} $currencyString"
+        schoolsPriceLabel.text = "${player.getPriceForBuilding(BuildingType.SCHOOL)} $currencyString"
+        palacePriceLabel.text = "${player.getPriceForBuilding(BuildingType.PALACE)} $currencyString"
+        cathedralPriceLabel.text = "${player.getPriceForBuilding(BuildingType.CATHEDRAL)} $currencyString"
+
+        // Available Space
+        marketsSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.MARKET).toString()
+        millsSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.MILL).toString()
+        granariesSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.GRANARY).toString()
+        warehousesSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.WAREHOUSE).toString()
+        schoolsSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.SCHOOL).toString()
+        palaceSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.PALACE).toString()
+        cathedralSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.CATHEDRAL).toString()
     }
 
     fun onBuyMarket(actionEvent: ActionEvent) {

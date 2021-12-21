@@ -45,6 +45,16 @@ class Player{
     val difficulty : Int        // Unused for now. Could define harvest and events
     var firstTurn : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
 
+    /** The price multiplier for buildings. This is by default 1.0 but can change due to events.
+     * E.g. wood shortage etc. */
+    private var playerBuildingPriceMultiplier = 1.0
+
+    /** The actual money the player possesses. This can also be negative.
+     *  According to the classical game, making debts is of no direct concern.
+     *  So purchases can be made, even if it leads to negative money.
+     *  This however might lead to side effects (like population unrest etc.)
+     *  TODO: Think of potential consequences. Like public expenses not being paid (e.g. health, schools...)
+     *  The original game and Kaiser II lead to skipping a turn as worst case, having the AI taking over. */
     var money = 1000                // The amount of money the player has
 
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
@@ -221,7 +231,17 @@ class Player{
             BuildingType.PALACE -> { land.buildings.palacePieces ++}
             BuildingType.CATHEDRAL -> { land.buildings.cathedralPieces ++}
         }
+
+        //TODO: Add pricing discount. This could come from random messages (e.g. wood shortage increases the price)
         money -= building.price
+    }
+
+
+    /** Returns the local price for a certain building.
+     *  This is important since building prices might vary from turn to turn.
+     *  E.g. when resources are cheap or work force is scarce. */
+    fun getPriceForBuilding(building : BuildingType):Int{
+        return (building.price * playerBuildingPriceMultiplier).toInt()
     }
 
     //</editor-fold>

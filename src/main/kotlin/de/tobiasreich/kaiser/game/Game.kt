@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.ViewController
 import de.tobiasreich.kaiser.config.PlayerConfig
+import de.tobiasreich.kaiser.game.data.country.BuildingType
 import java.util.*
 
 object Game {
@@ -53,5 +54,6 @@ object Game {
     fun getYear(): Int{
         return currentYear
     }
+
 
 }

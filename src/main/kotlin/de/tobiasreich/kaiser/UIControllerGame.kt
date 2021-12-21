@@ -170,7 +170,8 @@ class UIControllerGame : Initializable {
         val buildingsScene = Scene(fxmlLoader.load(), 750.0, 600.0)
         val controller = fxmlLoader.getController<UIControllerActionBuildings>()
         controller.setCallback{
-            updateViews()//Update the view so the user sees the available money
+            //Update the view so the user sees the available money
+            updateViews()
         }
 
         val stage = Stage()

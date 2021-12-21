@@ -30,4 +30,13 @@ class Land {
         matrix[11][12] = BuildingType.MARKET
         return matrix
     }
+
+    /** States how much buildings of this type can still be bought.
+     *  NOTE: This is not the absolute amount but basically
+     *  Total - Already Build
+     *  A player can't build more buildings of this type when 0 is reached. New land has to be acquired. */
+    fun getAvailableSpaceForBuilding(building: BuildingType): Int {
+        //TODO: Calculate how much land each building requires
+        return 5
+    }
 }
