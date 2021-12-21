@@ -158,7 +158,7 @@ class UIControllerGame : Initializable {
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"), Game.stringsBundle)
-        val taxScene = Scene(fxmlLoader.load(), 300.0, 200.0)
+        val taxScene = Scene(fxmlLoader.load(), 600.0, 400.0)
 
         val stage = Stage()
         stage.initModality(Modality.APPLICATION_MODAL)

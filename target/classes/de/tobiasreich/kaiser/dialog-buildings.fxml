@@ -6,9 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="750.0"
-      BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="de.tobiasreich.kaiser.UIControllerActionBuildings">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionBuildings">
    <children>
       <Label text="%buildings_title_buildung">
          <font>
@@ -17,7 +15,7 @@
          <VBox.margin>
             <Insets bottom="25.0" />
          </VBox.margin></Label>
-       
+
       <GridPane alignment="CENTER">
           <children>
               <!-- First building-->
@@ -71,11 +69,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="marketsPriceLabel"  text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <Label fx:id="marketsPriceLabel" text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyMarket" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
+              <Button fx:id="buyMarketButton" mnemonicParsing="false" onAction="#onBuyMarket" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -105,7 +103,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyMill" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
+              <Button fx:id="buyMillButton" mnemonicParsing="false" onAction="#onBuyMill" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -135,7 +133,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyGranary" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
+              <Button fx:id="buyGranaryButton" mnemonicParsing="false" onAction="#onBuyGranary" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -165,7 +163,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyWarehouse" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="4">
+              <Button fx:id="buyWarehouseButton" mnemonicParsing="false" onAction="#onBuyWarehouse" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -195,7 +193,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuySchool" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="5">
+              <Button fx:id="buySchoolButton" mnemonicParsing="false" onAction="#onBuySchool" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="5">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -226,7 +224,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyPalace" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="6">
+              <Button fx:id="buyPalaceButton" mnemonicParsing="false" onAction="#onBuyPalace" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="6">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -257,7 +255,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button mnemonicParsing="false" onAction="#onBuyCathedral" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="7">
+              <Button fx:id="buyCathedralButton" mnemonicParsing="false" onAction="#onBuyCathedral" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="7">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
@@ -271,5 +269,6 @@
                   </GridPane.margin></Label>
           </children>
       </GridPane>
+      <Button onAction="#onDoneButtonPressed" mnemonicParsing="false" text="%general_action_done" />
    </children>
 </VBox>

@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerStartScreen">
+<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionTaxes">
    <children>
-      <Label text="Land" />
-      <HBox>
-         <children>
-            <Label text="Einkommen" />
-            <Label text="Label">
-               <graphic>
-                  <Slider />
-               </graphic>
-            </Label>
-         </children>
-      </HBox>
+      <Label text="Steuern">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin></Label>
 
-      <HBox>
+      <GridPane alignment="CENTER">
          <children>
-            <Label text="Umsatzsteuer" />
-            <Label text="Label">
-               <graphic>
-                  <Slider />
-               </graphic>
-            </Label>
+            <Label text="Einkommenssteuer" GridPane.columnIndex="0" GridPane.rowIndex="0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin></Label>
+            <Label text="Gering" GridPane.columnIndex="1" GridPane.rowIndex="0">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin></Label>
+            <Slider fx:id="incomeTaxSlider" onMouseReleased="#incomeTaxChanged" GridPane.columnIndex="2" GridPane.rowIndex="0">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin></Slider>
+            <Label text="Gierig" GridPane.columnIndex="3" GridPane.rowIndex="0">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin></Label>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="0">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@img/icon_info.png" />
+               </image>
+            </ImageView>
          </children>
-      </HBox>
-
-      <HBox>
-         <children>
-            <Label text="Einkommen" />
-            <Label text="Label">
-               <graphic>
-                  <Slider />
-               </graphic>
-            </Label>
-         </children>
-      </HBox>
+      </GridPane>
+      <Button mnemonicParsing="false" onAction="#onDoneButtonPressed" text="%general_action_done" />
    </children>
 </VBox>
