@@ -56,4 +56,21 @@ class Main : Application() {
     }
 
 }
-        
+
+
+
+/*
+        With the new controlsfx library we might add even better controls:
+        https://controlsfx.github.io/
+
+        val notificationBuilder = Notifications.create()
+            .title("Title Text")
+            .text("Content text")
+            //.graphic(graphic)
+            .hideAfter(Duration.seconds(5.0))
+            .position(Pos.TOP_RIGHT)
+            .onAction { e: ActionEvent? -> println("Notification clicked on!") }
+            .threshold(3, Notifications.create().title("Threshold Notification")
+            )
+        notificationBuilder.show()
+* */

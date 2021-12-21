@@ -6,6 +6,7 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
+import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
@@ -15,6 +16,8 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.stage.Modality
 import javafx.stage.Stage
+import javafx.util.Duration
+import org.controlsfx.control.Notifications
 import java.net.URL
 import java.util.*
 
