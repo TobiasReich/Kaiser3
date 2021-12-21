@@ -149,9 +149,14 @@ class UIControllerActionBuildings : Initializable {
     }
 
     private fun buyBuilding(building : BuildingType){
-        Game.currentPlayer.buyBuilding(building)
-        updateViews()
-        callback.invoke()
+        if (Game.currentPlayer.land.getAvailableSpaceForBuilding(building) > 0) {
+            Game.currentPlayer.buyBuilding(building)
+            updateViews()
+            callback.invoke()
+        } else {
+            println("No space available")
+            //TODO: Make a notification / "Toast" / Disable button or such
+        }
     }
 
 }

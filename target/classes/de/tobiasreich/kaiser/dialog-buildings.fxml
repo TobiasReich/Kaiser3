@@ -6,7 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionBuildings">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="750.0"
+      BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="de.tobiasreich.kaiser.UIControllerActionBuildings">
    <children>
       <Label text="%buildings_title_buildung">
          <font>
@@ -69,7 +71,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <Label fx:id="marketsPriceLabel"  text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -81,7 +83,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="1">
+              <Label fx:id="marketsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -99,7 +101,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="2000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="2">
+              <Label fx:id="millsPriceLabel" text="2000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -111,7 +113,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="2">
+              <Label fx:id="millsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -129,7 +131,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="4000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="3">
+              <Label fx:id="granariesPriceLabel" text="4000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -141,7 +143,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="3">
+              <Label fx:id="granariesSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -159,7 +161,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="5000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="4">
+              <Label fx:id="warehousesPriceLabel" text="5000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -171,7 +173,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="4">
+              <Label fx:id="warehousesSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="4">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -189,7 +191,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="10000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="5">
+              <Label fx:id="schoolsPriceLabel" text="10000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="5">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -201,7 +203,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="5">
+              <Label fx:id="schoolsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="5">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -220,7 +222,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="8000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="6">
+              <Label fx:id="palacePriceLabel" text="8000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="6">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -232,7 +234,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="6">
+              <Label fx:id="palaceSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="6">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -251,7 +253,7 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="10000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="7">
+              <Label fx:id="cathedralPriceLabel" text="10000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="7">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -263,29 +265,11 @@
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="7">
+              <Label fx:id="cathedralSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="7">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
           </children>
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
       </GridPane>
    </children>
 </VBox>

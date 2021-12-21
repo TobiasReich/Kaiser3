@@ -102,7 +102,7 @@ class Player{
         // TODO: Once jobs are implemented, we want to select only farmers
         val farmer = player.population.adults.size
 
-        val processableLandSlots = player.land.available / LAND_USED_PER_FARMER
+        val processableLandSlots = player.land.landSize / LAND_USED_PER_FARMER
 
         // This determines how many farm land "parcels" will be processed
         val processedSlots = min(processableLandSlots, farmer)

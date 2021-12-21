@@ -212,7 +212,7 @@ class UIControllerGame : Initializable {
         gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.stringsBundle.getString("general_food")}"
         gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.stringsBundle.getString("general_persons")}"
         gameSummaryHappinessLabel.text = "75 %"
-        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.available} ${Game.stringsBundle.getString("general_hectars")}"
+        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.stringsBundle.getString("general_hectars")}"
     }
 
     private fun updateLandView() {

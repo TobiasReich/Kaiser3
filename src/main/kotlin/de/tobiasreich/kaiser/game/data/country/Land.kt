@@ -16,7 +16,7 @@ class Land {
     // This is a per player setting
     var zoomLevelImageSize = 40.0
 
-    val available : Int = 10000     // How many ha the user possesses
+    val landSize : Int = 10000      // How many ha the user possesses
 
     val buildings = Buildings()     // The standard population at start
 
@@ -37,6 +37,16 @@ class Land {
      *  A player can't build more buildings of this type when 0 is reached. New land has to be acquired. */
     fun getAvailableSpaceForBuilding(building: BuildingType): Int {
         //TODO: Calculate how much land each building requires
-        return 5
+        val amountBuildAlready = when(building){
+            BuildingType.MARKET -> buildings.markets
+            BuildingType.MILL ->  buildings.mills
+            BuildingType.GRANARY ->  buildings.granaries
+            BuildingType.WAREHOUSE -> buildings.warehouses
+            BuildingType.SCHOOL -> buildings.schools
+            BuildingType.PALACE -> buildings.palacePieces
+            BuildingType.CATHEDRAL -> buildings.cathedralPieces
+        }
+        val landAvailable = landSize - (amountBuildAlready * building.landNeeded)
+        return landAvailable / building.landNeeded
     }
 }
