@@ -167,13 +167,17 @@ class UIControllerGame : Initializable {
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.stringsBundle)
-        val taxScene = Scene(fxmlLoader.load(), 750.0, 600.0)
+        val buildingsScene = Scene(fxmlLoader.load(), 750.0, 600.0)
+        val controller = fxmlLoader.getController<UIControllerActionBuildings>()
+        controller.setCallback{
+            updateViews()//Update the view so the user sees the available money
+        }
 
         val stage = Stage()
         stage.isResizable = false
         stage.initModality(Modality.APPLICATION_MODAL)
         stage.title = "Gebäude"
-        stage.scene = taxScene
+        stage.scene = buildingsScene
         stage.onCloseRequest = EventHandler { updateViews() }
         stage.show()
     }

@@ -3,7 +3,6 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.data.country.BuildingType
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.canvas.Canvas
@@ -95,9 +94,10 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         matrix.forEachIndexed { indexColumn, column ->
             column.forEachIndexed { indexRow, fieldType ->
                 when(fieldType){
-                    BuildingType.FREE -> { /* nothing to do for now */}
                     BuildingType.MARKET -> { drawCanvas.graphicsContext2D.drawImage(imageMarket, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
-                    BuildingType.BARN -> { drawCanvas.graphicsContext2D.drawImage(imageBarn, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingType.GRANARY -> { drawCanvas.graphicsContext2D.drawImage(imageBarn, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    //TODO Add the other buildings
+                    else -> { /* nothing to do for now for null values but we might draw them with a texture, too*/}
                 }
             }
         }

@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.data.country.BuildingType
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -38,15 +39,25 @@ class UIControllerActionBuildings : Initializable {
 
     private lateinit var bundle: ResourceBundle
 
+    /** Notifies the view about a purchase so the statistics can be updated */
+    private lateinit var callback : () -> Unit
+
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
         updateViews()
     }
 
 
+    /** Sets the callback for the view to update on purchases
+     *  NOTE: Since this is just a notification I made the easy way of not creating
+     *  an interface but just store the lambda instead. */
+    fun setCallback(callback: () -> Unit){
+        this.callback = callback
+    }
+
 
     /** This updates the views and sets the buy buttons enabled/disabled */
-    fun updateViews(){
+    private fun updateViews(){
         println("update Views")
         val buildings = Game.currentPlayer.land.buildings
 
@@ -60,31 +71,37 @@ class UIControllerActionBuildings : Initializable {
     }
 
     fun onBuyMarket(actionEvent: ActionEvent) {
-        println("Buy market")
+        buyBuilding(BuildingType.MARKET)
     }
 
     fun onBuyMill(actionEvent: ActionEvent) {
-        println("Buy Mill")
+        buyBuilding(BuildingType.MILL)
     }
 
     fun onBuyGranary(actionEvent: ActionEvent) {
-        println("Buy Granary")
+        buyBuilding(BuildingType.GRANARY)
     }
 
-    fun onBuyWarehouseStorage(actionEvent: ActionEvent) {
-        println("Buy Storage")
+    fun onBuyWarehouse(actionEvent: ActionEvent) {
+        buyBuilding(BuildingType.WAREHOUSE)
     }
 
     fun onBuySchool(actionEvent: ActionEvent) {
-        println("Buy School")
+        buyBuilding(BuildingType.SCHOOL)
     }
 
     fun onBuyPalace(actionEvent: ActionEvent) {
-        println("Buy Palace")
+        buyBuilding(BuildingType.PALACE)
     }
 
     fun onBuyCathedral(actionEvent: ActionEvent) {
-        println("Buy Cathedral")
+        buyBuilding(BuildingType.CATHEDRAL)
+    }
+
+    private fun buyBuilding(building : BuildingType){
+        Game.currentPlayer.buyBuilding(building)
+        updateViews()
+        callback.invoke()
     }
 
 }

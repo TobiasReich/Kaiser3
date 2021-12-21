@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.config.PlayerConfig
+import de.tobiasreich.kaiser.game.data.country.BuildingType
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
@@ -204,6 +205,23 @@ class Player{
         val message = messageList.firstOrNull()
         messageList.remove(message)
         return message
+    }
+
+
+    /** Buys/builds a specific building for this user */
+    fun buyBuilding(building: BuildingType) {
+        //println("Buying $building for a price of ${building.price}.")
+        //TODO Palace and Cathedral can only be purchased one piece per turn
+        when(building){
+            BuildingType.MARKET -> { land.buildings.markets ++ }
+            BuildingType.MILL -> { land.buildings.mills ++}
+            BuildingType.GRANARY -> { land.buildings.granaries ++}
+            BuildingType.WAREHOUSE -> { land.buildings.warehouses ++}
+            BuildingType.SCHOOL -> { land.buildings.schools ++}
+            BuildingType.PALACE -> { land.buildings.palacePieces ++}
+            BuildingType.CATHEDRAL -> { land.buildings.cathedralPieces ++}
+        }
+        money -= building.price
     }
 
     //</editor-fold>

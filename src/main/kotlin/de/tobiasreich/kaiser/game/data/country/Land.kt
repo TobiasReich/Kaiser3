@@ -20,12 +20,12 @@ class Land {
 
     val buildings = Buildings()     // The standard population at start
 
-    fun getLandViewMatrix() : Array<Array<BuildingType>>{
-        val matrix = Array(LAND_WIDTH_FIELDS) { Array(LAND_HEIGHT_FIELDS) { BuildingType.FREE } }
+    fun getLandViewMatrix() : Array<Array<BuildingType?>>{
+        val matrix = Array(LAND_WIDTH_FIELDS) { arrayOfNulls<BuildingType>(LAND_HEIGHT_FIELDS) }
         // 1st parameter is column, 2nd parameter is the row
         matrix[0][0] = BuildingType.MARKET
-        matrix[1][1] = BuildingType.BARN
-        matrix[1][2] = BuildingType.BARN
+        matrix[1][1] = BuildingType.GRANARY
+        matrix[1][2] = BuildingType.GRANARY
         matrix[14][3] = BuildingType.MARKET
         matrix[11][12] = BuildingType.MARKET
         return matrix
