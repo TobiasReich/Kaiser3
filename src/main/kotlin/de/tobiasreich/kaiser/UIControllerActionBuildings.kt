@@ -5,16 +5,15 @@ import de.tobiasreich.kaiser.game.data.country.BuildingType
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.Node
+import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.BorderPane
+import javafx.stage.Stage
 import java.net.URL
 import java.util.*
 
 /** Controller, specific for the Buildings actions */
 class UIControllerActionBuildings : Initializable {
-
-    @FXML
-    private lateinit var rootBorderPane: BorderPane
 
     // Amount of build buildings
     @FXML
@@ -64,11 +63,30 @@ class UIControllerActionBuildings : Initializable {
     @FXML
     private lateinit var cathedralSpaceAvailableLabel: Label
 
-
-    private lateinit var bundle: ResourceBundle
+    // Buy Buttons
+    @FXML
+    private lateinit var buyMarketButton: Button
+    @FXML
+    private lateinit var buyMillButton: Button
+    @FXML
+    private lateinit var buyGranaryButton: Button
+    @FXML
+    private lateinit var buyWarehouseButton: Button
+    @FXML
+    private lateinit var buySchoolButton: Button
+    @FXML
+    private lateinit var buyPalaceButton: Button
+    @FXML
+    private lateinit var buyCathedralButton: Button
 
     /** Notifies the view about a purchase so the statistics can be updated */
     private lateinit var callback : () -> Unit
+
+    private lateinit var bundle: ResourceBundle
+
+    private val player = Game.currentPlayer
+    private val land = player.land
+    private val buildings = land.buildings
 
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
@@ -86,11 +104,6 @@ class UIControllerActionBuildings : Initializable {
 
     /** This updates the views and sets the buy buttons enabled/disabled */
     private fun updateViews(){
-        println("update Views")
-        val player = Game.currentPlayer
-        val land = player.land
-        val buildings = land.buildings
-
         // Amount of built buildings
         marketsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.markets)
         millsBuildLabel.text = String.format(bundle.getString("buildings_amount_built"), buildings.mills)
@@ -118,6 +131,8 @@ class UIControllerActionBuildings : Initializable {
         schoolsSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.SCHOOL).toString()
         palaceSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.PALACE).toString()
         cathedralSpaceAvailableLabel.text = land.getAvailableSpaceForBuilding(BuildingType.CATHEDRAL).toString()
+
+        setButtonStates()
     }
 
     fun onBuyMarket(actionEvent: ActionEvent) {
@@ -151,12 +166,27 @@ class UIControllerActionBuildings : Initializable {
     private fun buyBuilding(building : BuildingType){
         if (Game.currentPlayer.land.getAvailableSpaceForBuilding(building) > 0) {
             Game.currentPlayer.buyBuilding(building)
-            updateViews()
-            callback.invoke()
-        } else {
-            println("No space available")
-            //TODO: Make a notification / "Toast" / Disable button or such
+            callback.invoke() // Update "outside" view for updating the money there, too
         }
+        updateViews()
     }
 
+    /** This updates the state of the purchase buttons. If the land is already filled with the maximum amount
+     *  of buildings of a type (e.g. available space == 0) the button will be disabled. */
+    private fun setButtonStates(){
+        buyMarketButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.MARKET) == 0
+        buyMillButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.MILL) == 0
+        buyGranaryButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.GRANARY) == 0
+        buyWarehouseButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.WAREHOUSE) == 0
+        buySchoolButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.SCHOOL) == 0
+        buyPalaceButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.PALACE) == 0
+        buyCathedralButton.isDisable = land.getAvailableSpaceForBuilding(BuildingType.CATHEDRAL) == 0
+    }
+
+    /** When the user clicks the "done" button. Close this window */
+    fun onDoneButtonPressed(actionEvent: ActionEvent) {
+        val source: Node = actionEvent.source as Node
+        val stage: Stage = source.scene.window as Stage
+        stage.close()
+    }
 }

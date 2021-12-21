@@ -170,7 +170,7 @@ class UIControllerGame : Initializable {
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.stringsBundle)
-        val buildingsScene = Scene(fxmlLoader.load(), 750.0, 600.0)
+        val buildingsScene = Scene(fxmlLoader.load(), 750.0, 650.0)
         val controller = fxmlLoader.getController<UIControllerActionBuildings>()
         controller.setCallback{
             //Update the view so the user sees the available money
