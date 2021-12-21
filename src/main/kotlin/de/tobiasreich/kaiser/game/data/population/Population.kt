@@ -43,6 +43,7 @@ class Population {
     val soldiers = mutableListOf<Person>()
     val priests = mutableListOf<Person>()
 
+    var mood : Int = 50
 
     init {
         fillDummyPopulation() // Testing only
@@ -60,7 +61,6 @@ class Population {
             old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
     }
-
 
     /** Helper Method returning how many people live in this country */
     fun getAmountPeople() : Int {
@@ -152,7 +152,6 @@ class Population {
     }
 
 
-
     /** This processes all peoples age
      *
      *  Do first the old so we don't process younger ones twice when moving to another group
@@ -239,5 +238,16 @@ class Population {
      */
     private fun processEmigration() : Int {
         return 0
+    }
+
+    /** This calculates the mood for the population. */
+    fun calculateMood(
+        incomeTax: Double,
+        lawEnforcement: Double,
+        immigrationStrictness: Double,
+        healthSystem: Double,
+        educationSystem: Double
+    ) {
+        mood = 50
     }
 }

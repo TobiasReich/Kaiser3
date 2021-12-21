@@ -158,15 +158,13 @@ class UIControllerGame : Initializable {
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"), Game.stringsBundle)
-        val taxScene = SubScene(fxmlLoader.load(), 600.0, 400.0)
+        val taxScene = SubScene(fxmlLoader.load(), 800.0, 600.0)
+        val controller = fxmlLoader.getController<UIControllerActionTaxes>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            updateViews()
+        }
         rootBorderPane.center = taxScene
-
-//        val stage = Stage()
-//        stage.initModality(Modality.APPLICATION_MODAL)
-//        stage.title = "Steuern"
-//        stage.scene = taxScene
-//        stage.onCloseRequest = EventHandler { updateViews() }
-//        stage.show()
     }
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
@@ -205,11 +203,13 @@ class UIControllerGame : Initializable {
        // updateLandView()
         updatePopulationGraph()
 
+        Game.currentPlayer.calculateMood()
+
         // Updating statistics "table"
         gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.stringsBundle.getString("general_currency")}"
         gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.stringsBundle.getString("general_food")}"
         gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.stringsBundle.getString("general_persons")}"
-        gameSummaryHappinessLabel.text = "75 %"
+        gameSummaryHappinessLabel.text = "${Game.currentPlayer.population.mood} %"
         gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.stringsBundle.getString("general_hectars")}"
     }
 

@@ -5,10 +5,8 @@ import de.tobiasreich.kaiser.game.data.country.BuildingType
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.Node
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.stage.Stage
 import java.net.URL
 import java.util.*
 
@@ -80,7 +78,7 @@ class UIControllerActionBuildings : Initializable {
     private lateinit var buyCathedralButton: Button
 
     /** Notifies the view about a purchase so the statistics can be updated */
-    private lateinit var callback : () -> Unit
+    private lateinit var updateCallback : () -> Unit
 
     private lateinit var bundle: ResourceBundle
 
@@ -98,7 +96,7 @@ class UIControllerActionBuildings : Initializable {
      *  NOTE: Since this is just a notification I made the easy way of not creating
      *  an interface but just store the lambda instead. */
     fun setCallback(callback: () -> Unit){
-        this.callback = callback
+        this.updateCallback = callback
     }
 
 
@@ -166,7 +164,7 @@ class UIControllerActionBuildings : Initializable {
     private fun buyBuilding(building : BuildingType){
         if (Game.currentPlayer.land.getAvailableSpaceForBuilding(building) > 0) {
             Game.currentPlayer.buyBuilding(building)
-            callback.invoke() // Update "outside" view for updating the money there, too
+            updateCallback.invoke() // Update "outside" view for updating the money there, too
         }
         updateViews()
     }

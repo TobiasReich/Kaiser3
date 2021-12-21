@@ -70,7 +70,7 @@
                     <graphic>
                         <ImageView fx:id="tradeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_trade.png">
                                 </Image>
                             </image>
                         </ImageView>

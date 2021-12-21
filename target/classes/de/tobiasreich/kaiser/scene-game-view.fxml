@@ -10,7 +10,7 @@
 <BorderPane fx:id="rootBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerGame">
 
     <left>
-        <VBox fillWidth="false" BorderPane.alignment="CENTER">
+        <VBox fillWidth="false" style="-fx-background-color: #555;" BorderPane.alignment="CENTER">
             <children>
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onFoodButtonClick" prefWidth="125.0" text="Getreide">
                     <tooltip>
@@ -70,7 +70,7 @@
                     <graphic>
                         <ImageView fx:id="tradeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_trade.png">
                                 </Image>
                             </image>
                         </ImageView>
@@ -310,7 +310,7 @@
         </VBox>
     </left>
     <right>
-        <VBox alignment="TOP_RIGHT" prefWidth="250.0" BorderPane.alignment="TOP_RIGHT">
+        <VBox alignment="TOP_RIGHT" prefWidth="250.0" style="-fx-background-color: #EEE;" BorderPane.alignment="TOP_RIGHT">
             <children>
                 <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" title="%game_summary_population_title">
                     <xAxis>

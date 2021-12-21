@@ -9,8 +9,8 @@ import de.tobiasreich.kaiser.game.data.country.Land
 import de.tobiasreich.kaiser.game.data.country.Land.Companion.FOOD_HARVESTED_BY_FARMER
 import de.tobiasreich.kaiser.game.data.country.Land.Companion.LAND_USED_PER_FARMER
 import de.tobiasreich.kaiser.game.data.player.Country
-import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
+import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.Title
 import de.tobiasreich.kaiser.game.data.population.Population
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
@@ -44,6 +44,14 @@ class Player{
     val isAI : Boolean          // Defines whether it is an AI player (no visible turn is made by that player)
     val difficulty : Int        // Unused for now. Could define harvest and events
     var firstTurn : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
+
+
+    var incomeTax = 0.5
+    var lawEnforcement = 0.5
+    var immigrationStrictness = 0.5
+    var healthSystem = 0.5
+    var educationSystem = 0.5
+
 
     /** The price multiplier for buildings. This is by default 1.0 but can change due to events.
      * E.g. wood shortage etc. */
@@ -242,6 +250,11 @@ class Player{
      *  E.g. when resources are cheap or work force is scarce. */
     fun getPriceForBuilding(building : BuildingType):Int{
         return (building.price * playerBuildingPriceMultiplier).toInt()
+    }
+
+    /** Calculates the mood of the population. */
+    fun calculateMood() {
+        population.calculateMood(incomeTax, lawEnforcement, immigrationStrictness, healthSystem, educationSystem)
     }
 
     //</editor-fold>
