@@ -56,6 +56,11 @@ object Game {
     }
 
 
+    /** Returning a list of players that are not the current player */
+    fun getAllOtherPlayers() : List<Player>{
+        return players.filter { it != currentPlayer }
+    }
+
     // ---------------------------------------------------------
 
 

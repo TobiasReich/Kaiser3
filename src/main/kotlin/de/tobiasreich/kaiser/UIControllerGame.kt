@@ -132,31 +132,12 @@ class UIControllerGame : Initializable {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.stringsBundle)
         val foodScene = SubScene(fxmlLoader.load(), 630.0, 300.0)
         rootBorderPane.center = foodScene
-
-//        val stage = Stage()
-//        stage.initModality(Modality.APPLICATION_MODAL)
-//        stage.title = "Getreide"
-//        stage.scene = wheatScene
-//
-//        // When this dialog is closed, update the views!
-//        // For testing use this: adding 1000 to the users money.
-//        //TODO: Remove this once testing works fine. This is just so we see the view gets updated again
-//        Game.currentPlayer.money += 1000
-//        stage.onCloseRequest = EventHandler { updateViews() }
-//        stage.show()
     }
 
     fun onLandButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"), Game.stringsBundle)
         val landScene = SubScene(fxmlLoader.load(), 300.0, 200.0)
         rootBorderPane.center = landScene
-
-//        val stage = Stage()
-//        stage.initModality(Modality.APPLICATION_MODAL)
-//        stage.title = "Steuern"
-//        stage.scene = landScene
-//        stage.onCloseRequest = EventHandler { updateViews() }
-//        stage.show()
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
@@ -181,6 +162,18 @@ class UIControllerGame : Initializable {
         rootBorderPane.center = buildingsScene
     }
 
+
+
+    fun onDonateButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-donation.fxml"), Game.stringsBundle)
+        val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val controller = fxmlLoader.getController<UIControllerActionDonations>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            updateViews()
+        }
+        rootBorderPane.center = buildingsScene
+    }
 
     /********************************************
      *
@@ -272,4 +265,5 @@ class UIControllerGame : Initializable {
     fun onPopulationChartClicked(mouseEvent: MouseEvent) {
         ViewController.showInfoPopUp(populationChart, bundle.getString("game_summary_population_title"),bundle.getString("game_summary_population_info"))
     }
+
 }

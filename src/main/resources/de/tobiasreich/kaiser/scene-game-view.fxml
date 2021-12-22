@@ -99,7 +99,7 @@
 
             <Separator />
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Spenden">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onDonateButtonClick" prefWidth="125.0" text="Spenden">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_donation_button" />
                     </tooltip>

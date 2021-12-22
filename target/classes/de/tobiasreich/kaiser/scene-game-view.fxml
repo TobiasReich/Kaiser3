@@ -53,7 +53,7 @@
                     <graphic>
                         <ImageView fx:id="buildingsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_barn.png">
+                                <Image url="@img/icon_granary.png">
                                 </Image>
                             </image>
                         </ImageView>
@@ -99,7 +99,7 @@
 
             <Separator />
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Spenden">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onDonateButtonClick" prefWidth="125.0" text="Spenden">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_donation_button" />
                     </tooltip>
@@ -312,7 +312,7 @@
     <right>
         <VBox alignment="TOP_RIGHT" prefWidth="250.0" style="-fx-background-color: #EEE;" BorderPane.alignment="TOP_RIGHT">
             <children>
-                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onPopulationChartClicked" title="%game_summary_population_title">
+                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="225.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onPopulationChartClicked" title="%game_summary_population_title">
                     <xAxis>
                         <CategoryAxis animated="false" side="BOTTOM" />
                     </xAxis>
@@ -321,12 +321,15 @@
                     </yAxis>
                 </BarChart>
 
-                <PieChart fx:id="employmentChart" animated="false" labelLineLength="15.0" labelsVisible="false" legendVisible="true" onMouseClicked="#onEmploymentChartClick" prefHeight="240.0" prefWidth="250.0" title="%game_summary_worker_distribution_title" />
+                <PieChart fx:id="employmentChart" animated="false" labelLineLength="15.0" labelsVisible="false" legendVisible="true" maxHeight="300.0" maxWidth="250.0" onMouseClicked="#onEmploymentChartClick" prefHeight="300.0" prefWidth="250.0" title="%game_summary_worker_distribution_title" />
 
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%game_summary_title">
                <font>
                   <Font size="18.0" />
-               </font></Label>
+               </font>
+               <padding>
+                  <Insets top="10.0" />
+               </padding></Label>
             <GridPane alignment="CENTER" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
             
                <children>
@@ -365,6 +368,17 @@
                    </Label>
                    <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
             </GridPane>
             </children>
          <padding>
