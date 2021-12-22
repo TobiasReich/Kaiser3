@@ -18,8 +18,8 @@ class Main : Application() {
             launch(Main::class.java)
         }
 
-        const val WIDTH = 1280.0
-        const val HEIGHT = 720.0
+        const val WIDTH = 1600.0
+        const val HEIGHT = 900.0
     }
 
 

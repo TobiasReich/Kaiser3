@@ -208,6 +208,9 @@ class Player{
             messageList.add(processHarvest(this))
             //...
         }
+        // ------- Update player statistics -------
+        land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed)
+        calculateMood()                                 // Updating mood (In case something has changed - e.g. events)
     }
 
     //</editor-fold>

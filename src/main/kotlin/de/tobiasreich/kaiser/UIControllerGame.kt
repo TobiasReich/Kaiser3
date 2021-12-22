@@ -187,8 +187,11 @@ class UIControllerGame : Initializable {
      *
      *******************************************/
 
+    private lateinit var bundle: ResourceBundle
+
     @FXML
-    override fun initialize(p0: URL?, p1: ResourceBundle?) {
+    override fun initialize(p0: URL?, bundle: ResourceBundle?) {
+        this.bundle = bundle!!
         updateViews()
         updateLandView()
     }
@@ -236,13 +239,12 @@ class UIControllerGame : Initializable {
         println("Millworkers: $millWorkers, Granary: $granaryWorkers, Market: $marketWorkers, Unemployed: $unemployed")
 
         val pieChartData = FXCollections.observableArrayList(
-            PieChart.Data("Mühlen", millWorkers.toDouble()),
-            PieChart.Data("Kornspeicher", granaryWorkers.toDouble()),
-            PieChart.Data("Märkte", marketWorkers.toDouble()),
-            PieChart.Data("Arbeitslos", unemployed.toDouble())
+            PieChart.Data(bundle.getString("game_summary_mills"), millWorkers.toDouble()),
+            PieChart.Data(bundle.getString("game_summary_granaries"), granaryWorkers.toDouble()),
+            PieChart.Data(bundle.getString("game_summary_markets"), marketWorkers.toDouble()),
+            PieChart.Data(bundle.getString("game_summary_unemployment"), unemployed.toDouble())
         )
 
-        employmentChart.title = "Arbeiter"
         employmentChart.data = pieChartData
     }
 
@@ -256,9 +258,9 @@ class UIControllerGame : Initializable {
         val amountOld = population.old.size
 
         val series = Series<String, Int>()
-        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_children"), amountChildren))
-        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_adult"), amountAdult))
-        series.data.add(XYChart.Data(Game.stringsBundle.getString("game_summary_table_cat_old"), amountOld))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_children"), amountChildren))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_adult"), amountAdult))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_old"), amountOld))
         populationChart.data.add(series)
     }
 }

@@ -320,7 +320,10 @@
                         <NumberAxis animated="false" side="LEFT" />
                     </yAxis>
                 </BarChart>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%game_summary_title">
+
+                <PieChart fx:id="employmentChart" animated="false" legendVisible="true" labelLineLength="15.0" labelsVisible="false" prefHeight="240.0" prefWidth="250.0" title="%game_summary_worker_distribution_title" />
+
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%game_summary_title">
                <font>
                   <Font size="18.0" />
                </font></Label>
@@ -363,7 +366,6 @@
                    <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-                <PieChart fx:id="employmentChart" legendVisible="false" animated="false"  maxHeight="250.0" maxWidth="1.7976931348623157E308" title="%game_summary_unemployment"/>
             </children>
          <padding>
             <Insets right="10.0" />
