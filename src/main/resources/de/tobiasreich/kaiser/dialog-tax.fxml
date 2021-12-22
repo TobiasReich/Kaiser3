@@ -6,15 +6,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionTaxes">
+<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionTaxes">
     <children>
         <Label text="Steuern">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
             <VBox.margin>
-                <Insets bottom="25.0"/>
+                <Insets bottom="25.0" />
             </VBox.margin>
         </Label>
 
@@ -23,10 +22,10 @@
                 <!-- Header -->
                 <Label text="Ausgaben" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
                     </GridPane.margin>
                 </Label>
 
@@ -34,35 +33,33 @@
 
                 <Label text="Einkommenssteuer" GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Wenig" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Slider fx:id="incomeTaxSlider" onMouseReleased="#incomeTaxChanged" showTickMarks="true"
-                        GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <Slider fx:id="incomeTaxSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" minorTickCount="0" onMouseReleased="#incomeTaxChanged" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
                 <Label text="Gierig" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                     <image>
-                        <Image url="@img/icon_info.png"/>
+                        <Image url="@img/icon_info.png" />
                     </image>
                 </ImageView>
 
@@ -70,35 +67,33 @@
 
                 <Label text="Justiz" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Gnädig" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Slider fx:id="taxLawEnforcementSlider" onMouseReleased="#lawEnforcementChanged" showTickMarks="true"
-                        GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <Slider fx:id="taxLawEnforcementSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" minorTickCount="0" onMouseReleased="#lawEnforcementChanged" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
                 <Label text="Brutal" GridPane.columnIndex="3" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                     <image>
-                        <Image url="@img/icon_info.png"/>
+                        <Image url="@img/icon_info.png" />
                     </image>
                 </ImageView>
 
@@ -106,10 +101,10 @@
 
                 <Label text="Asylrecht" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
                     </GridPane.margin>
                 </Label>
 
@@ -117,35 +112,33 @@
 
                 <Label text="Asylrecht" GridPane.columnIndex="0" GridPane.rowIndex="4">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Gnädig" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Slider fx:id="immigrationSlider" onMouseReleased="#immigrationChanged" showTickMarks="true"
-                        GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <Slider fx:id="immigrationSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" minorTickCount="0" onMouseReleased="#immigrationChanged" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
                 <Label text="Restriktiv" GridPane.columnIndex="3" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                     <image>
-                        <Image url="@img/icon_info.png"/>
+                        <Image url="@img/icon_info.png" />
                     </image>
                 </ImageView>
 
@@ -154,10 +147,10 @@
 
                 <Label text="Ausgaben" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
                     </GridPane.margin>
                 </Label>
 
@@ -165,35 +158,33 @@
 
                 <Label text="Gesundheitssystem" GridPane.columnIndex="0" GridPane.rowIndex="6">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Gering" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Slider fx:id="healthSlider" onMouseReleased="#healthChanged" showTickMarks="true"
-                        GridPane.columnIndex="2" GridPane.rowIndex="6">
+                <Slider fx:id="healthSlider" majorTickUnit="0.25" max="1.0" minorTickCount="0" onMouseReleased="#healthChanged" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
                 <Label text="Umfassend" GridPane.columnIndex="3" GridPane.rowIndex="6">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="4" GridPane.rowIndex="6">
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                     <image>
-                        <Image url="@img/icon_info.png"/>
+                        <Image url="@img/icon_info.png" />
                     </image>
                 </ImageView>
 
@@ -202,38 +193,71 @@
 
                 <Label text="Schulpflicht" GridPane.columnIndex="0" GridPane.rowIndex="7">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Niemand" GridPane.columnIndex="1" GridPane.rowIndex="7">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Slider fx:id="educationSlider" onMouseReleased="#educationChanged" showTickMarks="true"
-                        GridPane.columnIndex="2" GridPane.rowIndex="7">
+                <Slider fx:id="educationSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" minorTickCount="0" onMouseReleased="#educationChanged" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
                 <Label text="Schulpflicht" GridPane.columnIndex="3" GridPane.rowIndex="7">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true"
-                           GridPane.columnIndex="4" GridPane.rowIndex="7">
+                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                     <image>
-                        <Image url="@img/icon_info.png"/>
+                        <Image url="@img/icon_info.png" />
                     </image>
                 </ImageView>
+
+                <!-- Education / School service -->
+
+                <Label text="Geschätzte Einnahmen" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="estimatedIncomeLabel" text="1000 Taler" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
+                    </GridPane.margin>
+                </Label>
             </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+
         </GridPane>
     </children>
 

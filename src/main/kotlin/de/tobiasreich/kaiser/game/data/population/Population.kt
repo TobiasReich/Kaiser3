@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser.game.data.population
 
+import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.data.player.PopulationReport
 import de.tobiasreich.kaiser.game.data.population.Health.HEALTH_DEAD
@@ -19,6 +20,15 @@ class Population {
          * It is useful since excessive food distribution increases the reproduction in the country
          * TODO: And also the happiness */
         const val MAX_FOOD_USE_PER_PERSON_FACTOR = 1.1f
+
+        const val BASE_EXPENSE_HEALTH_SYSTEM = 1.0
+        const val BASE_EXPENSE_EDUCATION_SYSTEM = 1.0
+
+        const val INCOME_FARMER = 20.0
+        const val INCOME_MERCHANT = 2.0
+        const val INCOME_TEACHER = 1.2
+        const val INCOME_SOLDIER = 1.5
+
 
         /* This is the factor for the MINIMUM food that can be distributed.
          * The rule is that at least 20% of the wheat has to stay as seed for the next year. Thus it is not possible to
@@ -43,21 +53,26 @@ class Population {
     val soldiers = mutableListOf<Person>()
     val priests = mutableListOf<Person>()
 
+    /** The default mood of the population.
+      * TODO: Decide specific traits for each player (might be "happy population" etc. like in Kaiser II)
+      */
+    var defaultMood = 50
+
     var mood : Int = 50
 
+
     init {
-        fillDummyPopulation() // Testing only
+        createStartPopulation()
     }
 
-    @Deprecated("Only used for testing!")
-    fun fillDummyPopulation(){
-        for (i in 0 until 10000){
+    private fun createStartPopulation(){
+        for (i in 0 until 1000){
             children.add(Person((Math.random() *  AGE_ADULT).toInt()))
         }
-        for (i in 0 until 10000){
+        for (i in 0 until 8000){
             adults.add(Person((Math.random() *  AGE_OLD).toInt()))
         }
-        for (i in 0 until 10000){
+        for (i in 0 until 1000){
             old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
     }
@@ -241,13 +256,21 @@ class Population {
     }
 
     /** This calculates the mood for the population. */
-    fun calculateMood(
-        incomeTax: Double,
-        lawEnforcement: Double,
-        immigrationStrictness: Double,
-        healthSystem: Double,
-        educationSystem: Double
-    ) {
-        mood = 50
+    fun calculateMood(laws: Laws) {
+        // MoodReductionFactor is 1 - tax - lawEndorcement - (1-immigration)
+        // E.g. tax=0, law=0, immigration=1 -> mood reduction is 0
+        val moodReductionFactor = laws.incomeTax + laws.lawEnforcement + (1.0 - laws.immigrationStrictness)
+
+        // Mood raises by "(health + educational expenses) * 0.5"
+        // E.g. health = 1, education = 1 -> Total mood gain = 1.0
+        val moodAddition = (laws.healthSystem + laws.educationSystem) * 0.5
+
+        // Mood is calculated by the default mood - reduction factor + mood addition
+        val calculatedMood = (defaultMood - (moodReductionFactor * 100.0) + (moodAddition * 100.0)).toInt()
+
+        //        println("moodReductionFactor: $moodReductionFactor")
+        //        println("moodAddition: $moodAddition")
+        //        println("Calculated Mood: $calculatedMood")
+        mood = calculatedMood.coerceAtMost(100).coerceAtLeast(0)
     }
 }

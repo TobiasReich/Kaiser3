@@ -203,7 +203,6 @@ class UIControllerGame : Initializable {
        // updateLandView()
         updatePopulationGraph()
 
-        Game.currentPlayer.calculateMood()
 
         // Updating statistics "table"
         gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.stringsBundle.getString("general_currency")}"

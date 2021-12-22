@@ -12,7 +12,10 @@ import de.tobiasreich.kaiser.game.data.player.Country
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.Title
+import de.tobiasreich.kaiser.game.data.population.Laws
 import de.tobiasreich.kaiser.game.data.population.Population
+import de.tobiasreich.kaiser.game.data.population.Population.Companion.BASE_EXPENSE_EDUCATION_SYSTEM
+import de.tobiasreich.kaiser.game.data.population.Population.Companion.BASE_EXPENSE_HEALTH_SYSTEM
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
 import javafx.scene.paint.Color
 import java.util.*
@@ -46,13 +49,6 @@ class Player{
     var firstTurn : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
 
 
-    var incomeTax = 0.5
-    var lawEnforcement = 0.5
-    var immigrationStrictness = 0.5
-    var healthSystem = 0.5
-    var educationSystem = 0.5
-
-
     /** The price multiplier for buildings. This is by default 1.0 but can change due to events.
      * E.g. wood shortage etc. */
     private var playerBuildingPriceMultiplier = 1.0
@@ -68,10 +64,15 @@ class Player{
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
     val land = Land()               // How many ha the user possesses
+    val laws = Laws()               // Player / Land specific rules like taxes ...
 
     var storedFood = 1000           // The resources (how much wheat is in the granaries)
     var foodForDistribution = 1000  // Amount of food to be distributed (i.e. how much do they get for that year)
     var foodPrice = 50              // The current wheat price for this player this year
+
+    init {
+        calculateMood()
+    }
 
 
     /** A list of messages arriving at the beginning of a year (turn) */
@@ -252,9 +253,27 @@ class Player{
         return (building.price * playerBuildingPriceMultiplier).toInt()
     }
 
-    /** Calculates the mood of the population. */
+    /** Calculates the mood of the population defined by the player's laws */
     fun calculateMood() {
-        population.calculateMood(incomeTax, lawEnforcement, immigrationStrictness, healthSystem, educationSystem)
+        population.calculateMood(laws)
+    }
+
+    /** Calculates the tax calculation. This can be used
+     *  to estimate tax income for the current turn and
+     *  also to calculate the real income at the beginning of a turn */
+    //TODO Use the buildings for the income calculation. They should be the primary source of income!!!
+    fun calculateTaxBalance() : Int {
+        // Final income / expenses
+        val incomeTax = population.adults.size * Population.INCOME_FARMER * laws.incomeTax * laws.lawEnforcement
+        val healthExpenses = population.getAmountPeople() * BASE_EXPENSE_HEALTH_SYSTEM * laws.healthSystem
+        val educationExpenses = population.children.size * BASE_EXPENSE_EDUCATION_SYSTEM * laws.educationSystem
+
+        println("Adults: ${population.adults.size}, Total: ${population.getAmountPeople()}, Children: ${population.children.size}")
+        println("Tax income (pure): $incomeTax")
+        println("Health expenses: $healthExpenses")
+        println("Education expenses: $educationExpenses")
+
+        return (incomeTax - healthExpenses - educationExpenses).toInt()
     }
 
     //</editor-fold>

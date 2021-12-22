@@ -3,6 +3,7 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.Label
 import javafx.scene.control.Slider
 import javafx.scene.input.MouseEvent
 import java.net.URL
@@ -26,15 +27,19 @@ class UIControllerActionTaxes : Initializable {
     @FXML
     private lateinit var incomeTaxSlider: Slider
 
+    @FXML
+    private lateinit var estimatedIncomeLabel: Label
+
+
     /** Notifies the view about a purchase so the statistics can be updated */
     private lateinit var updateCallback : () -> Unit
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        incomeTaxSlider.value = Game.currentPlayer.incomeTax
-        taxLawEnforcementSlider.value = Game.currentPlayer.lawEnforcement
-        immigrationSlider.value = Game.currentPlayer.immigrationStrictness
-        healthSlider.value = Game.currentPlayer.healthSystem
-        educationSlider.value = Game.currentPlayer.educationSystem
+        incomeTaxSlider.value = Game.currentPlayer.laws.incomeTax
+        taxLawEnforcementSlider.value = Game.currentPlayer.laws.lawEnforcement
+        immigrationSlider.value = Game.currentPlayer.laws.immigrationStrictness
+        healthSlider.value = Game.currentPlayer.laws.healthSystem
+        educationSlider.value = Game.currentPlayer.laws.educationSystem
     }
 
     /** Sets the callback for the view to update on purchases
@@ -45,32 +50,34 @@ class UIControllerActionTaxes : Initializable {
     }
 
     fun incomeTaxChanged() {
-        println("Income tax changed! ${incomeTaxSlider.value}.")
-        Game.currentPlayer.incomeTax = incomeTaxSlider.value
-        updateCallback.invoke()
+        Game.currentPlayer.laws.incomeTax = incomeTaxSlider.value
+        updateMood()
     }
 
     fun lawEnforcementChanged(mouseEvent: MouseEvent) {
-        println("Tax law enforcement tax changed! ${taxLawEnforcementSlider.value}.")
-        Game.currentPlayer.lawEnforcement = taxLawEnforcementSlider.value
-        updateCallback.invoke()
+        Game.currentPlayer.laws.lawEnforcement = taxLawEnforcementSlider.value
+        updateMood()
     }
 
     fun immigrationChanged(mouseEvent: MouseEvent) {
-        println("Immigration law tax changed! ${immigrationSlider.value}.")
-        Game.currentPlayer.immigrationStrictness = immigrationSlider.value
-        updateCallback.invoke()
+        Game.currentPlayer.laws.immigrationStrictness = immigrationSlider.value
+        updateMood()
     }
 
     fun healthChanged(mouseEvent: MouseEvent) {
-        println("Health system changed! ${healthSlider.value}.")
-        Game.currentPlayer.healthSystem = healthSlider.value
-        updateCallback.invoke()
+        Game.currentPlayer.laws.healthSystem = healthSlider.value
+        updateMood()
     }
 
     fun educationChanged(mouseEvent: MouseEvent) {
-        println("Education expenses changed! ${educationSlider.value}.")
-        Game.currentPlayer.educationSystem = educationSlider.value
+        Game.currentPlayer.laws.educationSystem = educationSlider.value
+        updateMood()
+    }
+
+    private fun updateMood(){
+        // Calculate the mood
+        Game.currentPlayer.calculateMood()
+        estimatedIncomeLabel.text = Game.currentPlayer.calculateTaxBalance().toString()
         updateCallback.invoke()
     }
 
