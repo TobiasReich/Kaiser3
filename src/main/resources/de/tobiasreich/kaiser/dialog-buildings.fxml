@@ -269,6 +269,5 @@
                   </GridPane.margin></Label>
           </children>
       </GridPane>
-      <Button onAction="#onDoneButtonPressed" mnemonicParsing="false" text="%general_action_done" />
    </children>
 </VBox>
