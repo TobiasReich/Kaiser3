@@ -13,6 +13,7 @@ import javafx.scene.chart.XYChart
 import javafx.scene.chart.XYChart.Series
 import javafx.scene.control.Label
 import javafx.scene.image.ImageView
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import java.net.URL
 import java.util.*
@@ -258,9 +259,17 @@ class UIControllerGame : Initializable {
         val amountOld = population.old.size
 
         val series = Series<String, Int>()
-        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_children"), amountChildren))
-        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_adult"), amountAdult))
-        series.data.add(XYChart.Data(bundle.getString("game_summary_table_cat_old"), amountOld))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_population_category_children"), amountChildren))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_population_category_adult"), amountAdult))
+        series.data.add(XYChart.Data(bundle.getString("game_summary_population_category_old"), amountOld))
         populationChart.data.add(series)
+    }
+
+    fun onEmploymentChartClick(mouseEvent: MouseEvent) {
+        ViewController.showInfoPopUp(employmentChart, bundle.getString("game_summary_worker_distribution_title"),bundle.getString("game_summary_info"))
+    }
+
+    fun onPopulationChartClicked(mouseEvent: MouseEvent) {
+        ViewController.showInfoPopUp(populationChart, bundle.getString("game_summary_population_title"),bundle.getString("game_summary_population_info"))
     }
 }

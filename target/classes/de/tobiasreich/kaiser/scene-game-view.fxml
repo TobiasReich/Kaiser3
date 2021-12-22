@@ -312,7 +312,7 @@
     <right>
         <VBox alignment="TOP_RIGHT" prefWidth="250.0" style="-fx-background-color: #EEE;" BorderPane.alignment="TOP_RIGHT">
             <children>
-                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" title="%game_summary_population_title">
+                <BarChart fx:id="populationChart" animated="false" legendVisible="false" maxHeight="250.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onPopulationChartClicked" title="%game_summary_population_title">
                     <xAxis>
                         <CategoryAxis animated="false" side="BOTTOM" />
                     </xAxis>
@@ -321,7 +321,7 @@
                     </yAxis>
                 </BarChart>
 
-                <PieChart fx:id="employmentChart" animated="false" legendVisible="true" labelLineLength="15.0" labelsVisible="false" prefHeight="240.0" prefWidth="250.0" title="%game_summary_worker_distribution_title" />
+                <PieChart fx:id="employmentChart" animated="false" labelLineLength="15.0" labelsVisible="false" legendVisible="true" onMouseClicked="#onEmploymentChartClick" prefHeight="240.0" prefWidth="250.0" title="%game_summary_worker_distribution_title" />
 
                 <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="%game_summary_title">
                <font>
