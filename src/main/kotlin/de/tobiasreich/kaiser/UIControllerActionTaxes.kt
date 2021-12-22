@@ -41,6 +41,8 @@ class UIControllerActionTaxes : Initializable {
         healthSlider.value = Game.currentPlayer.laws.healthSystem
         educationSlider.value = Game.currentPlayer.laws.educationSystem
 
+
+
         updateMood()
     }
 
@@ -87,5 +89,26 @@ class UIControllerActionTaxes : Initializable {
         estimatedIncomeLabel.text = Game.currentPlayer.calculateTaxBalance().toString()
     }
 
+    // -------- Info buttons --------
+
+    fun onIncomeTaxInfoClicked(mouseEvent: MouseEvent) {
+        println("Info Tax!")
+    }
+
+    fun onLawEnforcementInfoClicked(mouseEvent: MouseEvent) {
+        println("Info Law Enforcement!")
+    }
+
+    fun onImmigrationInfoClicked(mouseEvent: MouseEvent) {
+        println("Info Immigration!")
+    }
+
+    fun onHealthInfoClicked(mouseEvent: MouseEvent) {
+        println("Info Health!")
+    }
+
+    fun onEducationInfoClicked(mouseEvent: MouseEvent) {
+        println("Info Education!")
+    }
 
 }
