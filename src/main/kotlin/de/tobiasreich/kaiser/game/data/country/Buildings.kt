@@ -47,7 +47,7 @@ class Buildings {
         }
         availableWorkers-= usedMills * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
 
-        println("Workers available: $availableWorkers")
+        //println("Workers available: $availableWorkers")
 
         // --- Granaries ---
         usedGranaries = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountGranaries){
@@ -57,7 +57,7 @@ class Buildings {
         }
         availableWorkers-= usedGranaries * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
 
-        println("Workers available: $availableWorkers")
+        //println("Workers available: $availableWorkers")
 
         // --- Markets ---
         usedMarkets = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountMarkets){
@@ -67,7 +67,7 @@ class Buildings {
         }
         availableWorkers-= usedMarkets * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
 
-        println("Workers available: $availableWorkers")
+        //println("Workers available: $availableWorkers")
 
         // Now we calculate the tax variation factors
         println("Used buildings: Mills: $usedMills, Granaries: $usedGranaries, Markets: $usedMarkets")

@@ -240,10 +240,10 @@ class UIControllerGame : Initializable {
         println("Millworkers: $millWorkers, Granary: $granaryWorkers, Market: $marketWorkers, Unemployed: $unemployed")
 
         val pieChartData = FXCollections.observableArrayList(
-            PieChart.Data(bundle.getString("game_summary_mills"), millWorkers.toDouble()),
-            PieChart.Data(bundle.getString("game_summary_granaries"), granaryWorkers.toDouble()),
-            PieChart.Data(bundle.getString("game_summary_markets"), marketWorkers.toDouble()),
-            PieChart.Data(bundle.getString("game_summary_unemployment"), unemployed.toDouble())
+            PieChart.Data("${bundle.getString("game_summary_mills")} ($millWorkers)", millWorkers.toDouble()),
+            PieChart.Data("${bundle.getString("game_summary_granaries")} ($granaryWorkers)", granaryWorkers.toDouble()),
+            PieChart.Data("${bundle.getString("game_summary_markets")} ($marketWorkers)", marketWorkers.toDouble()),
+            PieChart.Data("${bundle.getString("game_summary_unemployment")} ($unemployed)", unemployed.toDouble())
         )
 
         employmentChart.data = pieChartData
