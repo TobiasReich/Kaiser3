@@ -40,6 +40,8 @@ class UIControllerActionTaxes : Initializable {
         immigrationSlider.value = Game.currentPlayer.laws.immigrationStrictness
         healthSlider.value = Game.currentPlayer.laws.healthSystem
         educationSlider.value = Game.currentPlayer.laws.educationSystem
+
+        updateMood()
     }
 
     /** Sets the callback for the view to update on purchases
@@ -52,33 +54,37 @@ class UIControllerActionTaxes : Initializable {
     fun incomeTaxChanged() {
         Game.currentPlayer.laws.incomeTax = incomeTaxSlider.value
         updateMood()
+        updateCallback.invoke()
     }
 
     fun lawEnforcementChanged(mouseEvent: MouseEvent) {
         Game.currentPlayer.laws.lawEnforcement = taxLawEnforcementSlider.value
         updateMood()
+        updateCallback.invoke()
     }
 
     fun immigrationChanged(mouseEvent: MouseEvent) {
         Game.currentPlayer.laws.immigrationStrictness = immigrationSlider.value
         updateMood()
+        updateCallback.invoke()
     }
 
     fun healthChanged(mouseEvent: MouseEvent) {
         Game.currentPlayer.laws.healthSystem = healthSlider.value
         updateMood()
+        updateCallback.invoke()
     }
 
     fun educationChanged(mouseEvent: MouseEvent) {
         Game.currentPlayer.laws.educationSystem = educationSlider.value
         updateMood()
+        updateCallback.invoke()
     }
 
     private fun updateMood(){
         // Calculate the mood
         Game.currentPlayer.calculateMood()
         estimatedIncomeLabel.text = Game.currentPlayer.calculateTaxBalance().toString()
-        updateCallback.invoke()
     }
 
 
