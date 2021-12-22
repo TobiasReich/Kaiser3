@@ -2,7 +2,7 @@ package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.config.PlayerConfig
 import de.tobiasreich.kaiser.game.data.country.BuildingType
-import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_PER_GRANARY
+import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_STORED_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
@@ -132,7 +132,7 @@ class Player{
      *    buildings.granaries * GRAIN_PER_GRANARY
      */
     fun getMaxWheatStorage() : Int {
-        return land.buildings.granaries * GRAIN_PER_GRANARY
+        return land.buildings.granaries * GRAIN_STORED_PER_GRANARY
     }
 
     /** This returns the title of the player depending on the set gender.
@@ -261,58 +261,14 @@ class Player{
     /** Calculates the tax calculation. This can be used
      *  to estimate tax income for the current turn and
      *  also to calculate the real income at the beginning of a turn */
-    //TODO Use the buildings for the income calculation. They should be the primary source of income!!!
     fun calculateTaxBalance() : Int {
-        // Final income / expenses
-        var availableWorkers = population.adults.size
+        land.buildings.updateUsedBuildings(population) // Update building usage
 
-        val amountMills = land.buildings.mills
-        val amountGranaries = land.buildings.granaries
-        val amountMarkets = land.buildings.markets
-        //TODO: Add a weight for jobs. E.g. 50% of people work in farms if possible
-
-        // Calculate how many buildings are fully occupied. Then reduce workers used by them.
-        // e.g. 550 workers will result in: 550 / 100 = 5
-
-        println("Workers available: $availableWorkers")
-
-        // --- Mills ---
-        val usedMills : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountMills){
-            amountMills
-        } else {
-            availableWorkers / Game.WORKERS_PER_BUILDING
-        }
-        availableWorkers-= usedMills * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
-
-        println("Workers available: $availableWorkers")
-
-        // --- Granaries ---
-        val usedGranaries : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountGranaries){
-            amountGranaries
-        } else {
-            amountGranaries / Game.WORKERS_PER_BUILDING
-        }
-        availableWorkers-= usedGranaries * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
-
-        println("Workers available: $availableWorkers")
-
-        // --- Markets ---
-        val usedMarkets : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountMarkets){
-            amountMarkets
-        } else {
-            availableWorkers / Game.WORKERS_PER_BUILDING
-        }
-        availableWorkers-= usedMarkets * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
-
-        println("Workers available: $availableWorkers")
-
-        // Now we calculate the tax variation factors
-        println("Used buildings: Mills: $usedMills, Granaries: $usedGranaries, Markets: $usedMarkets")
-
-        val taxMills = usedMills * BuildingType.MILL.income
-        val taxGranaries = usedGranaries * BuildingType.GRANARY.income
-        val taxMarkets = usedMarkets * BuildingType.MARKET.income
+        val taxMills = land.buildings.usedMills * BuildingType.MILL.income
+        val taxGranaries = land.buildings.usedGranaries * BuildingType.GRANARY.income
+        val taxMarkets = land.buildings.usedMarkets * BuildingType.MARKET.income
         val totalPotentialTax = taxMills + taxGranaries + taxMarkets
+
         println("Income: Mills: $taxMills, Granaries: $taxGranaries, Markets: $taxMarkets -> $totalPotentialTax")
 
         val incomeTax = totalPotentialTax * laws.incomeTax * laws.lawEnforcement
@@ -325,6 +281,12 @@ class Player{
         println("Education expenses: $educationExpenses")
 
         return (incomeTax - healthExpenses - educationExpenses).toInt()
+    }
+
+    /** Returns the percentage of employment.
+     *  A higher value means higher employment (so 100% is the desired value) */
+    fun getEmploymentRate() : Int {
+        return 50
     }
 
     //</editor-fold>
