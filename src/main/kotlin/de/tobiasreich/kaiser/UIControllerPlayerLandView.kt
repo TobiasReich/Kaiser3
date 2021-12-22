@@ -49,7 +49,7 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         }
 
         // loading the images for later drawing
-        imageBarn = Image(javaClass.getResource("img/icon_barn.png")!!.toExternalForm())
+        imageBarn = Image(javaClass.getResource("img/icon_granary.png")!!.toExternalForm())
         imageMarket = Image(javaClass.getResource("img/icon_market.png")!!.toExternalForm())
 
         addEventFilter(ScrollEvent.ANY) { event ->

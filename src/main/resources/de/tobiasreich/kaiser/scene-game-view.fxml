@@ -53,7 +53,7 @@
                     <graphic>
                         <ImageView fx:id="buildingsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_barn.png">
+                                <Image url="@img/icon_granary.png">
                                 </Image>
                             </image>
                         </ImageView>

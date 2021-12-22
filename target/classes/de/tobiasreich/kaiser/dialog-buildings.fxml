@@ -56,32 +56,32 @@
                   <Font name="System Bold" size="14.0" />
                </font></Label>
 
-            <!-- First building (Market)-->
+            <!-- First building (Mill)-->
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
                   <image>
-                      <Image url="@img/icon_market.png" />
+                      <Image url="@img/icon_windmill.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></ImageView>
-              <Label text="%building_name_market" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <Label text="%building_name_mill" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="marketsPriceLabel" text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <Label fx:id="millsPriceLabel" text="1000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button fx:id="buyMarketButton" mnemonicParsing="false" onAction="#onBuyMarket" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
+              <Button fx:id="buyMillButton" mnemonicParsing="false" onAction="#onBuyMill" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label fx:id="marketsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="1">
+              <Label fx:id="millsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="marketsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="1">
+              <Label fx:id="millsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="1">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -90,58 +90,58 @@
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
                   <image>
-                      <Image url="@img/icon_windmill.png" />
+                      <Image url="@img/icon_granary.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></ImageView>
-              <Label text="%building_name_mill" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <Label text="%building_name_granary" GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="millsPriceLabel" text="2000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="2">
+              <Label fx:id="granariesPriceLabel" text="2000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button fx:id="buyMillButton" mnemonicParsing="false" onAction="#onBuyMill" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
+              <Button fx:id="buyGranaryButton" mnemonicParsing="false" onAction="#onBuyGranary" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label fx:id="millsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="2">
+              <Label fx:id="granariesBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="millsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="2">
+              <Label fx:id="granariesSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="2">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
 
-              <!-- Third building (Granary)-->
+              <!-- Third building (Market)-->
 
               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
                   <image>
-                      <Image url="@img/icon_barn.png" />
+                      <Image url="@img/icon_market.png" />
                   </image>
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></ImageView>
-              <Label text="%building_name_granary" GridPane.columnIndex="1" GridPane.rowIndex="3">
+              <Label text="%building_name_market" GridPane.columnIndex="1" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="granariesPriceLabel" text="4000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="3">
+              <Label fx:id="marketsPriceLabel" text="4000 Taler" GridPane.columnIndex="2" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Button fx:id="buyGranaryButton" mnemonicParsing="false" onAction="#onBuyGranary" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
+              <Button fx:id="buyMarketButton" mnemonicParsing="false" onAction="#onBuyMarket" text="%general_action_buy" GridPane.columnIndex="3" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Button>
-              <Label fx:id="granariesBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="3">
+              <Label fx:id="marketsBuildLabel" text="12 gebaut" GridPane.columnIndex="4" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
-              <Label fx:id="granariesSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="3">
+              <Label fx:id="marketsSpaceAvailableLabel" text="Platz für 15 verfügbar" GridPane.columnIndex="5" GridPane.rowIndex="3">
                   <GridPane.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </GridPane.margin></Label>
@@ -269,6 +269,5 @@
                   </GridPane.margin></Label>
           </children>
       </GridPane>
-      <Button onAction="#onDoneButtonPressed" mnemonicParsing="false" text="%general_action_done" />
    </children>
 </VBox>
