@@ -24,11 +24,6 @@ class Population {
         const val BASE_EXPENSE_HEALTH_SYSTEM = 1.0
         const val BASE_EXPENSE_EDUCATION_SYSTEM = 1.0
 
-        const val INCOME_FARMER = 20.0
-        const val INCOME_MERCHANT = 2.0
-        const val INCOME_TEACHER = 1.2
-        const val INCOME_SOLDIER = 1.5
-
 
         /* This is the factor for the MINIMUM food that can be distributed.
          * The rule is that at least 20% of the wheat has to stay as seed for the next year. Thus it is not possible to
@@ -56,7 +51,7 @@ class Population {
     /** The default mood of the population.
       * TODO: Decide specific traits for each player (might be "happy population" etc. like in Kaiser II)
       */
-    var defaultMood = 50
+    var defaultMood = 100
 
     var mood : Int = 50
 
@@ -66,13 +61,13 @@ class Population {
     }
 
     private fun createStartPopulation(){
-        for (i in 0 until 1000){
+        for (i in 0 until 500){
             children.add(Person((Math.random() *  AGE_ADULT).toInt()))
         }
-        for (i in 0 until 8000){
+        for (i in 0 until 1000){
             adults.add(Person((Math.random() *  AGE_OLD).toInt()))
         }
-        for (i in 0 until 1000){
+        for (i in 0 until 200){
             old.add(Person((Math.random() * MAX_AGE).toInt()))
         }
     }
@@ -261,9 +256,9 @@ class Population {
         // E.g. tax=0, law=0, immigration=1 -> mood reduction is 0
         val moodReductionFactor = laws.incomeTax + laws.lawEnforcement + (1.0 - laws.immigrationStrictness)
 
-        // Mood raises by "(health + educational expenses) * 0.5"
-        // E.g. health = 1, education = 1 -> Total mood gain = 1.0
-        val moodAddition = (laws.healthSystem + laws.educationSystem) * 0.5
+        // Mood raises by "(health + educational expenses) * 0.1"
+        // E.g. health = 1, education = 1 -> Total mood gain = 0.2 (20%)
+        val moodAddition = (laws.healthSystem + laws.educationSystem) * 0.1
 
         // Mood is calculated by the default mood - reduction factor + mood addition
         val calculatedMood = (defaultMood - (moodReductionFactor * 100.0) + (moodAddition * 100.0)).toInt()

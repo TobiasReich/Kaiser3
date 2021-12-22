@@ -59,7 +59,7 @@ class Player{
      *  This however might lead to side effects (like population unrest etc.)
      *  TODO: Think of potential consequences. Like public expenses not being paid (e.g. health, schools...)
      *  The original game and Kaiser II lead to skipping a turn as worst case, having the AI taking over. */
-    var money = 1000                // The amount of money the player has
+    var money = 10000               // The amount of money the player has
 
     var playerTitle = Title.MISTER  // We automatically start with the lowest title Mr/Mrs
     val population = Population()   // The standard population at start
@@ -264,7 +264,58 @@ class Player{
     //TODO Use the buildings for the income calculation. They should be the primary source of income!!!
     fun calculateTaxBalance() : Int {
         // Final income / expenses
-        val incomeTax = population.adults.size * Population.INCOME_FARMER * laws.incomeTax * laws.lawEnforcement
+        var availableWorkers = population.adults.size
+
+        val amountMills = land.buildings.mills
+        val amountGranaries = land.buildings.granaries
+        val amountMarkets = land.buildings.markets
+        //TODO: Add a weight for jobs. E.g. 50% of people work in farms if possible
+
+        // Calculate how many buildings are fully occupied. Then reduce workers used by them.
+        // e.g. 550 workers will result in: 550 / 100 = 5
+
+        println("Workers available: $availableWorkers")
+
+        // --- Mills ---
+        val usedMills : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountMills){
+            amountMills
+        } else {
+            availableWorkers / Game.WORKERS_PER_BUILDING
+        }
+        availableWorkers-= usedMills * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
+
+        println("Workers available: $availableWorkers")
+
+        // --- Granaries ---
+        val usedGranaries : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountGranaries){
+            amountGranaries
+        } else {
+            amountGranaries / Game.WORKERS_PER_BUILDING
+        }
+        availableWorkers-= usedGranaries * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
+
+        println("Workers available: $availableWorkers")
+
+        // --- Markets ---
+        val usedMarkets : Int = if (availableWorkers / Game.WORKERS_PER_BUILDING > amountMarkets){
+            amountMarkets
+        } else {
+            availableWorkers / Game.WORKERS_PER_BUILDING
+        }
+        availableWorkers-= usedMarkets * Game.WORKERS_PER_BUILDING // Reduce total workers by the amount of mill workers
+
+        println("Workers available: $availableWorkers")
+
+        // Now we calculate the tax variation factors
+        println("Used buildings: Mills: $usedMills, Granaries: $usedGranaries, Markets: $usedMarkets")
+
+        val taxMills = usedMills * BuildingType.MILL.income
+        val taxGranaries = usedGranaries * BuildingType.GRANARY.income
+        val taxMarkets = usedMarkets * BuildingType.MARKET.income
+        val totalPotentialTax = taxMills + taxGranaries + taxMarkets
+        println("Income: Mills: $taxMills, Granaries: $taxGranaries, Markets: $taxMarkets -> $totalPotentialTax")
+
+        val incomeTax = totalPotentialTax * laws.incomeTax * laws.lawEnforcement
         val healthExpenses = population.getAmountPeople() * BASE_EXPENSE_HEALTH_SYSTEM * laws.healthSystem
         val educationExpenses = population.children.size * BASE_EXPENSE_EDUCATION_SYSTEM * laws.educationSystem
 
@@ -277,4 +328,6 @@ class Player{
     }
 
     //</editor-fold>
+
+
 }

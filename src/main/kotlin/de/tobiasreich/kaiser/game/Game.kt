@@ -56,4 +56,11 @@ object Game {
     }
 
 
+    /** Determines how many workers are used per building.
+     *  Currently, that is 100 people per building.
+     *  That means:
+     *  - having 100 people but 2 buildings, the second one does not generate profit.
+     *  - having 200 people but 1 building, the 100 excess people do not work nor pay taxes */
+    const val WORKERS_PER_BUILDING = 100
+
 }

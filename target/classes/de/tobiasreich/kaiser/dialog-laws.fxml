@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionTaxes">
+<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionLaws">
     <children>
-        <Label text="Steuern">
+        <Label text="%laws_title">
             <font>
                 <Font size="18.0" />
             </font>
@@ -20,7 +20,7 @@
         <GridPane alignment="CENTER">
             <children>
                 <!-- Header -->
-                <Label text="Ausgaben" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="%laws_income_title" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -31,7 +31,7 @@
 
                 <!-- Income tax-->
 
-                <Label text="Einkommenssteuer" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="%laws_income_tax_title" GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -39,7 +39,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Wenig" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="%laws_income_tax_scale_low" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -49,7 +49,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
-                <Label text="Gierig" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <Label text="%laws_income_tax_scale_high" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -65,7 +65,7 @@
 
                 <!-- Tax-Law enforcement -->
 
-                <Label text="Justiz" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label text="%laws_law_enforcement" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -73,7 +73,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Gnädig" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Label text="%laws_law_enforcement_scale_low" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -83,7 +83,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
-                <Label text="Brutal" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <Label text="%laws_law_enforcement_scale_high" GridPane.columnIndex="3" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -99,7 +99,7 @@
 
                 <!-- Header -->
 
-                <Label text="Asylrecht" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <Label text="%laws_immigration_title" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -110,7 +110,7 @@
 
                 <!-- Asyl law / Immigration permission -->
 
-                <Label text="Asylrecht" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                <Label text="%laws_immigration" GridPane.columnIndex="0" GridPane.rowIndex="4">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -118,7 +118,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Gnädig" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <Label text="%laws_immigration_scale_low" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -128,7 +128,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
-                <Label text="Restriktiv" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <Label text="%laws_immigration_scale_high" GridPane.columnIndex="3" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -145,7 +145,7 @@
 
                 <!-- Header -->
 
-                <Label text="Ausgaben" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                <Label text="%laws_expenses_title" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="5">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -156,7 +156,7 @@
 
                 <!-- Medical service -->
 
-                <Label text="Gesundheitssystem" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                <Label text="%laws_health" GridPane.columnIndex="0" GridPane.rowIndex="6">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -164,7 +164,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Gering" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <Label text="%laws_health_scale_low" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -174,7 +174,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
-                <Label text="Umfassend" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                <Label text="%laws_health_scale_high" GridPane.columnIndex="3" GridPane.rowIndex="6">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -191,7 +191,7 @@
 
                 <!-- Education / School service -->
 
-                <Label text="Schulpflicht" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                <Label text="%laws_education" GridPane.columnIndex="0" GridPane.rowIndex="7">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -199,7 +199,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Niemand" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <Label text="%laws_education_scale_low" GridPane.columnIndex="1" GridPane.rowIndex="7">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -209,7 +209,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </Slider>
-                <Label text="Schulpflicht" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                <Label text="%laws_education_scale_high" GridPane.columnIndex="3" GridPane.rowIndex="7">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -225,7 +225,7 @@
 
                 <!-- Education / School service -->
 
-                <Label text="Geschätzte Einnahmen" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                <Label text="%laws_estimated_balance" GridPane.columnIndex="0" GridPane.rowIndex="8">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
