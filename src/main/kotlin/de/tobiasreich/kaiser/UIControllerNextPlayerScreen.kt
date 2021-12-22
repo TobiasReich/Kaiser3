@@ -42,7 +42,10 @@ class UIControllerNextPlayerScreen : Initializable {
 
     @FXML
     fun onNextPlayerButtonClick(actionEvent: ActionEvent) {
+        // !!! This starts a new turn for the player!!!s
         Game.currentPlayer.startNewTurn()
+
+        // --------------------------------------------
 
         val message = Game.currentPlayer.getNextMessage()
 

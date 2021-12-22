@@ -8,6 +8,7 @@ class Buildings {
 
     companion object{
         const val GRAIN_STORED_PER_GRANARY = 10000
+        const val FOOD_PRODUCED_PER_MILL = 1000
     }
 
     var markets = 1

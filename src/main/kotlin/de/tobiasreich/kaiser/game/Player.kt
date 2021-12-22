@@ -2,12 +2,11 @@ package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.config.PlayerConfig
 import de.tobiasreich.kaiser.game.data.country.BuildingType
+import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.FOOD_PRODUCED_PER_MILL
 import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_STORED_PER_GRANARY
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
-import de.tobiasreich.kaiser.game.data.country.Land.Companion.FOOD_HARVESTED_BY_FARMER
-import de.tobiasreich.kaiser.game.data.country.Land.Companion.LAND_USED_PER_FARMER
 import de.tobiasreich.kaiser.game.data.player.Country
 import de.tobiasreich.kaiser.game.data.player.HarvestReport
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
@@ -19,7 +18,6 @@ import de.tobiasreich.kaiser.game.data.population.Population.Companion.BASE_EXPE
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
 import javafx.scene.paint.Color
 import java.util.*
-import kotlin.math.min
 
 /** This is the complete configuration and setup of once specific player
  *  A player consists of
@@ -108,21 +106,20 @@ class Player{
         val harvestCondition = HarvestCondition.values().random()
         val harvestEvent = HarvestEvent.values().random()
 
-        // Now get how many adults work on the field
-        // TODO: Once jobs are implemented, we want to select only farmers
-        val farmer = player.population.adults.size
+        println("HarvestCondition: ${harvestCondition.name}, HarvestEvent: ${harvestEvent.name}")
 
-        val processableLandSlots = player.land.landSize / LAND_USED_PER_FARMER
+        val harvestedFood = (FOOD_PRODUCED_PER_MILL * player.land.buildings.usedMills * harvestCondition.harvestRatio).toInt()
 
-        // This determines how many farm land "parcels" will be processed
-        val processedSlots = min(processableLandSlots, farmer)
-
-        val harvestedFood = (FOOD_HARVESTED_BY_FARMER * processedSlots * harvestCondition.harvestRatio).toInt()
+        println("Harvest this year brought: $harvestedFood")
 
         player.storedFood += harvestedFood
 
+        println("Total Food (before events): ${player.storedFood}")
+
         // ----- Work on the HARVEST EFFECTS -----
         player.storedFood = (player.storedFood * harvestEvent.effect).toInt()
+
+        println("Total Food (after events): ${player.storedFood}")
 
         return HarvestReport(harvestCondition, harvestedFood, harvestEvent)
     }
@@ -202,14 +199,16 @@ class Player{
         if (firstTurn){
             // Set this flag to false so the next turn everything goes as normal
             firstTurn = false
+            land.buildings.updateUsedBuildings(population)  // Updating employment for the first turn, showing correct predictions
         } else {
             // Since this is not the first turn, calculate updates and show the messages
             messageList.add(population.processPopulationChange(this))
+            land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed)
             messageList.add(processHarvest(this))
             //...
         }
         // ------- Update player statistics -------
-        land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed)
+
         calculateMood()                                 // Updating mood (In case something has changed - e.g. events)
     }
 

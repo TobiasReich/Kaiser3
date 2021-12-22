@@ -56,6 +56,9 @@ object Game {
     }
 
 
+    // ---------------------------------------------------------
+
+
     /** Determines how many workers are used per building.
      *  Currently, that is 100 people per building.
      *  That means:
