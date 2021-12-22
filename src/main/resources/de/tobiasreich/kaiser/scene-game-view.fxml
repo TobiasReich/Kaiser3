@@ -362,18 +362,8 @@
                    </Label>
                    <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
             </GridPane>
+                <PieChart fx:id="employmentChart" legendVisible="false" animated="false"  maxHeight="250.0" maxWidth="1.7976931348623157E308" title="%game_summary_unemployment"/>
             </children>
          <padding>
             <Insets right="10.0" />

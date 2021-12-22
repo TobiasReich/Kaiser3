@@ -1,12 +1,14 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.SubScene
 import javafx.scene.chart.BarChart
+import javafx.scene.chart.PieChart
 import javafx.scene.chart.XYChart
 import javafx.scene.chart.XYChart.Series
 import javafx.scene.control.Label
@@ -45,6 +47,10 @@ class UIControllerGame : Initializable {
     // Chat showing the age and the population amount in this category
     @FXML
     lateinit var populationChart: BarChart<String, Int>
+
+    // Chat showing the age and the population amount in this category
+    @FXML
+    lateinit var employmentChart: PieChart
 
     /********************************************
      *
@@ -198,6 +204,7 @@ class UIControllerGame : Initializable {
         // Update population graph
        // updateLandView()
         updatePopulationGraph()
+        updateUnemploymentGraph()
 
 
         // Updating statistics "table"
@@ -208,9 +215,35 @@ class UIControllerGame : Initializable {
         gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.stringsBundle.getString("general_hectars")}"
     }
 
+
     private fun updateLandView() {
         val playerLandView = UIControllerPlayerLandView(Game.currentPlayer)
         rootBorderPane.center = playerLandView
+    }
+
+
+    /** Renders a pie chart showing employment in 4 categories:
+     *  - mill workers
+     *  - granary workers
+     *  - market workers
+     *  - unemployed */
+    private fun updateUnemploymentGraph() {
+        val millWorkers = Game.currentPlayer.land.buildings.usedMills * Game.WORKERS_PER_BUILDING
+        val granaryWorkers = Game.currentPlayer.land.buildings.usedGranaries * Game.WORKERS_PER_BUILDING
+        val marketWorkers = Game.currentPlayer.land.buildings.usedMarkets * Game.WORKERS_PER_BUILDING
+        val unemployed = Game.currentPlayer.population.adults.size - millWorkers - granaryWorkers - marketWorkers
+
+        println("Millworkers: $millWorkers, Granary: $granaryWorkers, Market: $marketWorkers, Unemployed: $unemployed")
+
+        val pieChartData = FXCollections.observableArrayList(
+            PieChart.Data("Mühlen", millWorkers.toDouble()),
+            PieChart.Data("Kornspeicher", granaryWorkers.toDouble()),
+            PieChart.Data("Märkte", marketWorkers.toDouble()),
+            PieChart.Data("Arbeitslos", unemployed.toDouble())
+        )
+
+        employmentChart.title = "Arbeiter"
+        employmentChart.data = pieChartData
     }
 
     private fun updatePopulationGraph(){

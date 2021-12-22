@@ -72,6 +72,7 @@ class Player{
 
     init {
         calculateMood()
+        land.buildings.updateUsedBuildings(population)
     }
 
 
@@ -243,6 +244,7 @@ class Player{
 
         //TODO: Add pricing discount. This could come from random messages (e.g. wood shortage increases the price)
         money -= building.price
+        land.buildings.updateUsedBuildings(population)
     }
 
 
