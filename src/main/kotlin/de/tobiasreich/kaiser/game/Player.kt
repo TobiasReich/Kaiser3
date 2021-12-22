@@ -295,5 +295,8 @@ class Player{
 
     //</editor-fold>
 
+    override fun toString(): String {
+        return "Player $name ($country)"
+    }
 
 }

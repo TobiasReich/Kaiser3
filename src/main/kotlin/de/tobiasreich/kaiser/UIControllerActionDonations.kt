@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.Player
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -21,16 +22,24 @@ class UIControllerActionDonations : Initializable {
 
     private lateinit var bundle: ResourceBundle
 
-    private val player = Game.currentPlayer
+    private val players = Game.getAllOtherPlayers()
+    private var selectedPlayer : Player? = null
 
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
-        val options = FXCollections.observableArrayList<String>()
+
+        val playerNames = FXCollections.observableArrayList<String>()
         Game.getAllOtherPlayers().forEach {
-            options.add("${bundle.getString(it.country.nameResource)} (${it.name})")
+            playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
         }
 
-        playerSelectionCB.items = options
+        playerSelectionCB.items = playerNames
+        playerSelectionCB.valueProperty().addListener { _, _, _ ->
+            val selectedIndex = playerSelectionCB.selectionModel.selectedIndex
+            selectedPlayer = players[selectedIndex]
+            println("Index: $selectedIndex / $selectedPlayer")
+        }
+
     }
 
 
