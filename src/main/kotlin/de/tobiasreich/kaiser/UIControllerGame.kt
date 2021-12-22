@@ -2,11 +2,9 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import javafx.event.ActionEvent
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
-import javafx.scene.Scene
 import javafx.scene.SubScene
 import javafx.scene.chart.BarChart
 import javafx.scene.chart.XYChart
@@ -14,8 +12,6 @@ import javafx.scene.chart.XYChart.Series
 import javafx.scene.control.Label
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
-import javafx.stage.Modality
-import javafx.stage.Stage
 import java.net.URL
 import java.util.*
 
@@ -157,9 +153,9 @@ class UIControllerGame : Initializable {
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-tax.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-laws.fxml"), Game.stringsBundle)
         val taxScene = SubScene(fxmlLoader.load(), 800.0, 600.0)
-        val controller = fxmlLoader.getController<UIControllerActionTaxes>()
+        val controller = fxmlLoader.getController<UIControllerActionLaws>()
         controller.setCallback{
             //Update the view so the user sees the available money
             updateViews()

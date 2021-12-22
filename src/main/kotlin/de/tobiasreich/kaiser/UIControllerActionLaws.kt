@@ -9,8 +9,9 @@ import javafx.scene.input.MouseEvent
 import java.net.URL
 import java.util.*
 
-/** Controller, specific for the Land actions */
-class UIControllerActionTaxes : Initializable {
+
+/** Controller, specific for the laws actions (taxes,immigration...) */
+class UIControllerActionLaws : Initializable {
 
     @FXML
     private lateinit var educationSlider: Slider
@@ -34,14 +35,16 @@ class UIControllerActionTaxes : Initializable {
     /** Notifies the view about a purchase so the statistics can be updated */
     private lateinit var updateCallback : () -> Unit
 
-    override fun initialize(p0: URL?, p1: ResourceBundle?) {
+    private lateinit var bundle :  ResourceBundle
+
+    override fun initialize(p0: URL?, bundle: ResourceBundle?) {
+        this.bundle = bundle!!
+
         incomeTaxSlider.value = Game.currentPlayer.laws.incomeTax
         taxLawEnforcementSlider.value = Game.currentPlayer.laws.lawEnforcement
         immigrationSlider.value = Game.currentPlayer.laws.immigrationStrictness
         healthSlider.value = Game.currentPlayer.laws.healthSystem
         educationSlider.value = Game.currentPlayer.laws.educationSystem
-
-
 
         updateMood()
     }
@@ -90,25 +93,25 @@ class UIControllerActionTaxes : Initializable {
     }
 
     // -------- Info buttons --------
-
+    
     fun onIncomeTaxInfoClicked(mouseEvent: MouseEvent) {
-        println("Info Tax!")
+        ViewController.showInfoPopUp(incomeTaxSlider, bundle.getString("laws_income_tax_title"),bundle.getString("laws_income_tax_info"))
     }
 
     fun onLawEnforcementInfoClicked(mouseEvent: MouseEvent) {
-        println("Info Law Enforcement!")
+        ViewController.showInfoPopUp(taxLawEnforcementSlider, bundle.getString("laws_law_enforcement"),bundle.getString("laws_law_enforcement_info"))
     }
 
     fun onImmigrationInfoClicked(mouseEvent: MouseEvent) {
-        println("Info Immigration!")
+        ViewController.showInfoPopUp(immigrationSlider, bundle.getString("laws_immigration"),bundle.getString("laws_immigration_info"))
     }
 
     fun onHealthInfoClicked(mouseEvent: MouseEvent) {
-        println("Info Health!")
+        ViewController.showInfoPopUp(healthSlider, bundle.getString("laws_health"),bundle.getString("laws_health_info"))
     }
 
     fun onEducationInfoClicked(mouseEvent: MouseEvent) {
-        println("Info Education!")
+        ViewController.showInfoPopUp(educationSlider, bundle.getString("laws_education"),bundle.getString("laws_education_info"))
     }
 
 }
