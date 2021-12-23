@@ -39,7 +39,7 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
     private var fieldSize : Double
 
     init {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("view-player-land.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("view-player-land.fxml"), Game.resourcesBundle)
         fxmlLoader.setRoot(this)
         fxmlLoader.setController(this)
         try {

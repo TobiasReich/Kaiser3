@@ -65,35 +65,31 @@ class UIControllerMessagePopulation : Initializable, IMessageController{
         }
     }
 
-    private var bundle: ResourceBundle? = null
-
     @FXML
-    override fun initialize(p0: URL?, resources: ResourceBundle?) {
-
-    }
+    override fun initialize(p0: URL?, resources: ResourceBundle?) { }
 
     override fun setMessage(message: ReportMessage) {
         this.messge = message
         val popMsg = messge as PopulationReport
 
-        newsMessageBornLabel.text = String.format(Game.stringsBundle.getString("message_born_children"), popMsg.birth)
-        newsMessageDiedAgeLabel.text = String.format(Game.stringsBundle.getString("message_died_age"), popMsg.diedOfAge)
-        newsMessageDiedBadHealthLabel.text = String.format(Game.stringsBundle.getString("message_died_bad_health"), popMsg.diedOfHealth)
-        newsMessageImmimigratedLabel.text = String.format(Game.stringsBundle.getString("message_immigrated"), popMsg.immigrated)
-        newsMessageEmigratedLabel.text = String.format(Game.stringsBundle.getString("message_emigrated"), popMsg.emigrated)
-        newsMessageStarvedToDeathLabel.text = String.format(Game.stringsBundle.getString("message_starved_to_death"), popMsg.starvedToDeath)
+        newsMessageBornLabel.text = String.format(Game.resourcesBundle.getString("message_born_children"), popMsg.birth)
+        newsMessageDiedAgeLabel.text = String.format(Game.resourcesBundle.getString("message_died_age"), popMsg.diedOfAge)
+        newsMessageDiedBadHealthLabel.text = String.format(Game.resourcesBundle.getString("message_died_bad_health"), popMsg.diedOfHealth)
+        newsMessageImmimigratedLabel.text = String.format(Game.resourcesBundle.getString("message_immigrated"), popMsg.immigrated)
+        newsMessageEmigratedLabel.text = String.format(Game.resourcesBundle.getString("message_emigrated"), popMsg.emigrated)
+        newsMessageStarvedToDeathLabel.text = String.format(Game.resourcesBundle.getString("message_starved_to_death"), popMsg.starvedToDeath)
 
         if (popMsg.totalChange > 0){
-            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_grows")
-            newsMessageTotalChange.text = String.format(Game.stringsBundle.getString("message_population_difference_grows"), popMsg.totalChange)
+            populationMessageTitle.text = Game.resourcesBundle.getString("message_title_population_grows")
+            newsMessageTotalChange.text = String.format(Game.resourcesBundle.getString("message_population_difference_grows"), popMsg.totalChange)
 
         } else if (popMsg.totalChange < 0){
-            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_shrinks")
-            newsMessageTotalChange.text = String.format(Game.stringsBundle.getString("message_population_difference_shrinks"), popMsg.totalChange * -1)
+            populationMessageTitle.text = Game.resourcesBundle.getString("message_title_population_shrinks")
+            newsMessageTotalChange.text = String.format(Game.resourcesBundle.getString("message_population_difference_shrinks"), popMsg.totalChange * -1)
 
         } else {
-            populationMessageTitle.text = Game.stringsBundle.getString("message_title_population_stays_constant")
-            newsMessageTotalChange.text = Game.stringsBundle.getString("message_population_difference_stays_constant")
+            populationMessageTitle.text = Game.resourcesBundle.getString("message_title_population_stays_constant")
+            newsMessageTotalChange.text = Game.resourcesBundle.getString("message_population_difference_stays_constant")
         }
     }
 

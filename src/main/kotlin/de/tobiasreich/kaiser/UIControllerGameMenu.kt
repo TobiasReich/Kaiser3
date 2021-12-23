@@ -57,7 +57,7 @@ class UIControllerGameMenu : Initializable {
 
     @FXML
     private fun onMenuHelpClick() {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("menu-help-webview.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("menu-help-webview.fxml"), Game.resourcesBundle)
         val helpScene = Scene(fxmlLoader.load())
 
         val stage = Stage()
@@ -75,12 +75,12 @@ class UIControllerGameMenu : Initializable {
 
     @FXML
     private fun onMenuAboutClick() {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("menu-help-about.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("menu-help-about.fxml"), Game.resourcesBundle)
         val helpScene = Scene(fxmlLoader.load(), 640.0, 480.0)
 
         val stage = Stage()
         stage.initModality(Modality.APPLICATION_MODAL)
-        stage.title = Game.stringsBundle.getString("menu_about_title")
+        stage.title = Game.resourcesBundle.getString("menu_about_title")
         stage.scene = helpScene
         stage.show()
     }

@@ -2,13 +2,12 @@ package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.ViewController
 import de.tobiasreich.kaiser.config.PlayerConfig
-import de.tobiasreich.kaiser.game.data.country.BuildingType
 import java.util.*
 
 object Game {
 
     /** Language Bundle for resources */
-    lateinit var stringsBundle : ResourceBundle
+    lateinit var resourcesBundle : ResourceBundle
 
     private lateinit var players : List<Player>
     lateinit var currentPlayer : Player

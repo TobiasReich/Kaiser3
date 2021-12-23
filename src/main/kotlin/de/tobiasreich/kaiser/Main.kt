@@ -3,7 +3,6 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
-import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
@@ -29,10 +28,10 @@ class Main : Application() {
         val locale = Locale("de", "DE")
         //val locale = Locale.getDefault() // Use this one in the end
         val resources = ResourceBundle.getBundle("strings", locale)
-        Game.stringsBundle = resources
+        Game.resourcesBundle = resources
 
         // This loads the root view where there is a MENU on top.
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-root-menu.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("scene-root-menu.fxml"), Game.resourcesBundle)
         val rootMenuScene = Scene(fxmlLoader.load(), WIDTH, HEIGHT)
         // Load the Border pane which is the root of that view. There in the Center we want to show all the views
         // but keep the menu
@@ -42,7 +41,7 @@ class Main : Application() {
         ViewController.rootPane = borderPane
 
         // Now load a subScene view which will be shown in the Center
-        val subViewLoader = FXMLLoader(Main::class.java.getResource("scene-game-config-screen.fxml"), Game.stringsBundle)
+        val subViewLoader = FXMLLoader(Main::class.java.getResource("scene-game-config-screen.fxml"), Game.resourcesBundle)
         val subScene = Scene(subViewLoader.load(), WIDTH, HEIGHT)
 
         // Set this view as the "start screen"

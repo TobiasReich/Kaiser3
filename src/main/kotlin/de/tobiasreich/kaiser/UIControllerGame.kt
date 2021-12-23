@@ -129,19 +129,19 @@ class UIControllerGame : Initializable {
 
 
     fun onFoodButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-food.fxml"), Game.resourcesBundle)
         val foodScene = SubScene(fxmlLoader.load(), 630.0, 300.0)
         rootBorderPane.center = foodScene
     }
 
     fun onLandButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-land.fxml"), Game.resourcesBundle)
         val landScene = SubScene(fxmlLoader.load(), 300.0, 200.0)
         rootBorderPane.center = landScene
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-laws.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-laws.fxml"), Game.resourcesBundle)
         val taxScene = SubScene(fxmlLoader.load(), 800.0, 600.0)
         val controller = fxmlLoader.getController<UIControllerActionLaws>()
         controller.setCallback{
@@ -152,7 +152,7 @@ class UIControllerGame : Initializable {
     }
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-buildings.fxml"), Game.resourcesBundle)
         val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
         val controller = fxmlLoader.getController<UIControllerActionBuildings>()
         controller.setCallback{
@@ -165,7 +165,7 @@ class UIControllerGame : Initializable {
 
 
     fun onDonateButtonClick(actionEvent: ActionEvent) {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-donation.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("dialog-donation.fxml"), Game.resourcesBundle)
         val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
         val controller = fxmlLoader.getController<UIControllerActionDonations>()
         controller.setCallback{
@@ -205,11 +205,11 @@ class UIControllerGame : Initializable {
 
 
         // Updating statistics "table"
-        gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.stringsBundle.getString("general_currency")}"
-        gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.stringsBundle.getString("general_food")}"
-        gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.stringsBundle.getString("general_persons")}"
+        gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.resourcesBundle.getString("general_currency")}"
+        gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.resourcesBundle.getString("general_food")}"
+        gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.resourcesBundle.getString("general_persons")}"
         gameSummaryHappinessLabel.text = "${Game.currentPlayer.population.mood} %"
-        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.stringsBundle.getString("general_hectars")}"
+        gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.resourcesBundle.getString("general_hectars")}"
     }
 
 

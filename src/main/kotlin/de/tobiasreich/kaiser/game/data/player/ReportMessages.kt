@@ -18,7 +18,7 @@ class PopulationReport(val birth : Int, val diedOfAge : Int, val diedOfHealth : 
 }
 
 /** Harvest news. Was it a good or a bad one? */
-class HarvestReport(val harvest: HarvestCondition, val harvestedFood : Int, val harvestEvent : HarvestEvent) : ReportMessage {
+class HarvestReport(val harvest: HarvestCondition, val harvestedFood : Int, val totalFood : Int, val harvestEvent : HarvestEvent) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-harvest.fxml"))
     }

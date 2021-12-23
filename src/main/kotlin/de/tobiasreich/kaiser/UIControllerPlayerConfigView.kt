@@ -44,7 +44,7 @@ class UIControllerPlayerConfigView(private val playerConfig : PlayerConfig, priv
 
 
     init {
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("view-player-config.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("view-player-config.fxml"), Game.resourcesBundle)
         fxmlLoader.setRoot(this)
         fxmlLoader.setController(this)
         try {
@@ -81,7 +81,7 @@ class UIControllerPlayerConfigView(private val playerConfig : PlayerConfig, priv
     }
 
     private fun updateView(){
-        playerConfigCountryLabel.text = Game.stringsBundle.getString(playerConfig.country.nameResource)
+        playerConfigCountryLabel.text = Game.resourcesBundle.getString(playerConfig.country.nameResource)
         playerConfigNameTF.text = playerConfig.name
         playerConfigColorPicker.value = playerConfig.color
         playerConfigMaleToggleButton.isSelected = playerConfig.male

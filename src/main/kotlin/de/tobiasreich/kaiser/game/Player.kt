@@ -121,7 +121,7 @@ class Player{
 
         println("Total Food (after events): ${player.storedFood}")
 
-        return HarvestReport(harvestCondition, harvestedFood, harvestEvent)
+        return HarvestReport(harvestCondition, harvestedFood, player.storedFood, harvestEvent)
     }
 
     /** Convenience method determining how much grain can be stored in

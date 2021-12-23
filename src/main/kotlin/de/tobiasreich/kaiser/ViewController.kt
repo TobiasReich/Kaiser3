@@ -4,7 +4,6 @@ import de.tobiasreich.kaiser.game.Game
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
@@ -27,9 +26,9 @@ object ViewController {
     fun showScene(sceneName: SCENE_NAME) {
         //main!!.root = when (sceneName){
         val viewToShow : Parent = when (sceneName){
-            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-game-config-screen.fxml"), Game.stringsBundle) }
-            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.stringsBundle) }
-            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.stringsBundle) }
+            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-game-config-screen.fxml"), Game.resourcesBundle) }
+            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.resourcesBundle) }
+            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.resourcesBundle) }
         }
 
         rootPane.center = viewToShow
@@ -54,7 +53,7 @@ object ViewController {
         popOver.isAnimated = true
         popOver.title = title
         popOver.isCloseButtonEnabled = false
-        val fxmlLoader = FXMLLoader(Main::class.java.getResource("info_popup_layout.fxml"), Game.stringsBundle)
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("info_popup_layout.fxml"), Game.resourcesBundle)
         val node = fxmlLoader.load() as Node
         val label = node.lookup("#infoTextLabel") as Label
         label.text = infoText
