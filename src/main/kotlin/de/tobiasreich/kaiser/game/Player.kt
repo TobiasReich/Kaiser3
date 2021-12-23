@@ -47,6 +47,12 @@ class Player{
     var firstTurn : Boolean    // Skips update flow. Used for the first time a player is playing (So there is no harvest etc. at the first turn made)
 
 
+    /** The probability that this player gets a (negative) HarvestEvent
+     *  TODO Players might have a treat of good / bad luck
+     */
+    private var harvestEventProbability = 0.5
+
+
     /** The price multiplier for buildings. This is by default 1.0 but can change due to events.
      * E.g. wood shortage etc. */
     private var playerBuildingPriceMultiplier = 1.0
@@ -104,9 +110,11 @@ class Player{
     private fun processHarvest(player : Player) : HarvestReport {
         // Defines the current harvest condition this year -> Defining the wheat price
         val harvestCondition = HarvestCondition.values().random()
-        val harvestEvent = HarvestEvent.values().random()
+        val harvestEvent = if (Math.random() > harvestEventProbability){
+            HarvestEvent.values().random()
+        } else { null }
 
-        println("HarvestCondition: ${harvestCondition.name}, HarvestEvent: ${harvestEvent.name}")
+        println("HarvestCondition: ${harvestCondition.name}, HarvestEvent? : ${harvestEvent?.name}")
 
         val harvestedFood = (FOOD_PRODUCED_PER_MILL * player.land.buildings.usedMills * harvestCondition.harvestRatio).toInt()
 
@@ -117,9 +125,10 @@ class Player{
         println("Total Food (before events): ${player.storedFood}")
 
         // ----- Work on the HARVEST EFFECTS -----
-        player.storedFood = (player.storedFood * harvestEvent.effect).toInt()
-
-        println("Total Food (after events): ${player.storedFood}")
+        if (harvestEvent != null) {
+            player.storedFood = (player.storedFood * harvestEvent.effect).toInt()
+        }
+        println("Total Food (after potential events): ${player.storedFood}")
 
         return HarvestReport(harvestCondition, harvestedFood, player.storedFood, harvestEvent)
     }

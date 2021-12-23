@@ -73,9 +73,9 @@ class UIControllerMessageHarvest : Initializable, IMessageController{
 
         // val harvest: HarvestCondition, val harvestedFood : Int, val harvestEvent : HarvestEven
         val eventMessage = when (harvestMessage.harvestEvent){
-            HarvestEvent.NOTHING -> { "message_harvest_event_nothing" }
+            null -> { "message_harvest_event_nothing" }
             HarvestEvent.RATS_PLAGUE -> { "message_harvest_event_rats" }
-            HarvestEvent.GREAT_WEATHER -> { "message_harvest_event_great_weather" }
+            HarvestEvent.ROTTEN_FOOD -> { "message_harvest_event_rotten_food" }
             HarvestEvent.THEFT -> { "message_harvest_event_theft" }
         }
 

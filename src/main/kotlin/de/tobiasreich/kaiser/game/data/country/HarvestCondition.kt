@@ -11,12 +11,12 @@ enum class HarvestCondition(val harvestRatio : Float) {
     TERRIBLE_HARVEST(0.5f)
 }
 
-
+/** Events that happened after the harvest.
+ *  If it is anything else aside from "NOTHING" some of the food is lost */
 enum class HarvestEvent(val effect : Float){
 
-    NOTHING(1.0f),            // Nothing happens this year
     RATS_PLAGUE(0.7f),        // Rats were eating a lot of the food this year
-    GREAT_WEATHER(1.2f),      // There was great weather and the harvest was better
+    ROTTEN_FOOD(0.8f),        // Some food is rotten
     THEFT(0.9f),              // Someone stole a good amount of food from the granary
 
     //... TODO: Think of more events
