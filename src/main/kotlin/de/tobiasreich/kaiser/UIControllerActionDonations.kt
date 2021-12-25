@@ -2,16 +2,39 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
+import de.tobiasreich.kaiser.game.ResourceType
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.ComboBox
+import javafx.scene.control.*
+import javafx.scene.input.KeyEvent
+import javafx.scene.input.MouseEvent
 import java.net.URL
 import java.util.*
+import kotlin.math.max
 
 
 /** Controller, specific for the Buildings actions */
 class UIControllerActionDonations : Initializable {
+
+
+    @FXML
+    lateinit var donateButton: Button
+
+    @FXML
+    lateinit var donationTypeLabel: Label
+
+    @FXML
+    lateinit var donationAmountSlider: Slider
+
+    @FXML
+    lateinit var donationAmountTextField: TextField
+
+    @FXML
+    lateinit var donationTypeCB: ComboBox<String>
 
     @FXML
     lateinit var playerSelectionCB: ComboBox<String>
@@ -24,6 +47,9 @@ class UIControllerActionDonations : Initializable {
 
     private val players = Game.getAllOtherPlayers()
     private var selectedPlayer : Player? = null
+    private var selectedResource : ResourceType? = null
+    private var donationAmount: Int = 0
+
 
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
@@ -34,12 +60,81 @@ class UIControllerActionDonations : Initializable {
         }
 
         playerSelectionCB.items = playerNames
+
+        // Listener to changes of the selected player
         playerSelectionCB.valueProperty().addListener { _, _, _ ->
             val selectedIndex = playerSelectionCB.selectionModel.selectedIndex
             selectedPlayer = players[selectedIndex]
             println("Index: $selectedIndex / $selectedPlayer")
+            updateDonateButtonStatus()
         }
 
+        val resourceNames = FXCollections.observableArrayList<String>()
+        ResourceType.values().forEach {
+            val string = when(it){
+                ResourceType.MONEY -> { "resource_money" }
+                ResourceType.LAND -> { "resource_land" }
+                ResourceType.POPULATION -> { "resource_population" }
+                ResourceType.FOOD -> { "resource_food" }
+            }
+            resourceNames.add(bundle.getString(string))
+        }
+        donationTypeCB.items = resourceNames
+
+        // Listener to changes of the Resource type
+        donationTypeCB.valueProperty().addListener { _, _, _ ->
+            val selectedIndex = donationTypeCB.selectionModel.selectedIndex
+            selectedResource =  ResourceType.values()[selectedIndex]
+
+            updateDonationTypeText() //Sets the label to the right resource (e.g. population = "slaves")
+
+            // Reset the donated amount so players don't accidentally donate too much of a wrong resource
+            donationAmount = 0
+            donationAmountSlider.value = 0.0
+
+            donationAmountSlider.max = when(selectedResource){
+                ResourceType.MONEY -> Game.currentPlayer.money * 0.1
+                ResourceType.LAND -> Game.currentPlayer.land.landSize * 0.1
+                ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * 0.1
+                ResourceType.FOOD -> Game.currentPlayer.storedFood * 0.1
+                null -> 0.0
+            }
+
+            println("Selected Resource: $selectedResource")
+            updateDonationAmountText()
+            updateDonateButtonStatus()
+        }
+
+        // Listener that ignores the input of the TextField when it's not a number
+        donationAmountTextField.textProperty().addListener { _, oldValue, newValue ->
+            if (newValue.isEmpty()){
+                // Nothing to do
+            } else if (!newValue.matches("\\d*?".toRegex())) {
+                // Set to former value (= ignore this input)
+                donationAmountTextField.text = oldValue
+            } else {
+                val maxAmount =  when(selectedResource){
+                    ResourceType.MONEY -> Game.currentPlayer.money * 0.1
+                    ResourceType.LAND -> Game.currentPlayer.land.landSize * 0.1
+                    ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * 0.1
+                    ResourceType.FOOD -> Game.currentPlayer.storedFood * 0.1
+                    null -> 0.0
+                }
+                if (newValue.toInt() > maxAmount){
+                    println("$newValue is too high. Setting to max: $maxAmount")
+                    // Set to max value if user entered a higher one
+                    donationAmountTextField.text = maxAmount.toInt().toString()
+                    donationAmountSlider.value = maxAmount
+                } else {
+                    donationAmountSlider.value = newValue.toDouble()
+                }
+            }
+        }
+
+        // update view at start so there are no "empty" values
+        updateDonationTypeText()
+        updateDonationAmountText()
+        updateDonateButtonStatus()
     }
 
 
@@ -50,5 +145,29 @@ class UIControllerActionDonations : Initializable {
         this.updateCallback = callback
     }
 
+
+    fun onDonationAmountChanged(mouseEvent: MouseEvent) {
+        donationAmount = donationAmountSlider.value.toInt()
+        updateDonationAmountText()
+    }
+
+    private fun updateDonationTypeText() {
+        val amountString = when(selectedResource){
+            ResourceType.MONEY -> { bundle.getString("donation_summary_resource_money") }
+            ResourceType.LAND -> {  bundle.getString("donation_summary_resource_land")}
+            ResourceType.POPULATION -> { bundle.getString("donation_summary_resource_population")}
+            ResourceType.FOOD -> {  bundle.getString("donation_summary_resource_food")}
+            null -> { "---" }
+        }
+        donationTypeLabel.text = amountString
+    }
+
+    private fun updateDonationAmountText() {
+        donationAmountTextField.text = donationAmount.toString()
+    }
+
+    private fun updateDonateButtonStatus() {
+        donateButton.isDisable = selectedPlayer == null || selectedResource == null
+    }
 
 }
