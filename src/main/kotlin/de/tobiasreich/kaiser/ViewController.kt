@@ -4,10 +4,16 @@ import de.tobiasreich.kaiser.game.Game
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
+import javafx.scene.control.Alert
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.ButtonType
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
+import javafx.stage.Modality
 import org.controlsfx.control.PopOver
+import utils.FxDialogs
+
 
 /** Manager for setting views to the stage */
 object ViewController {
@@ -61,4 +67,13 @@ object ViewController {
         popOver.show(view)
     }
 
+    fun showModalDialog() : FxDialogs.DialogResult {
+        val result = FxDialogs.showConfirm("Title","Message")
+        println("Result from Dialog was $result")
+        return result
+    }
+
+    private fun showDialog(type: AlertType, modality : Modality) {
+        FxDialogs.showConfirm("Title","Message")
+    }
 }

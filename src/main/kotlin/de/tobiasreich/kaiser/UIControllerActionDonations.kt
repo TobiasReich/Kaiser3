@@ -3,18 +3,15 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.ResourceType
-import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
-import javafx.event.EventHandler
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
-import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
+import utils.FxDialogs
 import java.net.URL
 import java.util.*
-import kotlin.math.max
 
 
 /** Controller, specific for the Buildings actions */
@@ -168,6 +165,17 @@ class UIControllerActionDonations : Initializable {
 
     private fun updateDonateButtonStatus() {
         donateButton.isDisable = selectedPlayer == null || selectedResource == null
+    }
+
+    fun onSendDonationButtonClick(actionEvent: ActionEvent) {
+        val result = ViewController.showModalDialog()
+
+        if (result == FxDialogs.DialogResult.OK){
+            println("Donation made")
+            Game.currentPlayer.donateResource(selectedPlayer, selectedResource, donationAmount)
+        } else {
+            println("Donation NOT made")
+        }
     }
 
 }

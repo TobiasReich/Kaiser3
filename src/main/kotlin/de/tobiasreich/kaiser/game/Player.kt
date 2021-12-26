@@ -308,5 +308,24 @@ class Player{
         return "Player $name ($country)"
     }
 
+    /** This donates a resource to a given player.
+     *  In Detail:
+     *  - Reduce the resource by the given amount
+     *  - Send the selected player a donation message containing this resource.
+     *  -> The selected player then can either accept or reject this donation at the beginning of the next turn
+     *  //TODO It might come handy to allow only 1 donation per turn (per player) so players don't donate too much / cheat
+     */
+    fun donateResource(selectedPlayer: Player?, selectedResource: ResourceType?, donationAmount: Int) {
+        when(selectedResource){
+            ResourceType.MONEY -> { }
+            ResourceType.LAND -> { }
+            ResourceType.POPULATION -> { }
+            ResourceType.FOOD -> { }
+            null -> return
+        }
+
+        //TODO Implement
+    }
+
 
 }
