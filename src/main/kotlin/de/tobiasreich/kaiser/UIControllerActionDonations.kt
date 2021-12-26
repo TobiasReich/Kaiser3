@@ -94,7 +94,7 @@ class UIControllerActionDonations : Initializable {
             donationAmountSlider.max = when(selectedResource){
                 ResourceType.MONEY -> Game.currentPlayer.money * MAX_DONATION_AMOUNT
                 ResourceType.LAND -> Game.currentPlayer.land.landSize * MAX_DONATION_AMOUNT
-                ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * MAX_DONATION_AMOUNT
+                ResourceType.POPULATION -> Game.currentPlayer.population.adults.size * MAX_DONATION_AMOUNT
                 ResourceType.FOOD -> Game.currentPlayer.storedFood * MAX_DONATION_AMOUNT
                 null -> 0.0
             }
@@ -117,7 +117,7 @@ class UIControllerActionDonations : Initializable {
                 val maxAmount =  when(selectedResource){
                     ResourceType.MONEY -> Game.currentPlayer.money * MAX_DONATION_AMOUNT
                     ResourceType.LAND -> Game.currentPlayer.land.landSize * MAX_DONATION_AMOUNT
-                    ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * MAX_DONATION_AMOUNT
+                    ResourceType.POPULATION -> Game.currentPlayer.population.adults.size * MAX_DONATION_AMOUNT
                     ResourceType.FOOD -> Game.currentPlayer.storedFood * MAX_DONATION_AMOUNT
                     null -> 0.0
                 }

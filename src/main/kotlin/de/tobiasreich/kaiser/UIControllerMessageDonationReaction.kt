@@ -16,7 +16,7 @@ import java.net.URL
 import java.util.*
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
-class UIControllerMessageDonation : Initializable, IMessageController{
+class UIControllerMessageDonationReaction : Initializable, IMessageController{
 
     @FXML
     lateinit var playerTopLine: Line
@@ -25,14 +25,14 @@ class UIControllerMessageDonation : Initializable, IMessageController{
     lateinit var playerBottomLine: Line
 
     @FXML
-    lateinit var donationSummaryPlayerLabel: Label
+    lateinit var reactingPlayerLabel: Label
 
     @FXML
-    lateinit var donationSummaryAmountLabel: Label
+    lateinit var reactionLabel: Label
 
 
     /** The Message to be shown to the user */
-    private lateinit var message: DonationMessage
+    private lateinit var message: DonationReactionMessage
 
 
     /********************************************
@@ -43,7 +43,6 @@ class UIControllerMessageDonation : Initializable, IMessageController{
 
 
     private fun proceedToNextNews() {
-        println("Proceed with next message!")
         val message = Game.currentPlayer.getNextMessage()
 
         if (message == null){
@@ -63,16 +62,15 @@ class UIControllerMessageDonation : Initializable, IMessageController{
 
     override fun setMessage(message: ReportMessage) {
         println("set donation Message")
-        this.message = message as DonationMessage
+        this.message = message as DonationReactionMessage
         updateView()
     }
 
     private fun updateView() {
         println("updateView")
 
-        val donatingPlayer = message.donatingPlayer
-        //donation_message_message=%s %s von %s bietet euch eine noble Spende
-        //donation_message_message_donation=Wollt ihr die %d %s annehmen?
+        val donatingPlayer = message.respondingPlayer
+
         val playerTitle = if (donatingPlayer.isMale){
             Game.resourcesBundle.getString(donatingPlayer.playerTitle.resourceNameMale)
         } else {
@@ -87,36 +85,29 @@ class UIControllerMessageDonation : Initializable, IMessageController{
             ResourceType.FOOD -> {  Game.resourcesBundle.getString("donation_summary_resource_food")}
         }
 
-        donationSummaryPlayerLabel.style = ("-fx-text-fill: ${donatingPlayer.playerColor.toRGBCode()}; ")
+        reactingPlayerLabel.style = ("-fx-text-fill: ${donatingPlayer.playerColor.toRGBCode()}; ")
         playerTopLine.stroke = donatingPlayer.playerColor
         playerBottomLine.stroke = donatingPlayer.playerColor
 
-        donationSummaryPlayerLabel.text = String.format(Game.resourcesBundle.getString("donation_message_message"), playerTitle, donatingPlayer.name, playerCountry)
-        donationSummaryAmountLabel.text = String.format(Game.resourcesBundle.getString("donation_message_message_donation"),  message.donationAmount, selectedResource)
-    }
+        reactingPlayerLabel.text = String.format(Game.resourcesBundle.getString("donation_reaction_message_sender"), playerTitle, donatingPlayer.name, playerCountry)
 
-    fun onDonationRejectButtonClick(actionEvent: ActionEvent) {
-        //Send a donation reaction message to other placer (REJECTED) -> Refund donation
-        message.donatingPlayer.addMessage(DonationReactionMessage(Game.currentPlayer, message.selectedResource, message.donationAmount, message.people,false))
-        proceedToNextNews()
-    }
-
-    fun onDonationAcceptButtonClick(actionEvent: ActionEvent) {
-        //Send a donation reaction message to other placer (ACCEPTED)
-        val player = Game.currentPlayer
-        println("Current player: $player")
-        message.donatingPlayer.addMessage(DonationReactionMessage(player, message.selectedResource, message.donationAmount, message.people,true))
-
-        when (message.selectedResource){
-            ResourceType.MONEY -> { player.money += message.donationAmount }
-            ResourceType.LAND -> { player.land.landSize += message.donationAmount}
-            ResourceType.POPULATION -> {
-                player.population.addAdults(message.people!!)
-                player.land.buildings.updateUsedBuildings(player.population)
-            }
-            ResourceType.FOOD -> { player.addFood(message.donationAmount) }
+        if (message.accepted) {
+            reactionLabel.text = Game.resourcesBundle.getString("donation_message_message_reaction_accepted")
+        } else {
+            reactionLabel.text = Game.resourcesBundle.getString("donation_message_message_reaction_rejected")
         }
+    }
 
+    fun onNewsButtonClick(actionEvent: ActionEvent) {
+        if (!message.accepted) {
+            val player = Game.currentPlayer
+            when (message.selectedResource){
+                ResourceType.MONEY -> { player.money += message.donationAmount }
+                ResourceType.LAND -> { player.land.landSize += message.donationAmount}
+                ResourceType.POPULATION -> { player.population.addAdults(message.people!!) }
+                ResourceType.FOOD -> { player.addFood(message.donationAmount) }
+            }
+        }
         proceedToNextNews()
     }
 

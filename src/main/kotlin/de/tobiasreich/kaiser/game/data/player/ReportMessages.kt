@@ -6,6 +6,7 @@ import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.ResourceType
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
+import de.tobiasreich.kaiser.game.data.population.Person
 import javafx.fxml.FXMLLoader
 
 interface ReportMessage{
@@ -27,9 +28,15 @@ class HarvestReport(val harvest: HarvestCondition, val harvestedFood : Int, val 
     }
 }
 
-/** Harvest news. Was it a good or a bad one? */
-class DonationMessage(val donatingPlayer: Player, val selectedResource: ResourceType, val donationAmount: Int) : ReportMessage {
+/** A donation from another player. */
+class DonationMessage(val donatingPlayer: Player, val selectedResource: ResourceType, val donationAmount: Int, val people : List<Person>?) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-donation.fxml"), Game.resourcesBundle)
+    }
+}
+/** A reaction to your donation. Can be accepted or rejected. */
+class DonationReactionMessage(val respondingPlayer: Player, val selectedResource: ResourceType, val donationAmount: Int, val people : List<Person>?, val accepted : Boolean) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-donation-reaction.fxml"), Game.resourcesBundle)
     }
 }

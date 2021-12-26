@@ -1,6 +1,5 @@
 package de.tobiasreich.kaiser.game.data.population
 
-import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.data.player.PopulationReport
 import de.tobiasreich.kaiser.game.data.population.Health.HEALTH_DEAD
@@ -269,9 +268,18 @@ class Population {
         mood = calculatedMood.coerceAtMost(100).coerceAtLeast(0)
     }
 
+    /** Removes random amount people equally distributed (if possible) */
+    fun removeAdults(amount: Int) : List<Person>{
+        val slaves = mutableListOf<Person>()
+        slaves.addAll(adults.subList(0,amount))
+        println("Slaves donated: ${slaves.size}")
+        adults.removeAll(slaves)
+        return slaves
+    }
 
     /** Removes random amount people equally distributed (if possible) */
-    fun removeRandomPeople(donationAmount: Int) {
-        // TODO Implement this
+    fun addAdults(slaves : List<Person>) {
+        println("Slaves added to population: ${slaves.size}")
+        adults.addAll(slaves)
     }
 }

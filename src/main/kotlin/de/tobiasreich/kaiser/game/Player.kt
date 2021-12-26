@@ -9,12 +9,12 @@ import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
 import de.tobiasreich.kaiser.game.data.player.*
 import de.tobiasreich.kaiser.game.data.population.Laws
+import de.tobiasreich.kaiser.game.data.population.Person
 import de.tobiasreich.kaiser.game.data.population.Population
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.BASE_EXPENSE_EDUCATION_SYSTEM
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.BASE_EXPENSE_HEALTH_SYSTEM
 import de.tobiasreich.kaiser.game.data.population.Population.Companion.FOOD_USE_PER_PERSON
 import javafx.scene.paint.Color
-import java.lang.Math.min
 import java.util.*
 
 /** This is the complete configuration and setup of once specific player
@@ -320,6 +320,8 @@ class Player{
      *  //TODO It might come handy to allow only 1 donation per turn (per player) so players don't donate too much / cheat
      */
     fun donateResource(selectedPlayer: Player, selectedResource: ResourceType, donationAmount: Int) {
+        var people : List<Person>? = null
+
         when(selectedResource){
             ResourceType.MONEY -> { this.money -= donationAmount }
             ResourceType.LAND -> {
@@ -327,8 +329,8 @@ class Player{
                 land.removeLand(donationAmount, population)
             }
             ResourceType.POPULATION -> {
-                population.removeRandomPeople(donationAmount)
-                //TODO Update employment data
+                people = population.removeAdults(donationAmount)
+                land.buildings.updateUsedBuildings(population)
             }
             ResourceType.FOOD -> {
                 this.storedFood -= donationAmount
@@ -337,7 +339,7 @@ class Player{
             }
         }
 
-        selectedPlayer.addMessage(DonationMessage(this, selectedResource, donationAmount))
+        selectedPlayer.addMessage(DonationMessage(this, selectedResource, donationAmount, people))
     }
 
 

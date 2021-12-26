@@ -22,8 +22,8 @@ class UIControllerStartScreen : Initializable, IPlayerConfigChange {
         // This is the config at start of the game.
         val defaultPlayerList = listOf(
             PlayerConfig(0, Country.HOLSTEIN  , "Archibald Buttle"      , Color.RED         ,true, false, true, 0),
-            PlayerConfig(1, Country.WESTPHALIA, "Bella Bellington"      , Color.YELLOW      ,false, true, false,0),
-            PlayerConfig(2, Country.SAXONY    , "Charles Le Crobboiyent", Color.ORANGE      ,true, true, false,0),
+            PlayerConfig(1, Country.WESTPHALIA, "Bella Bellington"      , Color.ORANGE      ,false, true, false,0),
+            PlayerConfig(2, Country.SAXONY    , "Charles Le Crobboiyent", Color.YELLOWGREEN ,true, true, false,0),
             PlayerConfig(3, Country.PRUSSIA   , "Dorothea die Gerechte" , Color.GREEN       ,false, true, false,0),
             PlayerConfig(4, Country.HESSE     , "Erwin der Erlöser"     , Color.DARKCYAN    ,false, true, false,0),
             PlayerConfig(5, Country.THURINGIA , "Frieda die Fromme"     , Color.TURQUOISE   ,false, true, false,0),
