@@ -268,4 +268,10 @@ class Population {
         //        println("Calculated Mood: $calculatedMood")
         mood = calculatedMood.coerceAtMost(100).coerceAtLeast(0)
     }
+
+
+    /** Removes random amount people equally distributed (if possible) */
+    fun removeRandomPeople(donationAmount: Int) {
+        // TODO Implement this
+    }
 }

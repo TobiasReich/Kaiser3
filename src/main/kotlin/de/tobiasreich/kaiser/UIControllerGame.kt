@@ -171,6 +171,7 @@ class UIControllerGame : Initializable {
         controller.setCallback{
             //Update the view so the user sees the available money
             updateViews()
+            showLandView() //The callback is only called when a donation was made. Show the "land" again
         }
         rootBorderPane.center = buildingsScene
     }
@@ -187,7 +188,7 @@ class UIControllerGame : Initializable {
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
         updateViews()
-        updateLandView()
+        showLandView()
     }
 
 
@@ -213,7 +214,7 @@ class UIControllerGame : Initializable {
     }
 
 
-    private fun updateLandView() {
+    private fun showLandView() {
         val playerLandView = UIControllerPlayerLandView(Game.currentPlayer)
         rootBorderPane.center = playerLandView
     }

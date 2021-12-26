@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.Game.MAX_DONATION_AMOUNT
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.ResourceType
 import javafx.collections.FXCollections
@@ -88,12 +89,13 @@ class UIControllerActionDonations : Initializable {
             // Reset the donated amount so players don't accidentally donate too much of a wrong resource
             donationAmount = 0
             donationAmountSlider.value = 0.0
+            donationAmountTextField.text = "0"
 
             donationAmountSlider.max = when(selectedResource){
-                ResourceType.MONEY -> Game.currentPlayer.money * 0.1
-                ResourceType.LAND -> Game.currentPlayer.land.landSize * 0.1
-                ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * 0.1
-                ResourceType.FOOD -> Game.currentPlayer.storedFood * 0.1
+                ResourceType.MONEY -> Game.currentPlayer.money * MAX_DONATION_AMOUNT
+                ResourceType.LAND -> Game.currentPlayer.land.landSize * MAX_DONATION_AMOUNT
+                ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * MAX_DONATION_AMOUNT
+                ResourceType.FOOD -> Game.currentPlayer.storedFood * MAX_DONATION_AMOUNT
                 null -> 0.0
             }
 
@@ -104,6 +106,8 @@ class UIControllerActionDonations : Initializable {
 
         // Listener that ignores the input of the TextField when it's not a number
         donationAmountTextField.textProperty().addListener { _, oldValue, newValue ->
+            println("Text field updated: $oldValue -> $newValue")
+
             if (newValue.isEmpty()){
                 // Nothing to do
             } else if (!newValue.matches("\\d*?".toRegex())) {
@@ -111,10 +115,10 @@ class UIControllerActionDonations : Initializable {
                 donationAmountTextField.text = oldValue
             } else {
                 val maxAmount =  when(selectedResource){
-                    ResourceType.MONEY -> Game.currentPlayer.money * 0.1
-                    ResourceType.LAND -> Game.currentPlayer.land.landSize * 0.1
-                    ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * 0.1
-                    ResourceType.FOOD -> Game.currentPlayer.storedFood * 0.1
+                    ResourceType.MONEY -> Game.currentPlayer.money * MAX_DONATION_AMOUNT
+                    ResourceType.LAND -> Game.currentPlayer.land.landSize * MAX_DONATION_AMOUNT
+                    ResourceType.POPULATION -> Game.currentPlayer.population.getAmountPeople() * MAX_DONATION_AMOUNT
+                    ResourceType.FOOD -> Game.currentPlayer.storedFood * MAX_DONATION_AMOUNT
                     null -> 0.0
                 }
                 if (newValue.toInt() > maxAmount){
@@ -122,8 +126,10 @@ class UIControllerActionDonations : Initializable {
                     // Set to max value if user entered a higher one
                     donationAmountTextField.text = maxAmount.toInt().toString()
                     donationAmountSlider.value = maxAmount
+                    donationAmount = maxAmount.toInt()
                 } else {
                     donationAmountSlider.value = newValue.toDouble()
+                    donationAmount = newValue.toInt()
                 }
             }
         }
@@ -144,6 +150,7 @@ class UIControllerActionDonations : Initializable {
 
 
     fun onDonationAmountChanged(mouseEvent: MouseEvent) {
+        println("Slider value changed to ${donationAmountSlider.value.toInt()}")
         donationAmount = donationAmountSlider.value.toInt()
         updateDonationAmountText()
     }
@@ -172,9 +179,12 @@ class UIControllerActionDonations : Initializable {
 
         if (result == FxDialogs.DialogResult.OK){
             println("Donation made")
-            Game.currentPlayer.donateResource(selectedPlayer, selectedResource, donationAmount)
+            Game.currentPlayer.donateResource(selectedPlayer!!, selectedResource!!, donationAmount)
+            updateCallback()
+            //TODO We might want to block the donation screen for the rest of the turn.
         } else {
             println("Donation NOT made")
+            //Nothing to do for now
         }
     }
 

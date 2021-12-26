@@ -6,6 +6,9 @@ import java.util.*
 
 object Game {
 
+    // The maximum fraction of resources that a player is allowed to donate
+    const val MAX_DONATION_AMOUNT = 0.1
+
     /** Language Bundle for resources */
     lateinit var resourcesBundle : ResourceBundle
 

@@ -2,6 +2,8 @@ package de.tobiasreich.kaiser.game.data.country
 
 import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_HEIGHT_FIELDS
 import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_WIDTH_FIELDS
+import de.tobiasreich.kaiser.game.data.population.Population
+import kotlin.math.floor
 
 /** Defines the country and it's buildings. */
 class Land {
@@ -16,7 +18,7 @@ class Land {
     // This is a per player setting
     var zoomLevelImageSize = 40.0
 
-    val landSize : Int = 10000      // How many ha the user possesses
+    var landSize : Int = 10000      // How many ha the user possesses
 
     val buildings = Buildings()     // The standard population at start
 
@@ -36,7 +38,6 @@ class Land {
      *  Total - Already Build
      *  A player can't build more buildings of this type when 0 is reached. New land has to be acquired. */
     fun getAvailableSpaceForBuilding(building: BuildingType): Int {
-        //TODO: Calculate how much land each building requires
         val amountBuildAlready = when(building){
             BuildingType.MARKET -> buildings.markets
             BuildingType.MILL ->  buildings.mills
@@ -47,6 +48,36 @@ class Land {
             BuildingType.CATHEDRAL -> buildings.cathedralPieces
         }
         val landAvailable = landSize - (amountBuildAlready * building.landNeeded)
-        return landAvailable / building.landNeeded
+        //println("Land available: $landAvailable, $building land needed: ${building.landNeeded}: Result: ${floor(landAvailable.toDouble() / building.landNeeded.toDouble()).toInt()}")
+        return floor(landAvailable.toDouble() / building.landNeeded.toDouble()).toInt()
+    }
+
+
+    fun removeLand(amount: Int, population : Population) {
+        this.landSize -= amount
+
+        val millsAvailable = getAvailableSpaceForBuilding(BuildingType.MILL)
+        val granariesAvailable = getAvailableSpaceForBuilding(BuildingType.GRANARY)
+        val warehousesAvailable = getAvailableSpaceForBuilding(BuildingType.WAREHOUSE)
+        val marketsAvailable = getAvailableSpaceForBuilding(BuildingType.MARKET)
+
+        if(millsAvailable < 0){
+            buildings.mills += millsAvailable
+            println("Mills destroyed: $millsAvailable")
+        }
+        if(granariesAvailable < 0){
+            buildings.granaries += granariesAvailable
+            println("Granaries destroyed: $granariesAvailable")
+        }
+        if(warehousesAvailable < 0){
+            buildings.warehouses += warehousesAvailable
+            println("Warehouses destroyed: $warehousesAvailable")
+        }
+        if(marketsAvailable < 0){
+            buildings.markets += marketsAvailable
+            println("Markets destroyed: $marketsAvailable")
+        }
+
+        buildings.updateUsedBuildings(population)
     }
 }
