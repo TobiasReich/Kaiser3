@@ -175,7 +175,7 @@
                     <graphic>
                         <ImageView fx:id="militaryButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_sword.png">
                                 </Image>
                             </image>
                         </ImageView>
@@ -354,31 +354,28 @@
                    </Label>
                    <Label fx:id="gameSummaryInhabitantsLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                   <Label maxWidth="1.7976931348623157E308" text="%game_summary_happyness" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                   <Label maxWidth="1.7976931348623157E308" text="%game_summary_adults" GridPane.columnIndex="0" GridPane.rowIndex="3">
                        <GridPane.margin>
                            <Insets right="10.0" />
                        </GridPane.margin>
                    </Label>
-                   <Label fx:id="gameSummaryHappinessLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                   <Label fx:id="gameSummaryAdultInhabitantsLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                   <Label maxWidth="1.7976931348623157E308" text="%game_summary_land_possession" GridPane.columnIndex="0" GridPane.rowIndex="4">
+
+                   <Label maxWidth="1.7976931348623157E308" text="%game_summary_happyness" GridPane.columnIndex="0" GridPane.rowIndex="4">
                        <GridPane.margin>
                            <Insets right="10.0" />
                        </GridPane.margin>
                    </Label>
-                   <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                   <Label fx:id="gameSummaryHappinessLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                   <Label maxWidth="1.7976931348623157E308" text="%game_summary_land_possession" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                       <GridPane.margin>
+                           <Insets right="10.0" />
+                       </GridPane.margin>
+                   </Label>
+                   <Label fx:id="gameSummaryLandPossessionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
             </GridPane>
             </children>
          <padding>

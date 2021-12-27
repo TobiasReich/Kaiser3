@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root alignment="CENTER" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER">
+         <children>
+              <Label fx:id="unitTypeLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Soldat Typ 1" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+              <Label fx:id="payPerYearLabel" alignment="CENTER" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="100 Taler" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+              <Label fx:id="hireCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="1000 Taler" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+              <Button fx:id="hireMercenaryButton" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" text="%military_view_buy_as_mercenary" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+              <Label fx:id="recruitCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="500 Taler" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+             <Label fx:id="populationCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="500 Mann" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+             <Button fx:id="recruitSoldierButton" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" text="%military_view_recruit" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font></Button>
+            <HBox alignment="CENTER" fillHeight="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0">
+               <children>
+                    <CheckBox fx:id="meleeCB" disable="true" mnemonicParsing="false">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                   <CheckBox fx:id="rangedCB" disable="true" mnemonicParsing="false">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </CheckBox>
+               </children>
+            </HBox>
+             <ProgressBar fx:id="powerProgressbar" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" progress="0.5">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding></ProgressBar>
+             <ProgressBar fx:id="healthProgressbar" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" progress="0.4">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding></ProgressBar>
+             <ProgressBar fx:id="prestigeProgressbar" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" progress="0.9">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding></ProgressBar>
+             <ProgressBar fx:id="loyaltyProgressbar" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" progress="0.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding></ProgressBar>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="7.0" top="3.0" />
+         </padding></HBox>
+   </children>
+</fx:root>

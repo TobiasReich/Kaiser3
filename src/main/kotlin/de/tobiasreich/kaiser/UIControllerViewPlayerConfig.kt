@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox
 import java.io.IOException
 
 
-class UIControllerPlayerConfigView(private val playerConfig : PlayerConfig, private val callback : IPlayerConfigChange) : VBox() {
+class UIControllerViewPlayerConfig(private val playerConfig : PlayerConfig, private val callback : IPlayerConfigChange) : VBox() {
 
     @FXML
     lateinit var playerConfigCountryLabel: Label

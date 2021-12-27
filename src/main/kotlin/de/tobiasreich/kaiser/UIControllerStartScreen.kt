@@ -59,7 +59,7 @@ class UIControllerStartScreen : Initializable, IPlayerConfigChange {
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
         playersList = defaultPlayerList.toMutableList()
         playersList.forEach {
-            val playerConfigView = UIControllerPlayerConfigView(it, this)
+            val playerConfigView = UIControllerViewPlayerConfig(it, this)
             playerConfigs.children.add(playerConfigView)
         }
     }

@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.population.Population
 import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.*
@@ -19,7 +20,9 @@ import java.io.IOException
  *  - population cost as soldier
  *  - button to "recruit" as soldier (cheaper but population cost)
  */
-class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, private val population: Population) : VBox() {
+//TODO: Disable the recruit Button in case there are no enough adults
+class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, private val population: Population,
+                                          private val getUnitCallback : (unit : MilitaryUnit, bought : Boolean) -> Unit) : VBox() {
 
     @FXML
     lateinit var unitTypeLabel: Label
@@ -84,6 +87,12 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
         prestigeProgressbar.progress = unit.prestige
         loyaltyProgressbar.progress = unit.loyalty
 
+        hireMercenaryButton.onAction = EventHandler {
+            getUnitCallback.invoke(unit, true)
+        }
+        recruitSoldierButton.onAction = EventHandler {
+            getUnitCallback.invoke(unit, false)
+        }
     }
 
 }

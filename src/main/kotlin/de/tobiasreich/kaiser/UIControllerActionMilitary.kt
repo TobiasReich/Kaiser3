@@ -26,12 +26,27 @@ class UIControllerActionMilitary : Initializable {
     private lateinit var updateCallback : () -> Unit
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        val population = Game.currentPlayer.population
-        MilitaryUnit.values().forEach {
-            val unitView = UIControllerViewMilitaryRecruitUnit(it, population)
-            unitList.children.add(unitView)
+
+        val newUnitCallback = object : (MilitaryUnit, Boolean) -> Unit {
+            override fun invoke(unit: MilitaryUnit, purchased: Boolean) {
+                if(purchased){
+                    Game.currentPlayer.money -= unit.mercCost
+                } else {
+                    val population = Game.currentPlayer.population
+                    if (population.adults.size > unit.popCost) {
+                        Game.currentPlayer.money -= unit.recruitCost
+                        population.removeAdults(unit.popCost)
+                        Game.currentPlayer.land.buildings.updateUsedBuildings(population)
+                    }
+                }
+                updateCallback()
+            }
         }
 
+        MilitaryUnit.values().forEach {
+            val unitView = UIControllerViewMilitaryRecruitUnit(it, Game.currentPlayer.population, newUnitCallback)
+            unitList.children.add(unitView)
+        }
     }
 
     /** Sets the callback for the view to update on purchases

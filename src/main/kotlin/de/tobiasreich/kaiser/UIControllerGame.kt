@@ -21,6 +21,7 @@ import java.util.*
 
 class UIControllerGame : Initializable {
 
+
     // ------------------------------- Action Buttons (Left panel) -------------------------------
     @FXML
     lateinit var gameFoodButton: ImageView
@@ -32,6 +33,10 @@ class UIControllerGame : Initializable {
 
     @FXML
     lateinit var gameSummaryInhabitantsLabel: Label
+
+    @FXML
+    lateinit var gameSummaryAdultInhabitantsLabel: Label
+
     @FXML
     lateinit var gameSummaryFoodPossessionLabel: Label
 
@@ -176,7 +181,7 @@ class UIControllerGame : Initializable {
     }
 
 
-
+    /** Shows the military action when the user clicks on the military-button */
     fun onMilitaryButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-military.fxml"), Game.resourcesBundle)
         val militaryScene = SubScene(fxmlLoader.load(), 1100.0, 950.0)
@@ -184,7 +189,6 @@ class UIControllerGame : Initializable {
         controller.setCallback{
             //Update the view so the user sees the available money
             updateViews()
-            showLandView() //The callback is only called when a donation was made. Show the "land" again
         }
         rootBorderPane.center = militaryScene
     }
@@ -222,6 +226,7 @@ class UIControllerGame : Initializable {
         gameSummaryMoneyPossessionLabel.text = "${Game.currentPlayer.money} ${Game.resourcesBundle.getString("general_currency")}"
         gameSummaryFoodPossessionLabel.text = "${Game.currentPlayer.storedFood} ${Game.resourcesBundle.getString("general_food")}"
         gameSummaryInhabitantsLabel.text = "${Game.currentPlayer.population.getAmountPeople()} ${Game.resourcesBundle.getString("general_persons")}"
+        gameSummaryAdultInhabitantsLabel.text = Game.currentPlayer.population.adults.size.toString()
         gameSummaryHappinessLabel.text = "${Game.currentPlayer.population.mood} %"
         gameSummaryLandPossessionLabel.text = "${Game.currentPlayer.land.landSize} ${Game.resourcesBundle.getString("general_hectars")}"
     }
