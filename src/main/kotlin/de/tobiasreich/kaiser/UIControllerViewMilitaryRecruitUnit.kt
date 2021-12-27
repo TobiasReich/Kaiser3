@@ -7,7 +7,7 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.*
-import javafx.scene.layout.HBox
+import javafx.scene.layout.VBox
 import java.io.IOException
 
 /** This view shows the "purchase" option or one military unit.
@@ -19,7 +19,7 @@ import java.io.IOException
  *  - population cost as soldier
  *  - button to "recruit" as soldier (cheaper but population cost)
  */
-class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, private val population: Population) : HBox() {
+class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, private val population: Population) : VBox() {
 
     @FXML
     lateinit var unitTypeLabel: Label
@@ -35,6 +35,19 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
     lateinit var populationCostLabel: Label
     @FXML
     lateinit var recruitSoldierButton: Button
+    @FXML
+    lateinit var meleeCB: CheckBox
+    @FXML
+    lateinit var rangedCB: CheckBox
+    @FXML
+    lateinit var powerProgressbar: ProgressBar
+    @FXML
+    lateinit var healthProgressbar: ProgressBar
+    @FXML
+    lateinit var prestigeProgressbar: ProgressBar
+    @FXML
+    lateinit var loyaltyProgressbar: ProgressBar
+
 
 
     /** This is called by all config views but the controller is set programmatically so the usage is not shown
@@ -57,21 +70,20 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
             throw RuntimeException(exception)
         }
 
-        unitTypeLabel.text = "Soldat"
-//        val tabListener: EventHandler<KeyEvent> = EventHandler<KeyEvent> { evt ->
-//            evt.consume()
-//            updatePlayer(playerConfigActiveCB.isSelected) // Update player object
-//            updateView()                                  // Update the view representing the player
-//            callback.onUpdateActiveState(playerConfig)    // Notify the outer controller to update the whole view
-//            /* Since the UpdateView sets the "new" text the cursor would still be at the beginning of the view
-//             * Thus writing another character would lead to adding it at the start.
-//             * We therefore set the cursor to the end of the view */
-//            playerConfigNameTF.end()
-//        }
-//
-//        playerConfigNameTF.addEventHandler(KeyEvent.ANY, tabListener)
-//
-//        updateView()
+        unitTypeLabel.text = Game.resourcesBundle.getString(unit.nameRes)
+        payPerYearLabel.text = "${unit.pay} ${Game.resourcesBundle.getString("general_currency")}"
+        hireCostLabel.text = "${unit.mercCost} ${Game.resourcesBundle.getString("general_currency")}"
+        recruitCostLabel.text = "${unit.recruitCost} ${Game.resourcesBundle.getString("general_currency")}"
+        populationCostLabel.text = "${unit.popCost} ${Game.resourcesBundle.getString("general_persons_male")}"
+
+        meleeCB.isSelected = unit.melee
+        rangedCB.isSelected = unit.ranged
+
+        powerProgressbar.progress = 0.5
+        healthProgressbar.progress = 0.5
+        prestigeProgressbar.progress = 0.5
+        loyaltyProgressbar.progress = unit.loyalty
+
     }
 
 }

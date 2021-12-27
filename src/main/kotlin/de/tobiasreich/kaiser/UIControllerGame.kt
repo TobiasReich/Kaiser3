@@ -179,7 +179,7 @@ class UIControllerGame : Initializable {
 
     fun onMilitaryButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-military.fxml"), Game.resourcesBundle)
-        val militaryScene = SubScene(fxmlLoader.load(), 900.0, 700.0)
+        val militaryScene = SubScene(fxmlLoader.load(), 1100.0, 950.0)
         val controller = fxmlLoader.getController<UIControllerActionMilitary>()
         controller.setCallback{
             //Update the view so the user sees the available money
