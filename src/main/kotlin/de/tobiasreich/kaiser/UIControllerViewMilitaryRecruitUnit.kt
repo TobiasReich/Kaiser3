@@ -79,9 +79,9 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
         meleeCB.isSelected = unit.melee
         rangedCB.isSelected = unit.ranged
 
-        powerProgressbar.progress = 0.5
-        healthProgressbar.progress = 0.5
-        prestigeProgressbar.progress = 0.5
+        powerProgressbar.progress = unit.power
+        healthProgressbar.progress = unit.health
+        prestigeProgressbar.progress = unit.prestige
         loyaltyProgressbar.progress = unit.loyalty
 
     }
