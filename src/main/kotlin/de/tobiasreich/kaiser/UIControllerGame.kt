@@ -163,17 +163,30 @@ class UIControllerGame : Initializable {
     }
 
 
-
     fun onDonateButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-donation.fxml"), Game.resourcesBundle)
-        val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val donationScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
         val controller = fxmlLoader.getController<UIControllerActionDonations>()
         controller.setCallback{
             //Update the view so the user sees the available money
             updateViews()
             showLandView() //The callback is only called when a donation was made. Show the "land" again
         }
-        rootBorderPane.center = buildingsScene
+        rootBorderPane.center = donationScene
+    }
+
+
+
+    fun onMilitaryButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-military.fxml"), Game.resourcesBundle)
+        val militaryScene = SubScene(fxmlLoader.load(), 900.0, 700.0)
+        val controller = fxmlLoader.getController<UIControllerActionMilitary>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            updateViews()
+            showLandView() //The callback is only called when a donation was made. Show the "land" again
+        }
+        rootBorderPane.center = militaryScene
     }
 
     /********************************************
@@ -266,5 +279,6 @@ class UIControllerGame : Initializable {
     fun onPopulationChartClicked(mouseEvent: MouseEvent) {
         ViewController.showInfoPopUp(populationChart, bundle.getString("game_summary_population_title"),bundle.getString("game_summary_population_info"))
     }
+
 
 }

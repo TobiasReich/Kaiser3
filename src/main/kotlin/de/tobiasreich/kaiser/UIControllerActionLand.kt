@@ -25,7 +25,7 @@ class UIControllerActionLand : Initializable {
     }
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        foodAmountLabel.text = Game.currentPlayer.storedFood.toString()
+        //foodAmountLabel.text = Game.currentPlayer.storedFood.toString()
     }
 
 }

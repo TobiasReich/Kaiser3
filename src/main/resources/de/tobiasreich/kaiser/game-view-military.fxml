@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionMilitary">
+   <children>
+      <Label text="Militär">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin></Label>
+      <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+         <children>
+            <Label alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Einheit" />
+            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Sold/Jahr" />
+            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Söldner kosten" />
+            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="anwerben" />
+            <Label alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Rekrutierung kosten" />
+            <Label alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Bevölkerungs kosten" />
+            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Rekrutieren" />
+         </children>
+      </HBox>
+      <VBox fx:id="unitList" prefWidth="100.0">
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin></VBox>
+   </children>
+</VBox>

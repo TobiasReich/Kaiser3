@@ -168,7 +168,7 @@
                </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Militär">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onMilitaryButtonClick" prefWidth="125.0" text="Militär">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_military_button" />
                     </tooltip>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root alignment="CENTER" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+        <Label fx:id="unitTypeLabel" alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Soldat Typ 1" />
+        <Label fx:id="payPerYearLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="100 Taler" />
+        <Label fx:id="hireCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="1000 Taler" />
+        <Button fx:id="hireMercenaryButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefWidth="100.0" text="Anheuern" />
+        <Label fx:id="recruitCostLabel" alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="500 Taler" />
+       <Label fx:id="populationCostLabel" alignment="CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="500 Mann" />
+       <Button fx:id="recruitSoldierButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefWidth="100.0" text="Rekrutieren" />
+   </children>
+</fx:root>
