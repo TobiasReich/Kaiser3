@@ -6,6 +6,7 @@ import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.ResourceType
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
+import de.tobiasreich.kaiser.game.data.military.SabotageType
 import de.tobiasreich.kaiser.game.data.population.Person
 import javafx.fxml.FXMLLoader
 
@@ -34,9 +35,19 @@ class DonationMessage(val donatingPlayer: Player, val selectedResource: Resource
         return FXMLLoader(Main::class.java.getResource("news-donation.fxml"), Game.resourcesBundle)
     }
 }
+
 /** A reaction to your donation. Can be accepted or rejected. */
 class DonationReactionMessage(val respondingPlayer: Player, val selectedResource: ResourceType, val donationAmount: Int, val people : List<Person>?, val accepted : Boolean) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-donation-reaction.fxml"), Game.resourcesBundle)
+    }
+}
+
+/** A message about "sabotage"
+ *  TODO: Might be more interesting when this could occur randomly, too so it is not always obvious that this was sabotage
+ */
+class SabotageMessage(val sabotagingPlayer: Player, val sabotageType: SabotageType) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-sabotage.fxml"), Game.resourcesBundle)
     }
 }

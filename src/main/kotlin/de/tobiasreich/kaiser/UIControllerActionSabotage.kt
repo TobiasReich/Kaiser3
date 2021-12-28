@@ -92,7 +92,7 @@ class UIControllerActionSabotage : Initializable {
         }
         startSabotageButton.isDisable = false
 
-        val price = sabotage.cost * (player.playerTitle.ordinal + 1)
+        val price = getSabotageCost(player, sabotage)
         println("Sabotage costs: $price")
         sabotageCostLabel.text = "$price ${Game.resourcesBundle.getString("general_currency")}"
     }
@@ -107,7 +107,26 @@ class UIControllerActionSabotage : Initializable {
 
 
     fun onStartSabotageButtonClick(actionEvent: ActionEvent) {
+        val targetPlayer = selectedPlayer!!
+        val sabotage = selectedSabotage!!
 
+        val result = ViewController.showModalDialog()
+
+        if (result == FxDialogs.DialogResult.OK){
+            println("Donation made")
+            Game.currentPlayer.sabotagePlayer(targetPlayer, sabotage, getSabotageCost(targetPlayer, sabotage))
+            updateCallback()
+            //TODO We might want to block the donation screen for the rest of the turn.
+        } else {
+            println("Donation NOT made")
+            //Nothing to do for now
+        }
+    }
+
+
+    /** Calculates the cost of the sabotage, depending on the action and level of the player */
+    private fun getSabotageCost(player: Player, sabotageType: SabotageType) : Int {
+        return sabotageType.cost * (player.playerTitle.ordinal + 1)
     }
 
 }

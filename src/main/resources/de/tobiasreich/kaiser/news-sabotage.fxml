@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageSabotage">
+   <children>
+      <!-- Header -->
+      <Label fx:id="sabotageTitle" text="Title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </Label>
+      <Label fx:id="sabotageSummary" text="What happened">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+      <Label fx:id="sabotageSummaryConfession" text="A confession">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+
+      <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter" />
+   </children>
+</VBox>

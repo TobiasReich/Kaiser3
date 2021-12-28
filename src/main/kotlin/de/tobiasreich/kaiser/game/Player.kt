@@ -8,6 +8,7 @@ import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.SabotageType
 import de.tobiasreich.kaiser.game.data.player.*
 import de.tobiasreich.kaiser.game.data.population.Laws
 import de.tobiasreich.kaiser.game.data.population.Person
@@ -374,6 +375,24 @@ class Player{
         }
         println("Calculated pay for troops: $sum")
         return sum
+    }
+
+
+
+    /** Issues a sabotage action
+     *  //TODO It might come handy to allow only 1 spy action per turn (per player) so players don't donate too much / cheat
+     */
+    fun sabotagePlayer(selectedPlayer: Player, sabotageType: SabotageType, cost : Int) {
+        this.money -= cost
+
+        when(sabotageType){
+            SabotageType.STEAL_MONEY -> {}
+            SabotageType.BURN_MILLS -> {}
+            SabotageType.START_REVOLT -> {}
+            SabotageType.DEMORALIZE_TROOPS -> {}
+        }
+
+        selectedPlayer.addMessage(SabotageMessage(this, sabotageType))
     }
 
 }
