@@ -1,0 +1,13 @@
+Some perk ideas the user can pick:
+
+PEOPLE:
+worksome population: the population works harder (multiplying the food production etc.)
+happy people: The base mood of the people is a little higher
+compulsory education (Schulpflicht): The education expenses are cheaper (but can't be set to 0)
+
+MILITARY:
+cheap military: Reduces yearly costs of military units
+loyal servants: Reduces chances of military units to desert in battle
+
+PLAYER:
+luck: Fewer bad events at the beginning of the turn

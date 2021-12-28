@@ -216,7 +216,9 @@ class Player{
             // NOT the first turn: calculate updates and show the messages!
             messageList.add(population.processPopulationChange(this))
             land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed)
-            messageList.add(processHarvest(this))
+            messageList.add(processHarvest(this)) // Harvest
+            this.money -= calculateTroopPayment()
+
             //...
         }
         // ------- Update player statistics -------
@@ -305,11 +307,6 @@ class Player{
         return (incomeTax - healthExpenses - educationExpenses).toInt()
     }
 
-    /** Returns the percentage of employment.
-     *  A higher value means higher employment (so 100% is the desired value) */
-    fun getEmploymentRate() : Int {
-        return 50
-    }
 
     //</editor-fold>
 
@@ -365,6 +362,18 @@ class Player{
     fun removeMilitaryUnit(unit : MilitaryUnit){
         println("Removing unit ${unit.name} (from ${miliarty[unit]} units)")
         miliarty[unit] = miliarty[unit]!! - 1
+    }
+
+
+    /** Calculates how much pay the military units require per year */
+    fun calculateTroopPayment() : Int {
+        var sum = 0
+        miliarty.keys.forEach {
+            // The pay of the unit multiplied by the amount of unity in this category
+            sum += it.pay * (miliarty[it] ?: 0)
+        }
+        println("Calculated pay for troops: $sum")
+        return sum
     }
 
 }
