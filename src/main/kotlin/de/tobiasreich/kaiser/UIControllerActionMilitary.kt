@@ -31,12 +31,14 @@ class UIControllerActionMilitary : Initializable {
             override fun invoke(unit: MilitaryUnit, purchased: Boolean) {
                 if(purchased){
                     Game.currentPlayer.money -= unit.mercCost
+                    Game.currentPlayer.addMilitaryUnit(unit)
                 } else {
                     val population = Game.currentPlayer.population
                     if (population.adults.size > unit.popCost) {
                         Game.currentPlayer.money -= unit.recruitCost
                         population.removeAdults(unit.popCost)
                         Game.currentPlayer.land.buildings.updateUsedBuildings(population)
+                        Game.currentPlayer.addMilitaryUnit(unit)
                     }
                 }
                 updateCallback()

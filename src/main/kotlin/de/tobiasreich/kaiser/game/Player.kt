@@ -7,6 +7,7 @@ import de.tobiasreich.kaiser.game.data.country.Buildings.Companion.GRAIN_STORED_
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.player.*
 import de.tobiasreich.kaiser.game.data.population.Laws
 import de.tobiasreich.kaiser.game.data.population.Person
@@ -71,6 +72,10 @@ class Player{
     var storedFood = 1000           // The resources (how much wheat is in the granaries)
     var foodForDistribution = 1000  // Amount of food to be distributed (i.e. how much do they get for that year)
     var foodPrice = 50              // The current wheat price for this player this year
+
+    /* The units the player owns, grouped by unit */
+    var miliarty = mutableMapOf<MilitaryUnit, Int>()
+
 
     init {
         calculateMood()
@@ -342,5 +347,24 @@ class Player{
         selectedPlayer.addMessage(DonationMessage(this, selectedResource, donationAmount, people))
     }
 
+
+    /** Adds a military unit to the players troops */
+    fun addMilitaryUnit(unit : MilitaryUnit){
+        if(miliarty[unit] == null){
+            println("Adding first ${unit.name} to the troops")
+            miliarty[unit] = 1
+        } else {
+            miliarty[unit] = miliarty[unit]!! + 1
+            println("Added ${unit.name}- (currently ${miliarty[unit]} units)")
+        }
+    }
+
+
+    /** Removes a military unit from the players troops.
+     *  This can happen due to dying, selling, donating etc. */
+    fun removeMilitaryUnit(unit : MilitaryUnit){
+        println("Removing unit ${unit.name} (from ${miliarty[unit]} units)")
+        miliarty[unit] = miliarty[unit]!! - 1
+    }
 
 }
