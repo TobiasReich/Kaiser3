@@ -196,47 +196,44 @@ class Player{
      *  - Set a new harvest condition
      *  ...
      *
-     *  Then processes the decisions of the player of the last year
-     *  This includes
-     *  - calculate population growth / shrinking
-     *  - calculate health
-     *  - calculate work output
-     *  - calculate taxes
-     *  - calculate educational changes
-     *  - calculate mood
-     *  - ...
-     */
-    fun startNewTurn() {
-        // Clear old modifier before "processing" the news messages (so they affect only this single turn)
+     *  NOTE: This is all done in order to create the "news" messages.
+     *  For everything that is done after that (i.e. when the player finally starts making the turn)
+     *  the onNewTurnStarted() call is executed. */
+    fun beforeNewTurnStart() {
+        // Clear old modifiers before "processing" the news messages (so they affect only this single turn)
         clearMoodModifier()
         population.clearMoodModifier()
-
-        //messageList.clear() //Don't cleat this list or messages from other players will be lost!!!
 
         // Only show the update messages if the flag is not true
         // This is important in order to not show the update to a players first turn (or later when loading a saved game etc.)
         if (firstTurn){
             // Set this flag to false so the next turn everything goes as normal
             firstTurn = false
-            land.buildings.updateUsedBuildings(population)  // Updating employment for the first turn, showing correct predictions
         } else {
             // NOT the first turn: calculate updates and show the messages!
             messageList.add(population.processPopulationChange(this))
-            land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed)
+            //land.buildings.updateUsedBuildings(population)  // Updating employment (since people changed) Needed here??
             messageList.add(processHarvest(this)) // Harvest
-            this.money -= calculateTroopPayment()
-
             //...
         }
-        // ------- Update player statistics -------
-
-        calculateMood()                                 // Updating mood (In case something has changed - e.g. events)
-
-        // ------- AFTER THIS CALL, THE PLAYER GETS MESSAGES (AND CONSEQUENCES) -------
-        // So everything in this method is is executed before (e.g. updates, calculations..)
     }
 
-    //</editor-fold>
+
+    /** This is called directly when the player has finished reading all news and is now starting the turn.
+     *  Use this in order to update player values (e.g. mood, used buildings, morale...)
+     *
+     *  NOTE: This is executed after the player has read all the messages at the start of the turn.
+     *  Doing anything regarding that is too late here. Consider executing it in beforeNewTurnStart()! */
+    fun onNewTurnStarted() {
+        calculateMood()                                 // Updating mood (In case something has changed - e.g. events)
+        land.buildings.updateUsedBuildings(population)  // Updating employment for the first turn, showing correct predictions
+        this.money -= calculateTroopPayment()
+        // ...
+    }
+
+
+
+        //</editor-fold>
 
     // ------------------------------------------------------------------------
     //<editor-fold desc="Message Management">

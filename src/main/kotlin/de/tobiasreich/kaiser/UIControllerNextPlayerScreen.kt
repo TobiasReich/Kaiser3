@@ -1,13 +1,12 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
 import javafx.scene.shape.Line
 import utils.FXUtils.FxUtils.toRGBCode
 import java.net.URL
@@ -15,7 +14,7 @@ import java.util.*
 
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
-class UIControllerNextPlayerScreen : Initializable {
+class UIControllerNextPlayerScreen : Initializable, IMessageController {
 
     @FXML
     private lateinit var nextPlayerAddress: Label
@@ -43,21 +42,10 @@ class UIControllerNextPlayerScreen : Initializable {
     @FXML
     fun onNextPlayerButtonClick(actionEvent: ActionEvent) {
         // !!! This starts a new turn for the player!!!s
-        Game.currentPlayer.startNewTurn()
+        Game.currentPlayer.beforeNewTurnStart()
 
         // --------------------------------------------
-
-        val message = Game.currentPlayer.getNextMessage()
-
-        if (message == null){
-            ViewController.showGameScene()
-        } else {
-            val loader = message.getViewLoader()
-            val view = loader.load() as Pane
-            val nextSceneController = loader.getController() as IMessageController
-            nextSceneController.setMessage(message)
-            ViewController.showView(view)
-        }
+        proceedToNextNews()
     }
 
     @FXML
@@ -70,6 +58,10 @@ class UIControllerNextPlayerScreen : Initializable {
         nextPlayerTopLine.stroke = player.playerColor
         nextPlayerBottomLine.stroke = player.playerColor
         nextPlayerNextTurnButton.style = ("-fx-background-color: ${player.playerColor.toRGBCode()}; ")
+    }
+
+    override fun setMessage(message: ReportMessage) {
+        // Nothing to do here. This is always the first one!
     }
 
 }

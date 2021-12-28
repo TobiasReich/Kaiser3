@@ -42,20 +42,6 @@ class UIControllerMessageDonationReaction : Initializable, IMessageController{
      *******************************************/
 
 
-    private fun proceedToNextNews() {
-        val message = Game.currentPlayer.getNextMessage()
-
-        if (message == null){
-            ViewController.showGameScene()
-        } else {
-            val loader = message.getViewLoader()
-            val view = loader.load() as Pane
-            val nextSceneController = loader.getController() as IMessageController
-            nextSceneController.setMessage(message)
-            ViewController.showView(view)
-        }
-    }
-
 
     @FXML
     override fun initialize(p0: URL?, bundle: ResourceBundle?) { }
