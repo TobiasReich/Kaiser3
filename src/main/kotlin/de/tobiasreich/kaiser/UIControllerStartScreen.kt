@@ -53,7 +53,7 @@ class UIControllerStartScreen : Initializable, IPlayerConfigChange {
     @FXML
     fun onStartGameClick(actionEvent: ActionEvent) {
         Game.setupGame(getGameConfiguration().players)
-        ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
+        ViewController.showNextPlayerScene()
     }
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {

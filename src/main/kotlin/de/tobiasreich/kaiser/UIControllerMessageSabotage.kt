@@ -2,6 +2,8 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.data.military.SabotageType
+import de.tobiasreich.kaiser.game.data.military.SabotageType.Companion.MILITARY_MORALE_REDUCTION_FACTOR
+import de.tobiasreich.kaiser.game.data.military.SabotageType.Companion.REVOLT_MOOD_REDUCTION_FACTOR
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.SabotageMessage
 import javafx.event.ActionEvent
@@ -42,7 +44,7 @@ class UIControllerMessageSabotage : Initializable, IMessageController{
         val message = Game.currentPlayer.getNextMessage()
 
         if (message == null){
-            ViewController.showScene(ViewController.SCENE_NAME.GAME)
+            ViewController.showGameScene()
         } else {
             val loader = message.getViewLoader()
             val view = loader.load() as Pane
@@ -60,7 +62,6 @@ class UIControllerMessageSabotage : Initializable, IMessageController{
     }
 
     override fun setMessage(message: ReportMessage) {
-        println("setMessage")
         this.message = message as SabotageMessage
         updateView()
     }
@@ -75,11 +76,9 @@ class UIControllerMessageSabotage : Initializable, IMessageController{
         // If the mission failed, check if the apprehended spy will talk
         if (!sabotageSuccess){
             messageText = bundle.getString(message.sabotageType.sabotageText)
-            println("SABOTAGE")
 
             //TODO We might want to add the internal security here (laws, perks...)
             if(message.sabotageType.confess < Math.random()){
-                println("CONFESSION")
                 val titleString = if(message.sabotagingPlayer.isMale){
                     bundle.getString(message.sabotagingPlayer.playerTitle.resourceNameMale)
                 } else {
@@ -91,23 +90,26 @@ class UIControllerMessageSabotage : Initializable, IMessageController{
                     message.sabotagingPlayer.name, countryName)
             }
         } else {
-            println("ACCIDENT")
             messageText = bundle.getString(message.sabotageType.accidentText)
         }
 
-        // TODO Add consequences
-
         // Only execute the consequences when the sabotage was effective
         if (sabotageSuccess) {
+            val player = Game.currentPlayer
             when (message.sabotageType) {
                 SabotageType.STEAL_MONEY -> {
-                    Game.currentPlayer.money = (Game.currentPlayer.money.toDouble() * 0.9).toInt()
+                    player.money = (player.money.toDouble() * 0.9).toInt()
                 }
                 SabotageType.BURN_MILLS -> {
+                    player.land.buildings.destroyMill()
+                    player.land.buildings.updateUsedBuildings(player.population)
                 }
                 SabotageType.START_REVOLT -> {
+                    player.population.addMoodBonus(REVOLT_MOOD_REDUCTION_FACTOR)
+                    player.calculateMood()
                 }
                 SabotageType.DEMORALIZE_TROOPS -> {
+                    player.addMoodBonus(MILITARY_MORALE_REDUCTION_FACTOR)
                 }
             }
         }

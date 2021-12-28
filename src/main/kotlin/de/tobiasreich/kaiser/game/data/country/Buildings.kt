@@ -74,6 +74,15 @@ class Buildings {
         println("Used buildings: Mills: $usedMills, Granaries: $usedGranaries, Markets: $usedMarkets")
     }
 
+    /** Destroys one of the player's mills.
+     *  TODO We might want to "redraw" the map after that.
+     */
+    fun destroyMill() {
+        if(mills > 1){
+            mills -= 1
+        }
+    }
+
     // Other buildings:
 
     // churches

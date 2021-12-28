@@ -18,26 +18,24 @@ import utils.FxDialogs
 /** Manager for setting views to the stage */
 object ViewController {
 
-    @Suppress("ClassName")
-    enum class SCENE_NAME {
-        START_SCREEN,
-        GAME,
-        NEXT_PLAYER
-    }
-
-    //var main: Scene? = null
     lateinit var rootPane: BorderPane
 
-    /** This shows a certain screen*/
-    fun showScene(sceneName: SCENE_NAME) {
-        //main!!.root = when (sceneName){
-        val viewToShow : Parent = when (sceneName){
-            SCENE_NAME.START_SCREEN -> { FXMLLoader.load(javaClass.getResource("scene-game-config-screen.fxml"), Game.resourcesBundle) }
-            SCENE_NAME.GAME -> { FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.resourcesBundle) }
-            SCENE_NAME.NEXT_PLAYER -> { FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.resourcesBundle) }
-        }
+    /** This shows the "NEXT PLAYER" screen*/
+    fun showNextPlayerScene() {
+        val viewToShow : Pane = FXMLLoader.load(javaClass.getResource("scene-next-player-screen.fxml"), Game.resourcesBundle)
+        showView(viewToShow)
+    }
 
-        rootPane.center = viewToShow
+    /** This shows the START SCREEN screen*/
+    fun showStartScreenScene() {
+        val viewToShow : Pane =  FXMLLoader.load(javaClass.getResource("scene-game-config-screen.fxml"), Game.resourcesBundle)
+        showView(viewToShow)
+    }
+
+    /** This shows the GAME screen*/
+    fun showGameScene() {
+        val viewToShow : Pane = FXMLLoader.load(javaClass.getResource("scene-game-view.fxml"), Game.resourcesBundle)
+        showView(viewToShow)
     }
 
     /** This shows a certain screen (used for the news) */

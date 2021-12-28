@@ -46,7 +46,7 @@ class UIControllerMessageDonationReaction : Initializable, IMessageController{
         val message = Game.currentPlayer.getNextMessage()
 
         if (message == null){
-            ViewController.showScene(ViewController.SCENE_NAME.GAME)
+            ViewController.showGameScene()
         } else {
             val loader = message.getViewLoader()
             val view = loader.load() as Pane

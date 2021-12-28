@@ -76,6 +76,8 @@ class Player{
 
     /* The units the player owns, grouped by unit */
     var miliarty = mutableMapOf<MilitaryUnit, Int>()
+    /* The bonus / malus for troop morale. Higher values make the units less likely to desert. */
+    var miliartyMoodModifier = 0.0
 
 
     init {
@@ -205,6 +207,10 @@ class Player{
      *  - ...
      */
     fun startNewTurn() {
+        // Clear old modifier before "processing" the news messages (so they affect only this single turn)
+        clearMoodModifier()
+        population.clearMoodModifier()
+
         //messageList.clear() //Don't cleat this list or messages from other players will be lost!!!
 
         // Only show the update messages if the flag is not true
@@ -225,6 +231,9 @@ class Player{
         // ------- Update player statistics -------
 
         calculateMood()                                 // Updating mood (In case something has changed - e.g. events)
+
+        // ------- AFTER THIS CALL, THE PLAYER GETS MESSAGES (AND CONSEQUENCES) -------
+        // So everything in this method is is executed before (e.g. updates, calculations..)
     }
 
     //</editor-fold>
@@ -294,16 +303,16 @@ class Player{
         val taxMarkets = land.buildings.usedMarkets * BuildingType.MARKET.income
         val totalPotentialTax = taxMills + taxGranaries + taxMarkets
 
-        println("Income: Mills: $taxMills, Granaries: $taxGranaries, Markets: $taxMarkets -> $totalPotentialTax")
+//        println("Income: Mills: $taxMills, Granaries: $taxGranaries, Markets: $taxMarkets -> $totalPotentialTax")
 
         val incomeTax = totalPotentialTax * laws.incomeTax * laws.lawEnforcement
         val healthExpenses = population.getAmountPeople() * BASE_EXPENSE_HEALTH_SYSTEM * laws.healthSystem
         val educationExpenses = population.children.size * BASE_EXPENSE_EDUCATION_SYSTEM * laws.educationSystem
 
-        println("Adults: ${population.adults.size}, Total: ${population.getAmountPeople()}, Children: ${population.children.size}")
-        println("Tax income (pure): $incomeTax")
-        println("Health expenses: $healthExpenses")
-        println("Education expenses: $educationExpenses")
+//        println("Adults: ${population.adults.size}, Total: ${population.getAmountPeople()}, Children: ${population.children.size}")
+//        println("Tax income (pure): $incomeTax")
+//        println("Health expenses: $healthExpenses")
+//        println("Education expenses: $educationExpenses")
 
         return (incomeTax - healthExpenses - educationExpenses).toInt()
     }
@@ -393,6 +402,18 @@ class Player{
         }
 
         selectedPlayer.addMessage(SabotageMessage(this, sabotageType))
+    }
+
+
+    /** adds / subtracts a mood bonus for the troops */
+    fun addMoodBonus(amount : Double) {
+        this.miliartyMoodModifier += amount
+        println("Miliarty Mood Modifer: $miliartyMoodModifier")
+    }
+
+    /** Clears the mood bonus/malus for the troops */
+    private fun clearMoodModifier(){
+        this.miliartyMoodModifier = 0.0
     }
 
 }

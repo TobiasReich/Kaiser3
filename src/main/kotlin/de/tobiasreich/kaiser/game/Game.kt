@@ -48,8 +48,7 @@ object Game {
         }
 
         currentPlayer = players[nextPlayerIndex]
-        ViewController.showScene(ViewController.SCENE_NAME.NEXT_PLAYER)
-        //NextPlayerScreenUIController.showPlayerNews()
+        ViewController.showNextPlayerScene()
     }
 
     // The year is basically the turn number

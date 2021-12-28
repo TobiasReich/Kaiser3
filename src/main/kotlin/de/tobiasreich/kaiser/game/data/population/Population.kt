@@ -52,7 +52,10 @@ class Population {
       */
     var defaultMood = 100
 
-    var mood : Int = 50
+    /** A modifier that can be applied temporarily. E.g. by sabotage */
+    var moodModifier = 0
+
+    var mood = 50
 
 
     init {
@@ -251,16 +254,16 @@ class Population {
 
     /** This calculates the mood for the population. */
     fun calculateMood(laws: Laws) {
-        // MoodReductionFactor is 1 - tax - lawEndorcement - (1-immigration)
+        // MoodReduction is 1 - tax - lawEndorcement - (1-immigration)
         // E.g. tax=0, law=0, immigration=1 -> mood reduction is 0
-        val moodReductionFactor = laws.incomeTax + laws.lawEnforcement + (1.0 - laws.immigrationStrictness)
+        val moodReduction = laws.incomeTax + laws.lawEnforcement + (1.0 - laws.immigrationStrictness)
 
         // Mood raises by "(health + educational expenses) * 0.1"
         // E.g. health = 1, education = 1 -> Total mood gain = 0.2 (20%)
         val moodAddition = (laws.healthSystem + laws.educationSystem) * 0.1
 
         // Mood is calculated by the default mood - reduction factor + mood addition
-        val calculatedMood = (defaultMood - (moodReductionFactor * 100.0) + (moodAddition * 100.0)).toInt()
+        val calculatedMood = (defaultMood + moodModifier - (moodReduction * 100.0) + (moodAddition * 100.0)).toInt()
 
         //        println("moodReductionFactor: $moodReductionFactor")
         //        println("moodAddition: $moodAddition")
@@ -281,5 +284,16 @@ class Population {
     fun addAdults(slaves : List<Person>) {
         println("Slaves added to population: ${slaves.size}")
         adults.addAll(slaves)
+    }
+
+    /** adds / subtracts a mood bonus for this population! */
+    fun addMoodBonus(amount : Int) {
+        this.moodModifier += amount
+        println("MoodModifier: $moodModifier")
+    }
+
+    /** Clears the mood bonus/malus for this population! */
+    fun clearMoodModifier(){
+        this.moodModifier = 0
     }
 }
