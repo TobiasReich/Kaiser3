@@ -151,14 +151,14 @@
                </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Sabotage">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onSabotageButtonClick" prefWidth="125.0" text="Sabotage">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_sabotage_button" />
                     </tooltip>
                     <graphic>
                         <ImageView fx:id="sabotageButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_bomb.png">
                                 </Image>
                             </image>
                         </ImageView>

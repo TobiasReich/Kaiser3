@@ -180,6 +180,18 @@ class UIControllerGame : Initializable {
         rootBorderPane.center = donationScene
     }
 
+    /** When the player clicks on the sabotage button */
+    fun onSabotageButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-sabotage.fxml"), Game.resourcesBundle)
+        val donationScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val controller = fxmlLoader.getController<UIControllerActionSabotage>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            updateViews()
+            showLandView() //The callback is only called when a donation was made. Show the "land" again
+        }
+        rootBorderPane.center = donationScene
+    }
 
     /** Shows the military action when the user clicks on the military-button */
     fun onMilitaryButtonClick(actionEvent: ActionEvent) {
@@ -284,6 +296,7 @@ class UIControllerGame : Initializable {
     fun onPopulationChartClicked(mouseEvent: MouseEvent) {
         ViewController.showInfoPopUp(populationChart, bundle.getString("game_summary_population_title"),bundle.getString("game_summary_population_info"))
     }
+
 
 
 }
