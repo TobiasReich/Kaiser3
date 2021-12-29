@@ -23,8 +23,10 @@ import java.io.IOException
 class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
 
     companion object{
-        const val LAND_WIDTH_FIELDS  = 25
+
+        // The height is fixed. When the land grows, it grows in width
         const val LAND_HEIGHT_FIELDS = 20
+        const val LAND_FIELD_WIDTH = 200 // How many ha is one field in the graphical representation
 
         const val MIN_ZOOM_LEVEL = 20.0
         const val MAX_ZOOM_LEVEL = 50.0
@@ -33,10 +35,12 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
     @FXML
     lateinit var drawCanvas: Canvas
 
+    private var imageMill: Image
     private var imageBarn: Image
     private var imageMarket: Image
 
     private var fieldSize : Double
+    private var tilesWidth  : Int
 
     init {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("view-player-land.fxml"), Game.resourcesBundle)
@@ -49,6 +53,7 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         }
 
         // loading the images for later drawing
+        imageMill = Image(javaClass.getResource("img/icon_windmill.png")!!.toExternalForm())
         imageBarn = Image(javaClass.getResource("img/icon_granary.png")!!.toExternalForm())
         imageMarket = Image(javaClass.getResource("img/icon_market.png")!!.toExternalForm())
 
@@ -63,9 +68,13 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
             event.consume()
         }
 
-        fieldSize = Game.currentPlayer.land.zoomLevelImageSize
+        val land = Game.currentPlayer.land
+        fieldSize = land.zoomLevelImageSize
 
-        drawCanvas.width = LAND_WIDTH_FIELDS * fieldSize
+        // The land
+        tilesWidth  = land.landSize / LAND_FIELD_WIDTH
+
+        drawCanvas.width = tilesWidth * fieldSize
         drawCanvas.height = LAND_HEIGHT_FIELDS * fieldSize
 
         updateView()
@@ -73,14 +82,14 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
 
     private fun zoomIn() {
         fieldSize = (Game.currentPlayer.land.zoomLevelImageSize++).coerceAtMost(MAX_ZOOM_LEVEL)
-        drawCanvas.width = LAND_WIDTH_FIELDS * fieldSize
+        drawCanvas.width = tilesWidth * fieldSize
         drawCanvas.height = LAND_HEIGHT_FIELDS * fieldSize
         updateView()
     }
 
     private fun zoomOut() {
         fieldSize = (Game.currentPlayer.land.zoomLevelImageSize--).coerceAtLeast(MIN_ZOOM_LEVEL)
-        drawCanvas.width = LAND_WIDTH_FIELDS * fieldSize
+        drawCanvas.width = tilesWidth * fieldSize
         drawCanvas.height = LAND_HEIGHT_FIELDS * fieldSize
         updateView()
     }
@@ -94,6 +103,7 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         matrix.forEachIndexed { indexColumn, column ->
             column.forEachIndexed { indexRow, fieldType ->
                 when(fieldType){
+                    BuildingType.MILL -> { drawCanvas.graphicsContext2D.drawImage(imageMill, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     BuildingType.MARKET -> { drawCanvas.graphicsContext2D.drawImage(imageMarket, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     BuildingType.GRANARY -> { drawCanvas.graphicsContext2D.drawImage(imageBarn, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     //TODO Add the other buildings

@@ -1,7 +1,7 @@
 package de.tobiasreich.kaiser.game.data.country
 
+import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_FIELD_WIDTH
 import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_HEIGHT_FIELDS
-import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_WIDTH_FIELDS
 import de.tobiasreich.kaiser.game.data.population.Population
 import kotlin.math.floor
 
@@ -12,6 +12,12 @@ class Land {
 
         const val LAND_USED_PER_FARMER = 5 // ha that can be worked on by 1 single farmer (person)
         const val FOOD_HARVESTED_BY_FARMER = 5.0 // How much food can be harvested optimally per farmer
+
+        const val HEIGHT_MILL = 4
+        const val HEIGHT_GRANARY = 5
+        const val HEIGHT_MARKET = 6
+        const val HEIGHT_WAREHOUSE = 7
+
     }
 
     // This is the size of one tile in the map view, larger values lead to a bigger image
@@ -22,14 +28,41 @@ class Land {
 
     val buildings = Buildings()     // The standard population at start
 
+
+    /** This returns a matrix of the land to draw */
     fun getLandViewMatrix() : Array<Array<BuildingType?>>{
-        val matrix = Array(LAND_WIDTH_FIELDS) { arrayOfNulls<BuildingType>(LAND_HEIGHT_FIELDS) }
-        // 1st parameter is column, 2nd parameter is the row
-        matrix[0][0] = BuildingType.MARKET
-        matrix[1][1] = BuildingType.GRANARY
-        matrix[1][2] = BuildingType.GRANARY
-        matrix[14][3] = BuildingType.MARKET
-        matrix[11][12] = BuildingType.MARKET
+        val width = landSize / LAND_FIELD_WIDTH
+        val matrix = Array(width) { arrayOfNulls<BuildingType>(LAND_HEIGHT_FIELDS) }
+
+        // For every market
+        // We can have 1 market / 1000 ha land
+        // That means we can draw every market on every 1000/LAND_FIELD_WIDTH fields
+        // E.g. LAND_FIELD_WIDTH = 100 -> every MARKET.landNeeded/100 = 10 fields.
+        // Thus: 2 Markets -> 1st market at field 0, 2nd market at field 10
+        val fieldsPerMill = BuildingType.MILL.landNeeded / LAND_FIELD_WIDTH
+        for (mill in 0 until buildings.mills){
+            // 1st parameter is column (width), 2nd parameter is the row (height)
+            matrix[mill * fieldsPerMill + 3][HEIGHT_MILL] = BuildingType.MILL
+        }
+
+        val fieldsPerMarket = BuildingType.MARKET.landNeeded / LAND_FIELD_WIDTH
+        for (market in 0 until buildings.markets){
+            // 1st parameter is column (width), 2nd parameter is the row (height)
+            matrix[market * fieldsPerMarket + 3][HEIGHT_MARKET] = BuildingType.MARKET
+        }
+
+        val fieldsPerGranary = BuildingType.GRANARY.landNeeded / LAND_FIELD_WIDTH
+        for (granary in 0 until buildings.granaries){
+            // 1st parameter is column (width), 2nd parameter is the row (height)
+            matrix[granary * fieldsPerGranary + 3][HEIGHT_GRANARY] = BuildingType.GRANARY
+        }
+
+
+       // matrix[0][0] = BuildingType.MARKET
+        //matrix[0][5] = BuildingType.GRANARY
+//        matrix[1][2] = BuildingType.GRANARY
+//        matrix[14][3] = BuildingType.MARKET
+//        matrix[11][12] = BuildingType.MARKET
         return matrix
     }
 
