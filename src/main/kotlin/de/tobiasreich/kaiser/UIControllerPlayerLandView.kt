@@ -42,6 +42,10 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
     private var imageSchool: Image
     private var imageWall: Image
     private var imageHouse: Image
+    private var imageTree: Image
+    private var imageTree2: Image
+    private var imageBushes: Image
+    private var imageRoad: Image
 
     private var fieldSize : Double
     private var tilesWidth  : Int
@@ -64,6 +68,10 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         imageSchool = Image(javaClass.getResource("img/icon_school.png")!!.toExternalForm())
         imageWall = Image(javaClass.getResource("img/icon_wall.png")!!.toExternalForm())
         imageHouse = Image(javaClass.getResource("img/icon_houses.png")!!.toExternalForm())
+        imageTree = Image(javaClass.getResource("img/icon_tree.png")!!.toExternalForm())
+        imageTree2 = Image(javaClass.getResource("img/icon_tree2.png")!!.toExternalForm())
+        imageBushes = Image(javaClass.getResource("img/icon_bushes.png")!!.toExternalForm())
+        imageRoad = Image(javaClass.getResource("img/icon_road.png")!!.toExternalForm())
 
         addEventFilter(ScrollEvent.ANY) { event ->
             if (event.deltaY > 0) {
@@ -117,7 +125,11 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
                     BuildingImage.WAREHOUSE -> { drawCanvas.graphicsContext2D.drawImage(imageWarehouse, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     BuildingImage.SCHOOL -> { drawCanvas.graphicsContext2D.drawImage(imageSchool, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     BuildingImage.WALL -> { drawCanvas.graphicsContext2D.drawImage(imageWall, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.TREE -> { drawCanvas.graphicsContext2D.drawImage(imageTree, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.TREE2 -> { drawCanvas.graphicsContext2D.drawImage(imageTree2, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     BuildingImage.HOUSE -> { drawCanvas.graphicsContext2D.drawImage(imageHouse, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.BUSHES -> { drawCanvas.graphicsContext2D.drawImage(imageBushes, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.ROAD -> { drawCanvas.graphicsContext2D.drawImage(imageRoad, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     //TODO Add the other buildings
                     else -> { /* nothing to do for now for null values but we might draw them with a texture, too*/}
                 }

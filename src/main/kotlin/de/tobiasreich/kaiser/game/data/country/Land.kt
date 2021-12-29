@@ -3,7 +3,6 @@ package de.tobiasreich.kaiser.game.data.country
 import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_FIELD_WIDTH
 import de.tobiasreich.kaiser.UIControllerPlayerLandView.Companion.LAND_HEIGHT_FIELDS
 import de.tobiasreich.kaiser.game.data.population.Population
-import java.lang.Math.min
 import kotlin.math.floor
 
 /** Defines the country and it's buildings. */
@@ -21,10 +20,17 @@ class Land {
         const val HEIGHT_SCHOOL = 9
 
         // The "draw width" for a city (border width
-        const val CITY_WIDTH = 6
+        const val CITY_WIDTH = 10
 
         const val AMOUNT_PEOPLE_PER_BUILDING = 50
         const val AMOUNT_BUILDINGS_PER_CITY = 5
+
+        const val COMPLETE_CITY_POPULATION = 5000
+        const val COMPLETE_CITY_MILLS = 4
+        const val COMPLETE_CITY_MARKETS = 3
+        const val CITY_GRANARIES = 1
+        const val CITY_WAREHOUSES = 1
+        const val CITY_SCHOOLS = 1
 
     }
 
@@ -40,131 +46,346 @@ class Land {
     /** This returns a matrix of the land to draw */
     //TODO That algorithm is still ugly. Find a better way. This is just a proof of concept!
     fun getLandViewMatrix(population : Population) : Array<Array<BuildingImage?>>{
-        val width = landSize / LAND_FIELD_WIDTH
-        val matrix = Array(width) { arrayOfNulls<BuildingImage>(LAND_HEIGHT_FIELDS) }
+        val widthFields = landSize / LAND_FIELD_WIDTH
+        val matrix = Array(widthFields) { arrayOfNulls<BuildingImage>(LAND_HEIGHT_FIELDS) }
 
-        // First draw the buildings and city borders before drawing special buildings
-        setupCities(matrix, population, buildings.markets)
+        val amountCities = widthFields / CITY_WIDTH
 
-        drawMills(matrix)
-        drawMarkets(matrix)
-        drawGranaries(matrix)
-        drawWarehouses(matrix)
-        drawSchools(matrix)
+        var amountPeople = population.getAmountPeople()
+        var amountMills = buildings.mills
+        var amountMarkets = buildings.markets
+        var amountGranaries = buildings.granaries
+        var amountWarehouses = buildings.warehouses
+        var schoolsToDraw = buildings.schools
+        //TODO: Add other buildings like palace and cathedral
+
+        for (cityIndex in 0 until amountCities){
+            drawCity(matrix, 10 * cityIndex, amountPeople, amountMills, amountMarkets, amountGranaries, amountWarehouses, schoolsToDraw)
+            // Reduce maximum values a city can show so the next potential city shows only what it can actually have.
+            amountPeople -= COMPLETE_CITY_POPULATION
+            amountMills -= COMPLETE_CITY_MILLS
+            amountMarkets -= COMPLETE_CITY_MARKETS
+            amountGranaries -= CITY_GRANARIES
+            amountWarehouses -= CITY_WAREHOUSES
+            schoolsToDraw -= CITY_SCHOOLS
+        }
 
         return matrix
     }
 
-    private fun drawSchools(matrix: Array<Array<BuildingImage?>>) {
-        val fieldsPerSchool = BuildingType.SCHOOL.landNeeded / LAND_FIELD_WIDTH
-        for (school in 0 until buildings.schools) {
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            matrix[school * fieldsPerSchool + 5][HEIGHT_SCHOOL] = BuildingImage.SCHOOL
+    /** This draws one city beginning at the given StartWidth.
+     *  The caller can simply define a city (by the properties) and where to draw it (startWitdh)
+     *  Excessive values are ignored (e.g. if markets is a too high value, only the max amounts of markets / city are drawn)
+     *  That way the caller can always reduce it's amount of objects by a fixed number and doesn't have to worry about dawing
+     *  wrong values. Negative values are also ignored
+     *
+     *  A full city looks like that
+     *  <- 10 fields ->
+     *
+     *     0123456789
+     *  0  ..t....T..
+     *  1  ..b..t....
+     *  2  ..######..
+     *  3  ..#m.M.#.t
+     *  4  .t#hSmW#.b
+     *  5  ..#.MPh#..
+     *  6  ====C=====
+     *  7  ..#.M.h#t.
+     *  8  t.#hGM.#b.
+     *  9  ..#m.h.#.t
+     *  10 ..######..
+     *  11 ..t..b.t..
+     *  12 ....T.....
+     *  13 .t.....t..
+     *
+     *  # = wall
+     *
+     *  M = Mill 4x
+     *  m = market 3x
+     *  G = Granary 1x
+     *  W = Warehouse 1x
+     *  h = House 5x
+     *  S = School 1x
+     *  ... other buildings added when needed
+     *  P = Palace (1x)
+     *  C = Cathedral (1x)
+     *
+     *  = = Road (through City)
+     *  t = Tree 10x
+     *  T = Tree2 3x
+     *  b = bush 4x
+     */
+    private fun drawCity(matrix: Array<Array<BuildingImage?>>, startWidth : Int,  population: Int, mills : Int,
+                         markets : Int, granaries: Int, warehouses : Int, schools : Int){
+        val housesToDraw = population.coerceIn(0, COMPLETE_CITY_POPULATION) / 1000 // 0..5 houses
+        val millsToDraw = mills.coerceIn(0, COMPLETE_CITY_MILLS)
+        val marketsToDraw = markets.coerceIn(0, COMPLETE_CITY_MARKETS)
+        val granariesToDraw = granaries.coerceIn(0, CITY_GRANARIES)
+        val warehousesToDraw = warehouses.coerceIn(0, CITY_WAREHOUSES)
+        val schoolsToDraw = schools.coerceIn(0, CITY_SCHOOLS)
+
+        // Only "complete" cities have walls.
+        val hasWalls = population > COMPLETE_CITY_POPULATION && mills > COMPLETE_CITY_MILLS && markets > COMPLETE_CITY_MARKETS
+        if (hasWalls){
+            drawWalls(matrix, startWidth)
         }
+
+        drawRoad(matrix, startWidth)
+        drawNature(matrix, startWidth)
+        drawHouses(matrix, startWidth, housesToDraw)
+        drawMills(matrix, startWidth, millsToDraw)
+        drawMarkets(matrix, startWidth, marketsToDraw)
+        drawGranaries(matrix, startWidth, granariesToDraw)
+        drawWarehouses(matrix, startWidth, warehousesToDraw)
+        drawSchools(matrix, startWidth, schoolsToDraw)
     }
 
-    private fun drawWarehouses(matrix: Array<Array<BuildingImage?>>) {
-        val fieldsPerWarehouse = BuildingType.WAREHOUSE.landNeeded / LAND_FIELD_WIDTH
-        for (warehouse in 0 until buildings.warehouses) {
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            matrix[warehouse * fieldsPerWarehouse + 5][HEIGHT_WAREHOUSE] = BuildingImage.WAREHOUSE
-        }
+
+    /** This draws the road through the city at height 6 */
+    private fun drawRoad(matrix: Array<Array<BuildingImage?>>, startX: Int) {
+        println("City complete, drawing walls")
+
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        matrix[startX+0][6] = BuildingImage.ROAD
+        matrix[startX+1][6] = BuildingImage.ROAD
+        matrix[startX+2][6] = BuildingImage.ROAD
+        matrix[startX+3][6] = BuildingImage.ROAD
+        matrix[startX+4][6] = BuildingImage.ROAD
+        matrix[startX+5][6] = BuildingImage.ROAD
+        matrix[startX+6][6] = BuildingImage.ROAD
+        matrix[startX+7][6] = BuildingImage.ROAD
+        matrix[startX+8][6] = BuildingImage.ROAD
+        matrix[startX+9][6] = BuildingImage.ROAD
     }
 
-    private fun drawGranaries(matrix: Array<Array<BuildingImage?>>) {
-        val fieldsPerGranary = BuildingType.GRANARY.landNeeded / LAND_FIELD_WIDTH
-        for (granary in 0 until buildings.granaries) {
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            matrix[granary * fieldsPerGranary + 3][HEIGHT_GRANARY] = BuildingImage.GRANARY
-        }
+    /** This draws the wall around a city
+     *
+     *     0123456789
+     *  0  ..t....T..
+     *  1  ..b..t....
+     *  2  ..######..
+     *  3  ..#....#.t
+     *  4  .t#....#.b
+     *  5  ..#....#..
+     *  6  ..........
+     *  7  ..#....#t.
+     *  8  t.#....#b.
+     *  9  ..#....#.T
+     *  10 ..######..
+     *  11 ..t..b.t..
+     *  12 ....T.....
+     *  13 .t.....t..
+     * */
+    private fun drawNature(matrix: Array<Array<BuildingImage?>>, startX: Int) {
+        println("City complete, drawing walls")
+
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        matrix[startX+2][0] = BuildingImage.TREE
+        matrix[startX+5][1] = BuildingImage.TREE
+        matrix[startX+9][3] = BuildingImage.TREE
+        matrix[startX+1][4] = BuildingImage.TREE
+        matrix[startX+8][7] = BuildingImage.TREE
+        matrix[startX+0][8] = BuildingImage.TREE
+        matrix[startX+2][11] = BuildingImage.TREE
+        matrix[startX+7][11] = BuildingImage.TREE
+        matrix[startX+1][13] = BuildingImage.TREE
+        matrix[startX+7][13] = BuildingImage.TREE
+
+        matrix[startX+7][0] = BuildingImage.TREE2
+        matrix[startX+9][9] = BuildingImage.TREE2
+        matrix[startX+4][12] = BuildingImage.TREE2
+
+        matrix[startX+2][1] = BuildingImage.BUSHES
+        matrix[startX+9][4] = BuildingImage.BUSHES
+        matrix[startX+8][8] = BuildingImage.BUSHES
+        matrix[startX+5][11] = BuildingImage.BUSHES
     }
 
-    private fun drawMarkets(matrix: Array<Array<BuildingImage?>>) {
-        val fieldsPerMarket = BuildingType.MARKET.landNeeded / LAND_FIELD_WIDTH
-        for (market in 0 until buildings.markets) {
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            matrix[market * fieldsPerMarket + 3][HEIGHT_MARKET] = BuildingImage.MARKET
+
+    /** This draws the wall around a city
+     *
+     *   0123456789
+     *  0 ..........
+     *  1 ..........
+     *  2 ..######..
+     *  3 ..#....#..
+     *  4 ..#....#..
+     *  5 ..#....#..
+     *  6 ..........
+     *  7 ..#....#..
+     *  8 ..#....#..
+     *  9 ..#....#..
+     *  10..######..
+     *  11 ..........
+     * */
+    private fun drawWalls(matrix: Array<Array<BuildingImage?>>, wallStart: Int) {
+        println("City complete, drawing walls")
+
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        matrix[wallStart+2][2] = BuildingImage.WALL
+        matrix[wallStart+3][2] = BuildingImage.WALL
+        matrix[wallStart+4][2] = BuildingImage.WALL
+        matrix[wallStart+5][2] = BuildingImage.WALL
+        matrix[wallStart+6][2] = BuildingImage.WALL
+        matrix[wallStart+7][2] = BuildingImage.WALL
+
+        matrix[wallStart+2][3] = BuildingImage.WALL
+        matrix[wallStart+7][3] = BuildingImage.WALL
+
+        matrix[wallStart+2][4] = BuildingImage.WALL
+        matrix[wallStart+7][4] = BuildingImage.WALL
+
+        matrix[wallStart+2][5] = BuildingImage.WALL
+        matrix[wallStart+7][5] = BuildingImage.WALL
+
+        matrix[wallStart+2 ][7] = BuildingImage.WALL
+        matrix[wallStart+7][7] = BuildingImage.WALL
+
+        matrix[wallStart+2][8] = BuildingImage.WALL
+        matrix[wallStart+7][8] = BuildingImage.WALL
+
+        matrix[wallStart+2][9] = BuildingImage.WALL
+        matrix[wallStart+7][9] = BuildingImage.WALL
+
+        matrix[wallStart+2][10] = BuildingImage.WALL
+        matrix[wallStart+3][10] = BuildingImage.WALL
+        matrix[wallStart+4][10] = BuildingImage.WALL
+        matrix[wallStart+5][10] = BuildingImage.WALL
+        matrix[wallStart+6][10] = BuildingImage.WALL
+        matrix[wallStart+7][10] = BuildingImage.WALL
+    }
+
+
+    /** This draws the wall around a city
+     *     0123456789
+     *  0  ..........
+     *  1  ..........
+     *  2  ..######..
+     *  3  ..#....#..
+     *  4  ..#h...#..
+     *  5  ..#...h#..
+     *  6  ..........
+     *  7  ..#...h#..
+     *  8  ..#h...#..
+     *  9  ..#..h.#.
+     *  10 ..######..
+     *  11 ..........
+     * */
+    private fun drawHouses(matrix: Array<Array<BuildingImage?>>, startWidth: Int, amountHouses: Int) {
+        println("Drawing $amountHouses houses")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (amountHouses >= 5) {
+            matrix[startWidth+3][4] = BuildingImage.HOUSE
+        }
+        if (amountHouses >= 4) {
+            matrix[startWidth+6][5] = BuildingImage.HOUSE
+        }
+        if (amountHouses >= 3) {
+            matrix[startWidth+6][7] = BuildingImage.HOUSE
+        }
+        if (amountHouses >= 2) {
+            matrix[startWidth + 3][8] = BuildingImage.HOUSE
+        }
+        if (amountHouses >= 1) {
+            matrix[startWidth + 6][9] = BuildingImage.HOUSE
         }
     }
 
 
     /**
-     * For every market
-     * We can have 1 market / 1000 ha land
-     * That means we can draw every market on every 1000/LAND_FIELD_WIDTH fields
-     * E.g. LAND_FIELD_WIDTH = 100 -> every MARKET.landNeeded/100 = 10 fields.
-     * Thus: 2 Markets -> 1st market at field 0, 2nd market at field 10
-     * 1 2 3 4 5 6 7
-     */
-    private fun drawMills(matrix: Array<Array<BuildingImage?>>) {
-        val fieldsPerMill = BuildingType.MILL.landNeeded / LAND_FIELD_WIDTH
-        for (mill in 0 until buildings.mills) {
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            matrix[mill * fieldsPerMill + 3][HEIGHT_MILL] = BuildingImage.MILL
-        }
-    }
-
-    /** This draws cities depending on the buildings
+     *     0123456789
+     *  0  ..........
+     *  1  ..........
+     *  2  ..######..
+     *  3  ..#..M.#..
+     *  4  ..#....#..
+     *  5  ..#.M..#..
+     *  6  ..........
+     *  7  ..#.M..#..
+     *  8  ..#..M.#..
+     *  9  ..#....#.
+     *  10 ..######..
+     *  11 ..........
      *
      */
-    private fun setupCities(matrix: Array<Array<BuildingImage?>>, population: Population, amountMarkets : Int) {
-        // The amount of people determine how many "houses" are build
-        // This also defines how many "cities" are "drawn"
-        val amountBuildings = population.getAmountPeople() / AMOUNT_PEOPLE_PER_BUILDING
-        val amountCities = min(amountBuildings / AMOUNT_BUILDINGS_PER_CITY, 3)
-
-        for (city in 0 until amountCities){
-            /* For each city draw the borders
-             * ######
-             * #    #
-             * #    #
-             *
-             * #    #
-             * #    #
-             * ######
-             *
-             * Each city is 10 fields apart
-             */
-
-            // 1st parameter is column (width), 2nd parameter is the row (height)
-            val startWidth = (city * 10) + 2
-            matrix[startWidth  ][3] = BuildingImage.WALL
-            matrix[startWidth+1][3] = BuildingImage.WALL
-            matrix[startWidth+2][3] = BuildingImage.WALL
-            matrix[startWidth+3][3] = BuildingImage.WALL
-            matrix[startWidth+4][3] = BuildingImage.WALL
-            matrix[startWidth+5][3] = BuildingImage.WALL
-
-            matrix[startWidth  ][4] = BuildingImage.WALL
-            matrix[startWidth+5][4] = BuildingImage.WALL
-
-            matrix[startWidth  ][5] = BuildingImage.WALL
-            matrix[startWidth+5][5] = BuildingImage.WALL
-
-            matrix[startWidth  ][7] = BuildingImage.WALL
-            matrix[startWidth+5][7] = BuildingImage.WALL
-
-            matrix[startWidth  ][8] = BuildingImage.WALL
-            matrix[startWidth+5][8] = BuildingImage.WALL
-
-            matrix[startWidth  ][9] = BuildingImage.WALL
-            matrix[startWidth+5][9] = BuildingImage.WALL
-
-            matrix[startWidth  ][10] = BuildingImage.WALL
-            matrix[startWidth+1][10] = BuildingImage.WALL
-            matrix[startWidth+2][10] = BuildingImage.WALL
-            matrix[startWidth+3][10] = BuildingImage.WALL
-            matrix[startWidth+4][10] = BuildingImage.WALL
-            matrix[startWidth+5][10] = BuildingImage.WALL
-
-
-
-            matrix[startWidth+1][9] = BuildingImage.HOUSE
-            matrix[startWidth+2][9] = BuildingImage.HOUSE
-            matrix[startWidth+3][9] = BuildingImage.HOUSE
-            matrix[startWidth+4][9] = BuildingImage.HOUSE
+    private fun drawMills(matrix: Array<Array<BuildingImage?>>, startWidth: Int, millsToDraw: Int) {
+        println("Drawing $millsToDraw mills")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (millsToDraw >= 4) {
+            matrix[startWidth+5][3] = BuildingImage.MILL
+        }
+        if (millsToDraw >= 3) {
+            matrix[startWidth+4][5] = BuildingImage.MILL
+        }
+        if (millsToDraw >= 2) {
+            matrix[startWidth + 4][7] = BuildingImage.MILL
+        }
+        if (millsToDraw >= 1) {
+            matrix[startWidth + 5][8] = BuildingImage.MILL
         }
     }
+
+
+    /**
+     *     0123456789
+     *  0  ..........
+     *  1  ..........
+     *  2  ..######..
+     *  3  ..#m...#..
+     *  4  ..#..m.#..
+     *  5  ..#....#..
+     *  6  ..........
+     *  7  ..#....#..
+     *  8  ..#....#..
+     *  9  ..#m...#.
+     *  10 ..######..
+     *  11 ..........
+     */
+    private fun drawMarkets(matrix: Array<Array<BuildingImage?>>, startWidth: Int, marketsToDraw: Int) {
+        println("Drawing $marketsToDraw markets")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (marketsToDraw >= 3) {
+            matrix[startWidth+3][9] = BuildingImage.MARKET
+        }
+        if (marketsToDraw >= 2) {
+            matrix[startWidth+5][4] = BuildingImage.MARKET
+        }
+        if (marketsToDraw >= 1) {
+            matrix[startWidth+3][3] = BuildingImage.MARKET
+        }
+    }
+
+
+    /** Draws the Granary at [8:4] s*/
+    private fun drawGranaries(matrix: Array<Array<BuildingImage?>>, startWidth: Int, granariesToDraw: Int) {
+        println("Drawing $granariesToDraw granaries")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (granariesToDraw >= 1) {
+            matrix[startWidth+4][8] = BuildingImage.GRANARY
+        }
+    }
+
+    /** Draws the Warehouse at [4:6] s*/
+    private fun drawWarehouses(matrix: Array<Array<BuildingImage?>>, startWidth: Int, warehouses: Int) {
+        println("Drawing $warehouses warehouses")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (warehouses >= 1) {
+            matrix[startWidth+6][4] = BuildingImage.GRANARY
+        }
+    }
+
+    /** Draws the School at [4:4] s*/
+    private fun drawSchools(matrix: Array<Array<BuildingImage?>>, startWidth: Int, schools: Int) {
+        println("Drawing $schools schools")
+        // 1st parameter is column (width), 2nd parameter is the row (height)
+        if (schools >= 1) {
+            matrix[startWidth+4][4] = BuildingImage.SCHOOL
+        }
+    }
+
+
+
+
 
     /** States how much buildings of this type can still be bought.
      *  NOTE: This is not the absolute amount but basically

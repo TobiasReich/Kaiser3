@@ -66,7 +66,7 @@ class Population {
         for (i in 0 until 500){
             children.add(Person((Math.random() *  AGE_ADULT).toInt()))
         }
-        for (i in 0 until 1000){
+        for (i in 0 until 17000){
             adults.add(Person((Math.random() *  AGE_OLD).toInt()))
         }
         for (i in 0 until 200){
