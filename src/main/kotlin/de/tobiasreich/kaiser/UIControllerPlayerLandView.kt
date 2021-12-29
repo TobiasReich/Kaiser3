@@ -2,7 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
-import de.tobiasreich.kaiser.game.data.country.BuildingType
+import de.tobiasreich.kaiser.game.data.country.BuildingImage
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.canvas.Canvas
@@ -36,8 +36,12 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
     lateinit var drawCanvas: Canvas
 
     private var imageMill: Image
-    private var imageBarn: Image
+    private var imageGranary: Image
     private var imageMarket: Image
+    private var imageWarehouse: Image
+    private var imageSchool: Image
+    private var imageWall: Image
+    private var imageHouse: Image
 
     private var fieldSize : Double
     private var tilesWidth  : Int
@@ -54,8 +58,12 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
 
         // loading the images for later drawing
         imageMill = Image(javaClass.getResource("img/icon_windmill.png")!!.toExternalForm())
-        imageBarn = Image(javaClass.getResource("img/icon_granary.png")!!.toExternalForm())
+        imageGranary = Image(javaClass.getResource("img/icon_granary.png")!!.toExternalForm())
         imageMarket = Image(javaClass.getResource("img/icon_market.png")!!.toExternalForm())
+        imageWarehouse = Image(javaClass.getResource("img/icon_warehouse.png")!!.toExternalForm())
+        imageSchool = Image(javaClass.getResource("img/icon_school.png")!!.toExternalForm())
+        imageWall = Image(javaClass.getResource("img/icon_wall.png")!!.toExternalForm())
+        imageHouse = Image(javaClass.getResource("img/icon_houses.png")!!.toExternalForm())
 
         addEventFilter(ScrollEvent.ANY) { event ->
             if (event.deltaY > 0) {
@@ -99,19 +107,22 @@ class UIControllerPlayerLandView(private val player : Player) : ScrollPane() {
         drawCanvas.graphicsContext2D.fill = Color.GREEN
         drawCanvas.graphicsContext2D.fillRect(0.0, 0.0, drawCanvas.width, drawCanvas.height)
 
-        val matrix = Game.currentPlayer.land.getLandViewMatrix()
+        val matrix = Game.currentPlayer.land.getLandViewMatrix(Game.currentPlayer.population)
         matrix.forEachIndexed { indexColumn, column ->
             column.forEachIndexed { indexRow, fieldType ->
                 when(fieldType){
-                    BuildingType.MILL -> { drawCanvas.graphicsContext2D.drawImage(imageMill, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
-                    BuildingType.MARKET -> { drawCanvas.graphicsContext2D.drawImage(imageMarket, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
-                    BuildingType.GRANARY -> { drawCanvas.graphicsContext2D.drawImage(imageBarn, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.MILL -> { drawCanvas.graphicsContext2D.drawImage(imageMill, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.MARKET -> { drawCanvas.graphicsContext2D.drawImage(imageMarket, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.GRANARY -> { drawCanvas.graphicsContext2D.drawImage(imageGranary, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.WAREHOUSE -> { drawCanvas.graphicsContext2D.drawImage(imageWarehouse, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.SCHOOL -> { drawCanvas.graphicsContext2D.drawImage(imageSchool, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.WALL -> { drawCanvas.graphicsContext2D.drawImage(imageWall, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
+                    BuildingImage.HOUSE -> { drawCanvas.graphicsContext2D.drawImage(imageHouse, indexColumn * fieldSize, indexRow * fieldSize, fieldSize, fieldSize) }
                     //TODO Add the other buildings
                     else -> { /* nothing to do for now for null values but we might draw them with a texture, too*/}
                 }
             }
         }
-
     }
 
 }
