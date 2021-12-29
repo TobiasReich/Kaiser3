@@ -11,13 +11,13 @@ class Buildings {
         const val FOOD_PRODUCED_PER_MILL = 1000
     }
 
-    var markets = 10
-    var mills = 10
-    var granaries = 2
-    var palacePieces = 1
-    var cathedralPieces = 1
-    var warehouses = 1
-    var schools = 1
+    var markets = 1
+    var mills = 1
+    var granaries = 1
+    var palacePieces = 0
+    var cathedralPieces = 0
+    var warehouses = 0
+    var schools = 0
 
     var usedMills = 0
     var usedGranaries = 0

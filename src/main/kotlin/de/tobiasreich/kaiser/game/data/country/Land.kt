@@ -10,20 +10,8 @@ class Land {
 
     companion object{
 
-        const val LAND_USED_PER_FARMER = 5 // ha that can be worked on by 1 single farmer (person)
-        const val FOOD_HARVESTED_BY_FARMER = 5.0 // How much food can be harvested optimally per farmer
-
-        const val HEIGHT_MILL = 4
-        const val HEIGHT_GRANARY = 5
-        const val HEIGHT_MARKET = 7
-        const val HEIGHT_WAREHOUSE = 8
-        const val HEIGHT_SCHOOL = 9
-
         // The "draw width" for a city (border width
         const val CITY_WIDTH = 10
-
-        const val AMOUNT_PEOPLE_PER_BUILDING = 50
-        const val AMOUNT_BUILDINGS_PER_CITY = 5
 
         const val COMPLETE_CITY_POPULATION = 5000
         const val COMPLETE_CITY_MILLS = 4
@@ -222,37 +210,37 @@ class Land {
         println("City complete, drawing walls")
 
         // 1st parameter is column (width), 2nd parameter is the row (height)
-        matrix[wallStart+2][2] = BuildingImage.WALL
-        matrix[wallStart+3][2] = BuildingImage.WALL
-        matrix[wallStart+4][2] = BuildingImage.WALL
-        matrix[wallStart+5][2] = BuildingImage.WALL
-        matrix[wallStart+6][2] = BuildingImage.WALL
-        matrix[wallStart+7][2] = BuildingImage.WALL
+        matrix[wallStart+2][2] = BuildingImage.WALL_CORNER_NW
+        matrix[wallStart+3][2] = BuildingImage.WALL_H
+        matrix[wallStart+4][2] = BuildingImage.WALL_H
+        matrix[wallStart+5][2] = BuildingImage.WALL_H
+        matrix[wallStart+6][2] = BuildingImage.WALL_H
+        matrix[wallStart+7][2] = BuildingImage.WALL_CORNER_NE
 
-        matrix[wallStart+2][3] = BuildingImage.WALL
-        matrix[wallStart+7][3] = BuildingImage.WALL
+        matrix[wallStart+2][3] = BuildingImage.WALL_V
+        matrix[wallStart+7][3] = BuildingImage.WALL_V
 
-        matrix[wallStart+2][4] = BuildingImage.WALL
-        matrix[wallStart+7][4] = BuildingImage.WALL
+        matrix[wallStart+2][4] = BuildingImage.WALL_V
+        matrix[wallStart+7][4] = BuildingImage.WALL_V
 
-        matrix[wallStart+2][5] = BuildingImage.WALL
-        matrix[wallStart+7][5] = BuildingImage.WALL
+        matrix[wallStart+2][5] = BuildingImage.WALL_V
+        matrix[wallStart+7][5] = BuildingImage.WALL_V
 
-        matrix[wallStart+2 ][7] = BuildingImage.WALL
-        matrix[wallStart+7][7] = BuildingImage.WALL
+        matrix[wallStart+2 ][7] = BuildingImage.WALL_V
+        matrix[wallStart+7][7] = BuildingImage.WALL_V
 
-        matrix[wallStart+2][8] = BuildingImage.WALL
-        matrix[wallStart+7][8] = BuildingImage.WALL
+        matrix[wallStart+2][8] = BuildingImage.WALL_V
+        matrix[wallStart+7][8] = BuildingImage.WALL_V
 
-        matrix[wallStart+2][9] = BuildingImage.WALL
-        matrix[wallStart+7][9] = BuildingImage.WALL
+        matrix[wallStart+2][9] = BuildingImage.WALL_V
+        matrix[wallStart+7][9] = BuildingImage.WALL_V
 
-        matrix[wallStart+2][10] = BuildingImage.WALL
-        matrix[wallStart+3][10] = BuildingImage.WALL
-        matrix[wallStart+4][10] = BuildingImage.WALL
-        matrix[wallStart+5][10] = BuildingImage.WALL
-        matrix[wallStart+6][10] = BuildingImage.WALL
-        matrix[wallStart+7][10] = BuildingImage.WALL
+        matrix[wallStart+2][10] = BuildingImage.WALL_CORNER_SW
+        matrix[wallStart+3][10] = BuildingImage.WALL_H
+        matrix[wallStart+4][10] = BuildingImage.WALL_H
+        matrix[wallStart+5][10] = BuildingImage.WALL_H
+        matrix[wallStart+6][10] = BuildingImage.WALL_H
+        matrix[wallStart+7][10] = BuildingImage.WALL_CORNER_SE
     }
 
 
