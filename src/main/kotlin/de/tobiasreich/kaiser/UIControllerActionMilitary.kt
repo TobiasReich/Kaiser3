@@ -5,8 +5,6 @@ import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.Label
-import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import java.net.URL
 import java.util.*
@@ -27,11 +25,13 @@ class UIControllerActionMilitary : Initializable {
 
     override fun initialize(p0: URL?, p1: ResourceBundle?) {
 
-        val newUnitCallback = object : (MilitaryUnit, Boolean) -> Unit {
-            override fun invoke(unit: MilitaryUnit, purchased: Boolean) {
-                if(purchased){
+        val newUnitCallback = object : (MilitaryUnit, Boolean) -> Boolean {
+            override fun invoke(unit: MilitaryUnit, wantsToPurchase: Boolean) : Boolean {
+                if(wantsToPurchase){
                     Game.currentPlayer.money -= unit.mercCost
                     Game.currentPlayer.addMilitaryUnit(unit)
+                    updateCallback()
+                    return true
                 } else {
                     val population = Game.currentPlayer.population
                     if (population.adults.size > unit.popCost) {
@@ -39,14 +39,17 @@ class UIControllerActionMilitary : Initializable {
                         population.removeAdults(unit.popCost)
                         Game.currentPlayer.land.buildings.updateUsedBuildings(population)
                         Game.currentPlayer.addMilitaryUnit(unit)
+                        updateCallback()
+                        return true
                     }
+                    updateCallback()
+                    return false
                 }
-                updateCallback()
             }
         }
 
         MilitaryUnit.values().forEach {
-            val unitView = UIControllerViewMilitaryRecruitUnit(it, Game.currentPlayer.population, newUnitCallback)
+            val unitView = UIControllerViewMilitaryRecruitUnit(it, Game.currentPlayer.population, Game.currentPlayer.miliarty, newUnitCallback)
             unitList.children.add(unitView)
         }
     }

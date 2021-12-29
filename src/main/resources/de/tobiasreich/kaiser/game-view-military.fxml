@@ -20,6 +20,10 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" text="%military_view_units_owned" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
             <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="%military_view_pay_per_year" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -33,10 +37,6 @@
                   <Font name="System Bold" size="13.0" />
                </font></Label>
             <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="%military_view_price_as_recruit" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font></Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="%military_view_cost_population" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>

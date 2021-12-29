@@ -16,6 +16,13 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
+                <Label fx:id="ownedUnitsLabel" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" text="100 Taler" textAlignment="CENTER">
+                 <HBox.margin>
+                     <Insets />
+                 </HBox.margin>
+                 <font>
+                     <Font size="12.0" />
+                 </font></Label>
               <Label fx:id="payPerYearLabel" alignment="CENTER" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" text="100 Taler" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
@@ -37,14 +44,7 @@
                <font>
                   <Font size="12.0" />
                </font></Button>
-              <Label fx:id="recruitCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="500 Taler" textAlignment="CENTER">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="12.0" />
-               </font></Label>
-             <Label fx:id="populationCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="500 Mann" textAlignment="CENTER">
+              <Label fx:id="recruitCostLabel" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="500 Taler\n500Mann" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

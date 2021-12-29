@@ -21,11 +21,15 @@ import java.io.IOException
  *  - button to "recruit" as soldier (cheaper but population cost)
  */
 //TODO: Disable the recruit Button in case there are no enough adults
-class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, private val population: Population,
-                                          private val getUnitCallback : (unit : MilitaryUnit, bought : Boolean) -> Unit) : VBox() {
+class UIControllerViewMilitaryRecruitUnit(private val unit: MilitaryUnit, private val population: Population,
+                                          private val military: MutableMap<MilitaryUnit, Int>,
+                                          private val getUnitCallback: (MilitaryUnit, Boolean) -> Boolean
+) : VBox() {
 
     @FXML
     lateinit var unitTypeLabel: Label
+    @FXML
+    lateinit var ownedUnitsLabel: Label
     @FXML
     lateinit var payPerYearLabel: Label
     @FXML
@@ -34,8 +38,7 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
     lateinit var hireMercenaryButton: Button
     @FXML
     lateinit var recruitCostLabel: Label
-    @FXML
-    lateinit var populationCostLabel: Label
+
     @FXML
     lateinit var recruitSoldierButton: Button
     @FXML
@@ -73,11 +76,28 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
             throw RuntimeException(exception)
         }
 
+        updateUnitView()
+
+
+        hireMercenaryButton.onAction = EventHandler {
+            if (getUnitCallback.invoke(unit, true)){
+                updateUnitView() //If success, update the view
+            }
+        }
+        recruitSoldierButton.onAction = EventHandler {
+            if (getUnitCallback.invoke(unit, false)){
+                updateUnitView() //If success, update the view
+            }
+        }
+    }
+
+    private fun updateUnitView(){
         unitTypeLabel.text = Game.resourcesBundle.getString(unit.nameRes)
         payPerYearLabel.text = "${unit.pay} ${Game.resourcesBundle.getString("general_currency")}"
         hireCostLabel.text = "${unit.mercCost} ${Game.resourcesBundle.getString("general_currency")}"
-        recruitCostLabel.text = "${unit.recruitCost} ${Game.resourcesBundle.getString("general_currency")}"
-        populationCostLabel.text = "${unit.popCost} ${Game.resourcesBundle.getString("general_persons_male")}"
+        recruitCostLabel.text = "${unit.recruitCost} ${Game.resourcesBundle.getString("general_currency")}\n" +
+                "+ ${unit.popCost} ${Game.resourcesBundle.getString("general_persons_male")}"
+        ownedUnitsLabel.text = (military[unit] ?: 0).toString()
 
         meleeCB.isSelected = unit.melee
         rangedCB.isSelected = unit.ranged
@@ -86,13 +106,6 @@ class UIControllerViewMilitaryRecruitUnit(private val unit : MilitaryUnit, priva
         healthProgressbar.progress = unit.health
         prestigeProgressbar.progress = unit.prestige
         loyaltyProgressbar.progress = unit.loyalty
-
-        hireMercenaryButton.onAction = EventHandler {
-            getUnitCallback.invoke(unit, true)
-        }
-        recruitSoldierButton.onAction = EventHandler {
-            getUnitCallback.invoke(unit, false)
-        }
     }
 
 }
