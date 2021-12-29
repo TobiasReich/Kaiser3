@@ -81,7 +81,7 @@ class UIControllerActionMilitary : Initializable {
 
             for (unit in 0 until (military[unitType] ?: 0)){
                 println("Unit: $unitType")
-                val imageMill = Image(javaClass.getResource("img/icon_windmill.png")!!.toExternalForm())
+                val imageMill = Image(javaClass.getResource("img/icon_unit_warrior.png")!!.toExternalForm())
                 val imageView = ImageView()
                 imageView.fitWidth = 40.0
                 imageView.fitHeight = 40.0
@@ -90,8 +90,9 @@ class UIControllerActionMilitary : Initializable {
             }
 
         }
+    }
 
-
+    companion object{
 
     }
 
