@@ -12,7 +12,7 @@
             <Font size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="25.0" top="25.0" />
+            <Insets bottom="20.0" top="25.0" />
          </VBox.margin></Label>
       <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
          <children>
@@ -70,5 +70,18 @@
          <VBox.margin>
             <Insets top="15.0" />
          </VBox.margin></VBox>
+
+      <Label alignment="CENTER" contentDisplay="CENTER" text="%military_view_owned_troops">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <ScrollPane prefHeight="60.0">
+        <content>
+           <HBox fx:id="unitVisualization" maxWidth="1.7976931348623157E308" />
+        </content>
+      </ScrollPane>
    </children>
 </VBox>

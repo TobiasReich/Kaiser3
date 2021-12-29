@@ -5,12 +5,19 @@ import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+import javafx.scene.layout.FlowPane
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import java.net.URL
 import java.util.*
 
 /** Controller, specific for the Land actions */
 class UIControllerActionMilitary : Initializable {
+
+    @FXML
+    lateinit var unitVisualization: HBox
 
     @FXML
     private lateinit var unitList: VBox
@@ -27,11 +34,12 @@ class UIControllerActionMilitary : Initializable {
 
         val newUnitCallback = object : (MilitaryUnit, Boolean) -> Boolean {
             override fun invoke(unit: MilitaryUnit, wantsToPurchase: Boolean) : Boolean {
+                var success = false
                 if(wantsToPurchase){
                     Game.currentPlayer.money -= unit.mercCost
                     Game.currentPlayer.addMilitaryUnit(unit)
                     updateCallback()
-                    return true
+                    success = true
                 } else {
                     val population = Game.currentPlayer.population
                     if (population.adults.size > unit.popCost) {
@@ -40,11 +48,12 @@ class UIControllerActionMilitary : Initializable {
                         Game.currentPlayer.land.buildings.updateUsedBuildings(population)
                         Game.currentPlayer.addMilitaryUnit(unit)
                         updateCallback()
-                        return true
+                        success = true
                     }
                     updateCallback()
-                    return false
                 }
+                drawUnits()
+                return success
             }
         }
 
@@ -52,6 +61,9 @@ class UIControllerActionMilitary : Initializable {
             val unitView = UIControllerViewMilitaryRecruitUnit(it, Game.currentPlayer.population, Game.currentPlayer.miliarty, newUnitCallback)
             unitList.children.add(unitView)
         }
+
+        drawUnits()
+
     }
 
     /** Sets the callback for the view to update on purchases
@@ -60,4 +72,27 @@ class UIControllerActionMilitary : Initializable {
     fun setCallback(callback: () -> Unit){
         this.updateCallback = callback
     }
+
+    private fun drawUnits(){
+        unitVisualization.children.clear()
+        val military = Game.currentPlayer.miliarty
+
+        military.keys.forEach { unitType ->
+
+            for (unit in 0 until (military[unitType] ?: 0)){
+                println("Unit: $unitType")
+                val imageMill = Image(javaClass.getResource("img/icon_windmill.png")!!.toExternalForm())
+                val imageView = ImageView()
+                imageView.fitWidth = 40.0
+                imageView.fitHeight = 40.0
+                imageView.image = imageMill
+                unitVisualization.children.add(imageView)
+            }
+
+        }
+
+
+
+    }
+
 }
