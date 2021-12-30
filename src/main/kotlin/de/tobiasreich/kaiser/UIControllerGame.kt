@@ -205,6 +205,13 @@ class UIControllerGame : Initializable {
         rootBorderPane.center = militaryScene
     }
 
+
+    /** Shows the "map" of the own country */
+    fun onShowMapButtonClick(actionEvent: ActionEvent) {
+        showLandView()
+    }
+
+
     /********************************************
      *
      *             View Updates
@@ -217,6 +224,7 @@ class UIControllerGame : Initializable {
     override fun initialize(p0: URL?, bundle: ResourceBundle?) {
         this.bundle = bundle!!
         updateViews()
+        //TODO Consider showing the food action instead. After all this is what the game loop requires. The map is just fancy stuff.
         showLandView()
     }
 

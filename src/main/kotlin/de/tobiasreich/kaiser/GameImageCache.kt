@@ -2,12 +2,10 @@ package de.tobiasreich.kaiser
 
 import javafx.scene.image.Image
 
-/** Container class for static images that are required in multiple occasions
- *
- */
+/** Container class for static images that are required in multiple occasions */
 object GameImageCache {
 
-    // loading the images for later drawing
+    // Map view
     val imageMill: Image = Image(javaClass.getResource("img/icon_windmill.png")!!.toExternalForm())
     val imageGranary: Image = Image(javaClass.getResource("img/icon_granary.png")!!.toExternalForm())
     val imageMarket: Image = Image(javaClass.getResource("img/icon_market.png")!!.toExternalForm())
@@ -18,7 +16,7 @@ object GameImageCache {
     val imageTree2: Image = Image(javaClass.getResource("img/icon_tree2.png")!!.toExternalForm())
     val imageBushes: Image = Image(javaClass.getResource("img/icon_bushes.png")!!.toExternalForm())
     val imageRoad: Image = Image(javaClass.getResource("img/icon_road.png")!!.toExternalForm())
-
+    // City walls
     val imageWallH: Image = Image(javaClass.getResource("img/icon_wall_horizontal.png")!!.toExternalForm())
     val imageWallV: Image = Image(javaClass.getResource("img/icon_wall_vertical.png")!!.toExternalForm())
     val imageWallNE: Image = Image(javaClass.getResource("img/icon_wall_corner_NE.png")!!.toExternalForm())
@@ -26,7 +24,7 @@ object GameImageCache {
     val imageWallSE: Image = Image(javaClass.getResource("img/icon_wall_corner_SE.png")!!.toExternalForm())
     val imageWallSW: Image = Image(javaClass.getResource("img/icon_wall_corner_SW.png")!!.toExternalForm())
 
-
+    // Units
     val warrior: Image = Image(javaClass.getResource("img/icon_unit_warrior.png")!!.toExternalForm())
     val archer: Image = Image(javaClass.getResource("img/icon_unit_archer.png")!!.toExternalForm())
     val spearman: Image = Image(javaClass.getResource("img/icon_unit_spearman.png")!!.toExternalForm())
