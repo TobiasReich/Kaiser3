@@ -49,7 +49,7 @@ class UIControllerActionWar : Initializable {
     private fun drawUnitsAtHome(){
         unitsAtHomeVisualization.children.clear()
 
-        miliartyAtHome.keys.forEach { unitType ->
+        miliartyAtHome.keys.sorted().forEach { unitType ->
 
             for (unit in 0 until (miliartyAtHome[unitType] ?: 0)){
                 println("Unit: $unitType")
@@ -71,7 +71,9 @@ class UIControllerActionWar : Initializable {
                     MilitaryUnit.MUSKETEER -> {GameImageCache.warrior}
                     MilitaryUnit.ARTILLERY -> {GameImageCache.warrior}
                 }
-
+                imageView.setOnMouseClicked { event ->
+                    moveToBattlefield(unitType)
+                }
                 unitsAtHomeVisualization.children.add(imageView)
             }
         }
@@ -81,7 +83,7 @@ class UIControllerActionWar : Initializable {
     private fun drawUnitsToWar(){
         unitsToWarVisualization.children.clear()
 
-        miliartyAtWar.keys.forEach { unitType ->
+        miliartyAtWar.keys.sorted().forEach { unitType ->
 
             for (unit in 0 until (miliartyAtWar[unitType] ?: 0)){
                 println("Unit: $unitType")
@@ -103,14 +105,26 @@ class UIControllerActionWar : Initializable {
                     MilitaryUnit.MUSKETEER -> {GameImageCache.warrior}
                     MilitaryUnit.ARTILLERY -> {GameImageCache.warrior}
                 }
-
+                imageView.setOnMouseClicked { event ->
+                    moveToHome(unitType)
+                }
                 unitsToWarVisualization.children.add(imageView)
             }
         }
     }
 
-    companion object{
+    private fun moveToBattlefield(unitType: MilitaryUnit) {
+        miliartyAtHome[unitType] = miliartyAtHome[unitType]!! - 1
+        miliartyAtWar[unitType] = (miliartyAtWar[unitType]?: 0) + 1
+        drawUnitsAtHome()
+        drawUnitsToWar()
+    }
 
+    private fun moveToHome(unitType: MilitaryUnit) {
+        miliartyAtWar[unitType] = miliartyAtWar[unitType]!! - 1
+        miliartyAtHome[unitType] = (miliartyAtHome[unitType]?: 0) + 1
+        drawUnitsAtHome()
+        drawUnitsToWar()
     }
 
 }

@@ -75,7 +75,7 @@ class UIControllerActionMilitary : Initializable {
         unitVisualization.children.clear()
         val military = Game.currentPlayer.miliarty
 
-        military.keys.forEach { unitType ->
+        military.keys.sorted().forEach { unitType ->
 
             for (unit in 0 until (military[unitType] ?: 0)){
                 println("Unit: $unitType")
