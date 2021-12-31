@@ -11,7 +11,7 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
-import utils.FxDialogs
+import de.tobiasreich.kaiser.game.utils.FxDialogs
 import java.net.URL
 import java.util.*
 

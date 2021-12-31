@@ -131,7 +131,7 @@ class Land {
 
     /** This draws the road through the city at height 6 */
     private fun drawRoad(matrix: Array<Array<BuildingImage?>>, startX: Int) {
-        println("City complete, drawing walls")
+        //println("City complete, drawing walls")
 
         // 1st parameter is column (width), 2nd parameter is the row (height)
         matrix[startX+0][6] = BuildingImage.ROAD
@@ -165,7 +165,7 @@ class Land {
      *  13 .t.....t..
      * */
     private fun drawNature(matrix: Array<Array<BuildingImage?>>, startX: Int) {
-        println("City complete, drawing walls")
+        //println("City complete, drawing walls")
 
         // 1st parameter is column (width), 2nd parameter is the row (height)
         matrix[startX+2][0] = BuildingImage.TREE
@@ -207,7 +207,7 @@ class Land {
      *  11 ..........
      * */
     private fun drawWalls(matrix: Array<Array<BuildingImage?>>, wallStart: Int) {
-        println("City complete, drawing walls")
+        //println("City complete, drawing walls")
 
         // 1st parameter is column (width), 2nd parameter is the row (height)
         matrix[wallStart+2][2] = BuildingImage.WALL_CORNER_NW
@@ -260,7 +260,7 @@ class Land {
      *  11 ..........
      * */
     private fun drawHouses(matrix: Array<Array<BuildingImage?>>, startWidth: Int, amountHouses: Int) {
-        println("Drawing $amountHouses houses")
+        //println("Drawing $amountHouses houses")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (amountHouses >= 5) {
             matrix[startWidth+3][4] = BuildingImage.HOUSE
@@ -297,7 +297,7 @@ class Land {
      *
      */
     private fun drawMills(matrix: Array<Array<BuildingImage?>>, startWidth: Int, millsToDraw: Int) {
-        println("Drawing $millsToDraw mills")
+        //println("Drawing $millsToDraw mills")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (millsToDraw >= 4) {
             matrix[startWidth+5][3] = BuildingImage.MILL
@@ -330,7 +330,7 @@ class Land {
      *  11 ..........
      */
     private fun drawMarkets(matrix: Array<Array<BuildingImage?>>, startWidth: Int, marketsToDraw: Int) {
-        println("Drawing $marketsToDraw markets")
+        //println("Drawing $marketsToDraw markets")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (marketsToDraw >= 3) {
             matrix[startWidth+3][9] = BuildingImage.MARKET
@@ -346,7 +346,7 @@ class Land {
 
     /** Draws the Granary at [8:4] s*/
     private fun drawGranaries(matrix: Array<Array<BuildingImage?>>, startWidth: Int, granariesToDraw: Int) {
-        println("Drawing $granariesToDraw granaries")
+        //println("Drawing $granariesToDraw granaries")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (granariesToDraw >= 1) {
             matrix[startWidth+4][8] = BuildingImage.GRANARY
@@ -355,7 +355,7 @@ class Land {
 
     /** Draws the Warehouse at [4:6] s*/
     private fun drawWarehouses(matrix: Array<Array<BuildingImage?>>, startWidth: Int, warehouses: Int) {
-        println("Drawing $warehouses warehouses")
+        //println("Drawing $warehouses warehouses")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (warehouses >= 1) {
             matrix[startWidth+6][4] = BuildingImage.GRANARY
@@ -364,7 +364,7 @@ class Land {
 
     /** Draws the School at [4:4] s*/
     private fun drawSchools(matrix: Array<Array<BuildingImage?>>, startWidth: Int, schools: Int) {
-        println("Drawing $schools schools")
+        //println("Drawing $schools schools")
         // 1st parameter is column (width), 2nd parameter is the row (height)
         if (schools >= 1) {
             matrix[startWidth+4][4] = BuildingImage.SCHOOL
@@ -394,7 +394,10 @@ class Land {
         return floor(landAvailable.toDouble() / building.landNeeded.toDouble()).toInt()
     }
 
-
+    /** Removes land from the given player.
+     *  All buildings on this piece of land are destroyed
+     *  (Meaning, if there were 10 mills but after that there
+     *  is only place for 9, one is destroyed) */
     fun removeLand(amount: Int, population : Population) {
         this.landSize -= amount
 

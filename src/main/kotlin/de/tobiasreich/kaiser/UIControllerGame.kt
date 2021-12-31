@@ -212,6 +212,7 @@ class UIControllerGame : Initializable {
         val controller = fxmlLoader.getController<UIControllerActionWar>()
         controller.setCallback{
             //Update the view so the user sees the available money
+            showLandView()
             updateViews()
         }
         rootBorderPane.center = warScene

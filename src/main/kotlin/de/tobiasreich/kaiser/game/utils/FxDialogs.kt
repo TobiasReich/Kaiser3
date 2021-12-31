@@ -1,4 +1,4 @@
-package utils
+package de.tobiasreich.kaiser.game.utils
 
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane

@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
+import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
@@ -11,6 +12,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
 import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
+import de.tobiasreich.kaiser.game.utils.FxDialogs
 import java.net.URL
 import java.util.*
 
@@ -166,9 +168,19 @@ class UIControllerActionWar : Initializable {
 
     /** Declares war to the target player */
     fun startWar(actionEvent: ActionEvent) {
-        println("Start war!")
-        //TODO remove the units from the players military units
-        //TODO move these units to the WarManager, so they are "on the way" to the destination player
+        val result = ViewController.showModalDialog()
+
+        if (result == FxDialogs.DialogResult.OK){
+            println("Declaring war")
+            //Set the player's military to the ones remaining "at home"
+            Game.currentPlayer.miliarty = miliartyAtHome
+            WarManager.declareWar(Game.currentPlayer, targetPlayer!!, miliartyAtWar)
+            updateCallback()
+            // Close the view (show the
+        } else {
+            println("No war declared")
+            //Nothing to do for now
+        }
     }
 
 }

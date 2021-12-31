@@ -8,7 +8,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.shape.Line
-import utils.FXUtils.FxUtils.toRGBCode
+import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import java.net.URL
 import java.util.*
 

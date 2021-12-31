@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
 import javafx.stage.Modality
 import org.controlsfx.control.PopOver
-import utils.FxDialogs
+import de.tobiasreich.kaiser.game.utils.FxDialogs
 
 
 /** Manager for setting views to the stage */
