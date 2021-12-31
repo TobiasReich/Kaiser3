@@ -82,10 +82,12 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></Label>
-            <Label  fx:id="peaceOfferLabel" text="Als Ausgleich für einen Friedensvertrag von 10 Jahren dauer bieten sie eine Zahlung in Höhe von %d %s">
+            <Label fx:id="peaceOfferLabel" text="Als Ausgleich für einen Friedensvertrag von 10 Jahren dauer bieten sie eine Zahlung in Höhe von %d %s">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin></Label>
+
+            <Label text="%war_declaration_reaction_accept_peace_offer_info" />
 
             <Button mnemonicParsing="false" onAction="#acceptPeaceOfferButtonClick" text="%war_declaration_reaction_accept_peace_offer_button">
                <VBox.margin>

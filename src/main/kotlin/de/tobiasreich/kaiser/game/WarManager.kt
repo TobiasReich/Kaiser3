@@ -15,6 +15,8 @@ object WarManager {
 
     private val warDeclarations = mutableListOf<WarDeclaration>()
 
+    private val returningTroops = mutableListOf<TroopMovement>()
+
     fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnit, Int>){
         warDeclarations.add(WarDeclaration(initiator, target, units))
         target.addMessage(WarDeclarationMessage(initiator, units))
@@ -69,6 +71,21 @@ object WarManager {
         return estimate
     }
 
+
+    /** Adds a military group of troops to the returning troops.
+     *  These are fetched at the beginning of a player's turn. */
+    fun addTroopMovement(troops : TroopMovement){
+        returningTroops.add(troops)
+    }
+
+    /** Returns a list of returning troops so the player can integrate them in their troops again
+     *  NOTE: The returning troops are deleted afterwards! */
+    fun getAllReturningTroops(destination: Player) : List<TroopMovement>{
+        val troopMovements = returningTroops.filter{ it.destination == destination }
+        returningTroops.removeAll(troopMovements) // Delete them, so they don't come home every turn!
+        return troopMovements
+    }
+
 }
 
 
@@ -82,3 +99,11 @@ enum class BattleOutcome{
 
 /** Data object for tracking war declarations */
 data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnit, Int>)
+
+/** Data object for troop movement.
+ *  This is a bundle of units that will arrive at the destination (player) the next time it becomes the player's turn
+ *
+ *  NOTE: The reason for that is, so that on a peace treaty, the player does not receive the troops immediately.
+ *  That gives another layer of diplomacy since other players might use the situation for their own goals and attack a
+ *  player that is at war with another country. */
+data class TroopMovement(val origin : Player, val destination : Player, val units : Map<MilitaryUnit, Int>)

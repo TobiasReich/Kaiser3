@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.BattleOutcome
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.TroopMovement
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationReactionMessage
@@ -95,19 +96,17 @@ class UIControllerMessageWarDeclarationReaction : Initializable, IMessageControl
      *  Starts the battle! */
     fun startWarButtonClick(actionEvent: ActionEvent) {
         println("Start War now!")
-        //TODO Implement this
+        //TODO Implement the battle!
         proceedToNextNews() // For now proceed
     }
 
     /** Player accepts peace offer.
-     *  Troops are coming home
-     *  //TODO It might be a good idea if they also take 1 turn to come back so other players might take advantage of warmongers
-     *  */
+     *  Troops are coming home in the next turn. */
     fun acceptPeaceOfferButtonClick(actionEvent: ActionEvent) {
         //TODO Add peace treaty between both players
 
         // Integrate military from the battlefield (they are coming back)
-        //TODO It might be a good idea if they also take 1 turn to come back so other players might take advantage of warmongers
+        WarManager.addTroopMovement(TroopMovement(message.reactingPlayer, Game.currentPlayer, message.returningUnits))
         proceedToNextNews() // For now proceed
     }
 }

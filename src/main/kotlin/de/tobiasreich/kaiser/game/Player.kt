@@ -204,6 +204,11 @@ class Player{
         clearMoodModifier()
         population.clearMoodModifier()
 
+        // Check for troops returning from the battlefield
+        WarManager.getAllReturningTroops(this).forEach{
+            messageList.add(ReturningTroopsMessage(it.origin, it.units))
+        }
+
         // Only show the update messages if the flag is not true
         // This is important in order to not show the update to a players first turn (or later when loading a saved game etc.)
         if (firstTurn){

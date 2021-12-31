@@ -163,7 +163,7 @@ class UIControllerActionWar : Initializable {
      * AND at least one unit is selected to go to war (one can't declare war
      * without sending at least one unit to the battle field) */
     private fun updateToWarButton(){
-        toWarButton.isDisable = targetPlayer == null && miliartyAtWar.values.sum() > 0
+        toWarButton.isDisable = targetPlayer == null || miliartyAtWar.values.sum() <= 0
     }
 
     /** Declares war to the target player */

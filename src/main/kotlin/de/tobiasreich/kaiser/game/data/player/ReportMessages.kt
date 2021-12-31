@@ -69,3 +69,10 @@ class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOfferAm
         return FXMLLoader(Main::class.java.getResource("news-war-declaration-reaction.fxml"), Game.resourcesBundle)
     }
 }
+
+/** A message about a troops coming back from the battlefield  */
+class ReturningTroopsMessage(val originPlayer: Player, val returningUnits : Map<MilitaryUnit, Int>) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-returning-troops.fxml"), Game.resourcesBundle)
+    }
+}

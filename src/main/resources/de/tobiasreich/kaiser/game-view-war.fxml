@@ -69,6 +69,7 @@
                 <HBox fx:id="unitsToWarVisualization" maxWidth="1.7976931348623157E308" />
             </content>
         </ScrollPane>
+      <Label text="%war_view_action_info" />
 
         <Button fx:id="toWarButton" disable="true" mnemonicParsing="false" onAction="#startWar" text="%war_view_action_button">
          <VBox.margin>
