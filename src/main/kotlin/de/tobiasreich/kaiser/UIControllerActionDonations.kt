@@ -114,6 +114,7 @@ class UIControllerActionDonations : Initializable {
                 // Set to former value (= ignore this input)
                 donationAmountTextField.text = oldValue
             } else {
+                //TODO What about negative money? We need a minimum of 0!!!
                 val maxAmount =  when(selectedResource){
                     ResourceType.MONEY -> Game.currentPlayer.money * MAX_DONATION_AMOUNT
                     ResourceType.LAND -> Game.currentPlayer.land.landSize * MAX_DONATION_AMOUNT

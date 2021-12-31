@@ -30,8 +30,29 @@ object WarManager {
         return warDeclarations.firstOrNull{it.initiator == player}
     }
 
+    /** This calculates the ROUGH chances of victory for the attacker.
+     *  (For defense chances just use the opposite values)
+     *  A value EASY_VICTORY or LIKELY_VICTORY suggests the attacker might win. But there is NO GUARANTE!
+     *  This is just a guess by the "power" of all units.
+     *  A good combination of units might still win (e.g. when they have a higher initiative and "shoot first")
+     *
+     *  A value of INDECISIVE suggests a "draw" meaning the outcome is insecure and both are equally likely to win.
+     *
+     *  POTENTIAL_LOSS and SURE_LOSS values however suggest, the attacker might lose the battle. */
+    fun estimateBattleOutcome(attacker : Map<MilitaryUnit, Int>, defender : Map<MilitaryUnit, Int>) : BattleOutcome {
+        return BattleOutcome.INDECISIVE
+    }
+
 }
 
+
+enum class BattleOutcome{
+    EASY_VICTORY,
+    LIKELY_VICTORY,
+    INDECISIVE,
+    POTENTIAL_LOSS,
+    SURE_LOSS
+}
 
 /** Data object for tracking war declarations */
 data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnit, Int>)
