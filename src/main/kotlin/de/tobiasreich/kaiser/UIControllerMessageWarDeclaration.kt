@@ -13,10 +13,8 @@ import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.scene.shape.Line
-import java.lang.Math.max
 import java.net.URL
 import java.util.*
-import kotlin.math.min
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
 class UIControllerMessageWarDeclaration : Initializable, IMessageController{
@@ -80,15 +78,15 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
         declaringPlayerLabel.style = ("-fx-text-fill: ${declaringPlayer.playerColor.toRGBCode()}; ")
         playerTopLine.stroke = declaringPlayer.playerColor
         playerBottomLine.stroke = declaringPlayer.playerColor
-        declaringPlayerLabel.text = String.format(bundle.getString("war_message_initiator_message"), playerTitle, declaringPlayer.name, playerCountry)
+        declaringPlayerLabel.text = String.format(bundle.getString("war_declaration_message_initiator_message"), playerTitle, declaringPlayer.name, playerCountry)
 
         // War estimation for the defender
         val outcomeStringResource = when (WarManager.estimateBattleOutcome(Game.currentPlayer.miliarty, message.units)){
-            BattleOutcome.EASY_VICTORY -> { "war_message_estimation_easy_victory" }
-            BattleOutcome.LIKELY_VICTORY -> { "war_message_estimation_potential_victory" }
-            BattleOutcome.INDECISIVE -> {"war_message_estimation_indecisive"}
-            BattleOutcome.POTENTIAL_LOSS -> { "war_message_estimation_potential_loss" }
-            BattleOutcome.SURE_LOSS -> { "war_message_estimation_sure_loss" }
+            BattleOutcome.EASY_VICTORY -> { "war_declaration_message_estimation_easy_victory" }
+            BattleOutcome.LIKELY_VICTORY -> { "war_declaration_message_estimation_potential_victory" }
+            BattleOutcome.INDECISIVE -> {"war_declaration_message_estimation_indecisive"}
+            BattleOutcome.POTENTIAL_LOSS -> { "war_declaration_message_estimation_potential_loss" }
+            BattleOutcome.SURE_LOSS -> { "war_declaration_message_estimation_sure_loss" }
         }
         warEstimationLabel.text = bundle.getString(outcomeStringResource)
 
@@ -120,14 +118,14 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
     /** Player clicked on the button to accept war.
      *  Just proceed with the next messages */
     fun acceptWarButtonClick(actionEvent: ActionEvent) {
-        println("War accepted, no peace offer!")
+        // Nothing to do here. The battle starts when the other player makes his turn again!
         proceedToNextNews()
     }
 
 
     /** Player wants to make a peace offer by offering [peaceOfferAmount] amount of money */
     fun makePeaceOfferButtonClick(actionEvent: ActionEvent) {
-        println("Made a peace offer of ???? ")
         message.declaringPlayer.addMessage(WarDeclarationReactionMessage(Game.currentPlayer, peaceOfferAmount, message.units))
+        proceedToNextNews()
     }
 }

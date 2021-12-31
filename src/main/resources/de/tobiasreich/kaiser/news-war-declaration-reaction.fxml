@@ -6,10 +6,10 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageWarDeclaration">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageWarDeclarationReaction">
    <children>
       <!-- Header -->
-      <Label text="%war_message_title" underline="true">
+      <Label text="%war_declaration_reaction_message_title" underline="true">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -18,7 +18,7 @@
          </padding>
       </Label>
 
-      <Label text="%war_declaration_message_message">
+      <Label text="%war_declaration_reaction_message_message">
          <VBox.margin>
             <Insets bottom="10.0" top="10.0" />
          </VBox.margin></Label>
@@ -29,7 +29,7 @@
          </VBox.margin>
       </Line>
 
-      <Label fx:id="declaringPlayerLabel" text="Offenbar werden sie von Herzog X von Y befehligt. " textAlignment="CENTER">
+      <Label fx:id="reactingPlayerLabel" text="Offenbar werden sie von Herzog X von Y befehligt. " textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font></Label>
@@ -49,18 +49,18 @@
          </font></Label>
 
 
-      <Label text="%war_declaration_message_reaction_question">
+      <Label text="%war_declaration_reaction_message_question">
          <VBox.margin>
             <Insets top="25.0" />
          </VBox.margin></Label>
 
       <VBox alignment="CENTER" style="-fx-background-color: #FDD;">
          <children>
-            <Label text="%war_declaration_message_accept_war_text">
+            <Label text="%war_declaration_reaction_start_war_text">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
-            <Button mnemonicParsing="false" onAction="#acceptWarButtonClick" text="%war_declaration_message_accept_war_button">
+            <Button mnemonicParsing="false" onAction="#startWarButtonClick" text="%war_declaration_reaction_start_war_button">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin></Button>
@@ -75,31 +75,19 @@
 
       <VBox alignment="CENTER" style="-fx-background-color: #DFD;">
          <children>
-            <Label text="%war_declaration_message_make_peace_offer_title">
+            <Label text="%war_declaration_reaction_accept_peace_offer_title">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></Label>
-            <Label text="%war_declaration_message_peace_offer_text">
+            <Label  fx:id="peaceOfferLabel" text="Als Ausgleich für einen Friedensvertrag von 10 Jahren dauer bieten sie eine Zahlung in Höhe von %d %s">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin></Label>
-            <HBox alignment="CENTER">
-               <children>
-                  <TextField fx:id="peaceOfferTextField">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin></TextField>
-                  <Label text="%general_currency">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin></Label>
-               </children>
-            </HBox>
 
-            <Button mnemonicParsing="false" onAction="#makePeaceOfferButtonClick" text="%war_declaration_message_make_peace_offer_button">
+            <Button mnemonicParsing="false" onAction="#acceptPeaceOfferButtonClick" text="%war_declaration_reaction_accept_peace_offer_button">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin></Button>

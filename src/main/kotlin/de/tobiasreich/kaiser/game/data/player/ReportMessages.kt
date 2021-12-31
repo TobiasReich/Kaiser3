@@ -64,7 +64,7 @@ class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<Militar
  *  Note: this message includes the returning units. These are needed so the player - should the peace treaty be accepted -
  *  can re-include the own units again.
  */
-class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOffer : Int, val returningUnits : Map<MilitaryUnit, Int>) : ReportMessage {
+class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOfferAmount : Int, val returningUnits : Map<MilitaryUnit, Int>) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-war-declaration-reaction.fxml"), Game.resourcesBundle)
     }
