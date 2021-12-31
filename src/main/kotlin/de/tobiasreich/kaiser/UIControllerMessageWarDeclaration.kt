@@ -128,6 +128,6 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
     /** Player wants to make a peace offer by offering [peaceOfferAmount] amount of money */
     fun makePeaceOfferButtonClick(actionEvent: ActionEvent) {
         println("Made a peace offer of ???? ")
-        message.declaringPlayer.addMessage(WarDeclarationReactionMessage(Game.currentPlayer, peaceOfferAmount))
+        message.declaringPlayer.addMessage(WarDeclarationReactionMessage(Game.currentPlayer, peaceOfferAmount, message.units))
     }
 }

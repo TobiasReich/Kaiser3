@@ -60,8 +60,11 @@ class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<Militar
     }
 }
 
-/** A message about a reaction to a war declaration (i.e. a peace treaty) */
-class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOffer : Int) : ReportMessage {
+/** A message about a reaction to a war declaration (i.e. a peace treaty)
+ *  Note: this message includes the returning units. These are needed so the player - should the peace treaty be accepted -
+ *  can re-include the own units again.
+ */
+class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOffer : Int, val returningUnits : Map<MilitaryUnit, Int>) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-war-declaration-reaction.fxml"), Game.resourcesBundle)
     }
