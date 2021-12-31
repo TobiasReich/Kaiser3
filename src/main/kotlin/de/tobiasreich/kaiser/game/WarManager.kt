@@ -39,8 +39,34 @@ object WarManager {
      *  A value of INDECISIVE suggests a "draw" meaning the outcome is insecure and both are equally likely to win.
      *
      *  POTENTIAL_LOSS and SURE_LOSS values however suggest, the attacker might lose the battle. */
-    fun estimateBattleOutcome(attacker : Map<MilitaryUnit, Int>, defender : Map<MilitaryUnit, Int>) : BattleOutcome {
-        return BattleOutcome.INDECISIVE
+    fun estimateBattleOutcome(ownMilitary : Map<MilitaryUnit, Int>, otherMilitary : Map<MilitaryUnit, Int>) : BattleOutcome {
+        var ownPower = 0.0
+        var otherPower = 0.0
+
+        ownMilitary.keys.forEach {
+            val unitPower = it.power * (ownMilitary[it] ?: 0).toDouble()
+//            println("$it power: $unitPower")
+            ownPower +=  unitPower
+        }
+
+        otherMilitary.keys.forEach {
+            val unitPower = it.power * (otherMilitary[it] ?: 0).toDouble()
+//            println("$it power: $unitPower")
+            otherPower +=  unitPower
+        }
+
+//        println("Own Power: $ownPower")
+//        println("Other Power: $otherPower")
+
+        val estimate = when{
+            ownPower > otherPower * 5 -> { BattleOutcome.EASY_VICTORY }    // Having more than 5 times the other's troops
+            ownPower > otherPower * 2 -> { BattleOutcome.LIKELY_VICTORY }  // Having more than twice the other's troops
+            ownPower * 5 < otherPower -> { BattleOutcome.SURE_LOSS }       // Having less than a 5th of the other's troops
+            ownPower * 2 < otherPower -> { BattleOutcome.POTENTIAL_LOSS }  // Having less than half the other's troops
+            else -> { BattleOutcome.INDECISIVE }                           // All else is indecisive
+        }
+
+        return estimate
     }
 
 }
