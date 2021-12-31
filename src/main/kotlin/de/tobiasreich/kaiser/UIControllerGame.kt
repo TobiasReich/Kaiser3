@@ -205,6 +205,17 @@ class UIControllerGame : Initializable {
         rootBorderPane.center = militaryScene
     }
 
+    /** War view */
+    fun onWarButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-war.fxml"), Game.resourcesBundle)
+        val warScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
+        val controller = fxmlLoader.getController<UIControllerActionWar>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            updateViews()
+        }
+        rootBorderPane.center = warScene
+    }
 
     /** Shows the "map" of the own country */
     fun onShowMapButtonClick(actionEvent: ActionEvent) {

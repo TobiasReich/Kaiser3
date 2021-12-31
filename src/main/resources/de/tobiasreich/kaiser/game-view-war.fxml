@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionWar">
+   <children>
+      <Label text="%war_view_title">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" top="25.0" />
+         </VBox.margin></Label>
+
+      <Label text="%war_view_owned_troops">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" top="25.0" />
+         </VBox.margin></Label>
+
+      <Label alignment="CENTER" contentDisplay="CENTER" text="%war_view_stay_home">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <ScrollPane prefHeight="60.0">
+        <content>
+           <HBox fx:id="unitsAtHomeVisualization" maxWidth="1.7976931348623157E308" />
+        </content>
+      </ScrollPane>
+
+      <Label alignment="CENTER" contentDisplay="CENTER" text="%war_view_send_to_war">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <ScrollPane prefHeight="60.0">
+         <content>
+            <HBox fx:id="unitsToWarVisualization" maxWidth="1.7976931348623157E308" />
+         </content>
+      </ScrollPane>
+
+   </children>
+</VBox>

@@ -185,14 +185,14 @@
                </font>
                 </Button>
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Krieg">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onWarButtonClick" prefWidth="125.0" text="Krieg">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_war_button" />
                     </tooltip>
                     <graphic>
                         <ImageView fx:id="warButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_war.png">
                                 </Image>
                             </image>
                         </ImageView>
