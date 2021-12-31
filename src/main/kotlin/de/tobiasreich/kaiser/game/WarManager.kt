@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
 
 /** Object for tracking war declarations.
  *  Every player that declares war to another player will add the war declarations here.
@@ -16,7 +17,7 @@ object WarManager {
 
     fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnit, Int>){
         warDeclarations.add(WarDeclaration(initiator, target, units))
-        //TODO Add a note (message) to the target player so they get warned about "incoming troops" at turn start
+        target.addMessage(WarDeclarationMessage(initiator, units))
     }
 
     /** Gets the next war declaration FOR the given player. */

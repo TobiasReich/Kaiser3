@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageWarDeclaration">
+   <children>
+      <!-- Header -->
+      <Label text="%war_message_title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </Label>
+
+      <Label text="Unsere Spione berichten uns von Truppen, die in unsere Richtung marschieren.">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+
+      <Line fx:id="playerTopLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+      <Label fx:id="declaringPlayerLabel" text="Offenbar werden sie von Herzog X von Y befehligt. " textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+
+      <Line fx:id="playerBottomLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+      <Label fx:id="warEstimationLabel" text="War estimation">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+
+
+      <Label text="%war_message_reaction_question">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="%war_message_accept_war_text">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="%war_message_accept_war_button">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </VBox>
+
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="%war_message_make_peace_offer_title">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Label>
+            <Label text="%war_message_peace_offer_text">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Label>
+            <HBox alignment="CENTER">
+               <children>
+                  <TextField fx:id="peaceOfferTextField" />
+                  <Label text="%general_currency" />
+               </children>
+            </HBox>
+
+            <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="%war_message_make_peace_offer_button">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+   </children>
+</VBox>

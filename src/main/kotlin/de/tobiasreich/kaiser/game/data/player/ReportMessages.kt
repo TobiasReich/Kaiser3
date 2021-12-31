@@ -6,6 +6,7 @@ import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.ResourceType
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.SabotageType
 import de.tobiasreich.kaiser.game.data.population.Person
 import javafx.fxml.FXMLLoader
@@ -49,5 +50,19 @@ class DonationReactionMessage(val respondingPlayer: Player, val selectedResource
 class SabotageMessage(val sabotagingPlayer: Player, val sabotageType: SabotageType) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-sabotage.fxml"), Game.resourcesBundle)
+    }
+}
+
+/** A message about a war declaration */
+class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<MilitaryUnit, Int>) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-war-declaration.fxml"), Game.resourcesBundle)
+    }
+}
+
+/** A message about a reaction to a war declaration (i.e. a peace treaty) */
+class WarDeclarationReactionMessage(val declaringPlayer: Player, val units : Map<MilitaryUnit, Int>) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-war-declaration-reaction.fxml"), Game.resourcesBundle)
     }
 }
