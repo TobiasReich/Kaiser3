@@ -1,10 +1,14 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.Button
+import javafx.scene.control.ComboBox
 import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
 import java.net.URL
@@ -12,6 +16,12 @@ import java.util.*
 
 /** Controller, specific for the Land actions */
 class UIControllerActionWar : Initializable {
+
+    @FXML
+    lateinit var toWarButton: Button
+
+    @FXML
+    lateinit var playerSelectionCB: ComboBox<String>
 
     @FXML
     lateinit var unitsToWarVisualization: HBox
@@ -30,9 +40,27 @@ class UIControllerActionWar : Initializable {
     private var miliartyAtHome = mutableMapOf<MilitaryUnit, Int>()
     private var miliartyAtWar = mutableMapOf<MilitaryUnit, Int>()
 
+    private val players = Game.getAllOtherPlayers()
+    private var targetPlayer : Player? = null
 
-    override fun initialize(p0: URL?, p1: ResourceBundle?) {
-        //Copy all
+
+    override fun initialize(p0: URL?, bundle: ResourceBundle) {
+        val playerNames = FXCollections.observableArrayList<String>()
+        Game.getAllOtherPlayers().forEach {
+            playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
+        }
+
+        playerSelectionCB.items = playerNames
+
+        // Listener to changes of the selected player
+        playerSelectionCB.valueProperty().addListener { _, _, _ ->
+            val selectedIndex = playerSelectionCB.selectionModel.selectedIndex
+            targetPlayer = players[selectedIndex]
+            println("Index: $selectedIndex / $targetPlayer")
+            updateToWarButton()
+        }
+
+        //Copy all military units to the "at home" category
         miliartyAtHome = HashMap(Game.currentPlayer.miliarty)
 
         drawUnitsAtHome()
@@ -118,6 +146,7 @@ class UIControllerActionWar : Initializable {
         miliartyAtWar[unitType] = (miliartyAtWar[unitType]?: 0) + 1
         drawUnitsAtHome()
         drawUnitsToWar()
+        updateToWarButton()
     }
 
     private fun moveToHome(unitType: MilitaryUnit) {
@@ -125,6 +154,21 @@ class UIControllerActionWar : Initializable {
         miliartyAtHome[unitType] = (miliartyAtHome[unitType]?: 0) + 1
         drawUnitsAtHome()
         drawUnitsToWar()
+        updateToWarButton()
+    }
+
+    /** Sets the "to War" button enabled when a target player is selected
+     * AND at least one unit is selected to go to war (one can't declare war
+     * without sending at least one unit to the battle field) */
+    private fun updateToWarButton(){
+        toWarButton.isDisable = targetPlayer == null && miliartyAtWar.values.sum() > 0
+    }
+
+    /** Declares war to the target player */
+    fun startWar(actionEvent: ActionEvent) {
+        println("Start war!")
+        //TODO remove the units from the players military units
+        //TODO move these units to the WarManager, so they are "on the way" to the destination player
     }
 
 }
