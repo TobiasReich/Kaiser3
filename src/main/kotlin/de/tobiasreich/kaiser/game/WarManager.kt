@@ -42,23 +42,8 @@ object WarManager {
      *
      *  POTENTIAL_LOSS and SURE_LOSS values however suggest, the attacker might lose the battle. */
     fun estimateBattleOutcome(ownMilitary : Map<MilitaryUnit, Int>, otherMilitary : Map<MilitaryUnit, Int>) : BattleOutcome {
-        var ownPower = 0.0
-        var otherPower = 0.0
-
-        ownMilitary.keys.forEach {
-            val unitPower = it.power * (ownMilitary[it] ?: 0).toDouble()
-//            println("$it power: $unitPower")
-            ownPower +=  unitPower
-        }
-
-        otherMilitary.keys.forEach {
-            val unitPower = it.power * (otherMilitary[it] ?: 0).toDouble()
-//            println("$it power: $unitPower")
-            otherPower +=  unitPower
-        }
-
-//        println("Own Power: $ownPower")
-//        println("Other Power: $otherPower")
+        val ownPower = getBattlePower(ownMilitary)
+        val otherPower = getBattlePower(otherMilitary)
 
         val estimate = when{
             ownPower > otherPower * 5 -> { BattleOutcome.EASY_VICTORY }    // Having more than 5 times the other's troops
@@ -69,6 +54,46 @@ object WarManager {
         }
 
         return estimate
+    }
+
+
+    /** Returns the battle power of an army */
+    fun getBattlePower(units : Map<MilitaryUnit, Int>) : Double {
+        var power = 0.0
+
+        units.keys.forEach {
+            val unitPower = it.power * (units[it] ?: 0).toDouble()
+            power +=  unitPower
+        }
+        return power
+    }
+
+    /** Returns the attack power of an army */
+    fun getAttackPowerByType(melee : Boolean, units : Map<MilitaryUnit, Int>) : Double {
+        var power = 0.0
+        if (melee){
+            units.keys.filter { it.melee }.forEach {
+                val unitPower = it.power * (units[it] ?: 0).toDouble()
+                power +=  unitPower
+            }
+        } else {
+            units.keys.filter { it.ranged }.forEach {
+                val unitPower = it.power * (units[it] ?: 0).toDouble()
+                power +=  unitPower
+            }
+        }
+
+        return power
+    }
+
+    /** This "kills" units depending on the damage power they receive */
+    fun tageDamage(units : Map<MilitaryUnit, Int>, power : Double) : Map<MilitaryUnit, Int> {
+        var power = 0.0
+        units.keys.sorted().forEach {
+            val unitPower = it.power * (units[it] ?: 0).toDouble()
+            power +=  unitPower
+        }
+        return units
     }
 
 

@@ -74,8 +74,11 @@ class Player{
     var foodForDistribution = 1000  // Amount of food to be distributed (i.e. how much do they get for that year)
     var foodPrice = 50              // The current wheat price for this player this year
 
+
     /* The units the player owns, grouped by unit */
+    //TODO We might want to make a list of unit objects instead so their state can be modeled better (e.g. having health going down during battle)
     var miliarty = mutableMapOf<MilitaryUnit, Int>()
+
     /* The bonus / malus for troop morale. Higher values make the units less likely to desert. */
     var miliartyMoodModifier = 0.0
 
