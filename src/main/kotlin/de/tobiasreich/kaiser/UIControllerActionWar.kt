@@ -62,6 +62,10 @@ class UIControllerActionWar : Initializable {
             updateToWarButton()
         }
 
+        //TODO Add "War goal" option for different types of wars
+        // E.g. steal land, rob money, burn buildings, kill people.
+        // That might give more strategic options for the attacker!
+
         //Copy all military units to the "at home" category
         miliartyAtHome = HashMap(Game.currentPlayer.miliarty)
 

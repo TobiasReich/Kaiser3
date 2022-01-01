@@ -3,6 +3,7 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.BattleOutcome
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.WarManager
+import de.tobiasreich.kaiser.game.data.player.BattleMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationReactionMessage
@@ -118,7 +119,8 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
     /** Player clicked on the button to accept war.
      *  Just proceed with the next messages */
     fun acceptWarButtonClick(actionEvent: ActionEvent) {
-        // Nothing to do here. The battle starts when the other player makes his turn again!
+        // Add a battle message to the attacking player. The battle starts with the attacker's turn
+        message.declaringPlayer.addMessage(BattleMessage(message.declaringPlayer, message.units, Game.currentPlayer))
         proceedToNextNews()
     }
 

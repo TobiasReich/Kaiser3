@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.BattleOutcome
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.TroopMovement
 import de.tobiasreich.kaiser.game.WarManager
+import de.tobiasreich.kaiser.game.data.player.BattleMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationReactionMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -95,8 +96,7 @@ class UIControllerMessageWarDeclarationReaction : Initializable, IMessageControl
     /** The player does not accept the peace offer.
      *  Starts the battle! */
     fun startWarButtonClick(actionEvent: ActionEvent) {
-        println("Start War now!")
-        //TODO Implement the battle!
+        Game.currentPlayer.addMessageToFrontOfList(BattleMessage(Game.currentPlayer, message.returningUnits, message.reactingPlayer))
         proceedToNextNews() // For now proceed
     }
 

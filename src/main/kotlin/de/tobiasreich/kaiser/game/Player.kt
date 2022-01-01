@@ -261,6 +261,12 @@ class Player{
         messageList.add(messsage)
     }
 
+    /** Sets a message to the "front" of the message queue. This comes handy when one message should trigger another
+     * (e.g. a war declaration reaction has a direct new message for a battle) */
+    fun addMessageToFrontOfList(messsage : ReportMessage){
+        messageList.add(0, messsage)
+    }
+
 
     /** Buys/builds a specific building for this user */
     fun buyBuilding(building: BuildingType) {

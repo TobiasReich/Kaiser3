@@ -76,3 +76,18 @@ class ReturningTroopsMessage(val originPlayer: Player, val returningUnits : Map<
         return FXMLLoader(Main::class.java.getResource("news-returning-troops.fxml"), Game.resourcesBundle)
     }
 }
+
+/** A message about a troops coming back from the battlefield  */
+class BattleMessage(val attackingPlayer: Player, val attackingUnits : Map<MilitaryUnit, Int>,
+                    val defendingPlayer: Player) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-battle.fxml"), Game.resourcesBundle)
+    }
+}
+/** A message about an outcome of a battle, sent do the defender (the attacker sees the battle directly in the turn) */
+class BattleOutcomeMessage(val attackingPlayer: Player, val remainingUnits : Map<MilitaryUnit, Int>,
+                           val unitLosses : Map<MilitaryUnit, Int>) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-battle-summary.fxml"), Game.resourcesBundle)
+    }
+}
