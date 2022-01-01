@@ -8,6 +8,7 @@ import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.country.Land
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.military.SabotageType
 import de.tobiasreich.kaiser.game.data.player.*
 import de.tobiasreich.kaiser.game.data.population.Laws
@@ -76,11 +77,10 @@ class Player{
 
 
     /* The units the player owns, grouped by unit */
-    //TODO We might want to make a list of unit objects instead so their state can be modeled better (e.g. having health going down during battle)
-    var miliarty = mutableMapOf<MilitaryUnit, Int>()
+    var military = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
 
     /* The bonus / malus for troop morale. Higher values make the units less likely to desert. */
-    var miliartyMoodModifier = 0.0
+    var militaryMoodModifier = 0.0
 
 
     init {
@@ -368,30 +368,29 @@ class Player{
 
     /** Adds a military unit to the players troops */
     fun addMilitaryUnit(unit : MilitaryUnit){
-        if(miliarty[unit] == null){
-            println("Adding first ${unit.name} to the troops")
-            miliarty[unit] = 1
-        } else {
-            miliarty[unit] = miliarty[unit]!! + 1
-            println("Added ${unit.name}- (currently ${miliarty[unit]} units)")
+        if(military[unit.type] == null){
+            println("Adding a new list for the unit type")
+            military[unit.type] = mutableListOf()
         }
+        military[unit.type]!!.add(unit)
+        println("Added ${unit}- (currently ${military[unit.type]} units)")
     }
 
 
     /** Removes a military unit from the players troops.
      *  This can happen due to dying, selling, donating etc. */
     fun removeMilitaryUnit(unit : MilitaryUnit){
-        println("Removing unit ${unit.name} (from ${miliarty[unit]} units)")
-        miliarty[unit] = miliarty[unit]!! - 1
+        println("Removing unit ${unit} (from ${military[unit.type]} units)")
+        military[unit.type]!!.remove(unit)
     }
 
 
     /** Calculates how much pay the military units require per year */
     fun calculateTroopPayment() : Int {
         var sum = 0
-        miliarty.keys.forEach {
+        military.keys.forEach { type ->
             // The pay of the unit multiplied by the amount of unity in this category
-            sum += it.pay * (miliarty[it] ?: 0)
+            sum += military[type]!!.sumOf{ it.pay }
         }
         println("Calculated pay for troops: $sum")
         return sum
@@ -418,13 +417,13 @@ class Player{
 
     /** adds / subtracts a mood bonus for the troops */
     fun addMoodBonus(amount : Double) {
-        this.miliartyMoodModifier += amount
-        println("Miliarty Mood Modifer: $miliartyMoodModifier")
+        this.militaryMoodModifier += amount
+        println("Miliarty Mood Modifer: $militaryMoodModifier")
     }
 
     /** Clears the mood bonus/malus for the troops */
     private fun clearMoodModifier(){
-        this.miliartyMoodModifier = 0.0
+        this.militaryMoodModifier = 0.0
     }
 
 }

@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.player.BattleMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -21,6 +22,9 @@ import java.util.*
 
 /** A battle view showing a battle against another player */
 class UIControllerMessageBattle : Initializable, IMessageController{
+
+    @FXML
+    lateinit var battleTitle: Label
 
     @FXML
     lateinit var battleEndButton: Button
@@ -61,8 +65,8 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         })
     )
 
-    private lateinit var attackingUnits : Map<MilitaryUnit, Int>
-    private lateinit var defendingUnits : Map<MilitaryUnit, Int>
+    private lateinit var attackingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private lateinit var defendingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>
 
     /********************************************
      *
@@ -78,13 +82,13 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     @FXML
     override fun initialize(p0: URL?, bundle: ResourceBundle) {
         this.bundle = bundle
-        attackingUnits = message.attackingUnits
-        defendingUnits = message.defendingPlayer.miliarty
         battleTimeline.cycleCount = Timeline.INDEFINITE
     }
 
     override fun setMessage(message: ReportMessage) {
         this.message = message as BattleMessage
+        attackingUnits = message.attackingUnits
+        defendingUnits = message.defendingPlayer.military
         updateView()
     }
 

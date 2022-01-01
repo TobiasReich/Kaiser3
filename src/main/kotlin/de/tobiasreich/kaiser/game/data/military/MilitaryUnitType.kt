@@ -16,10 +16,10 @@ package de.tobiasreich.kaiser.game.data.military
  * - prestige: the prestige points given for owning such a unit (higher is better)
  * - loyalty: the default mood of this unit (higher is better), decides about deserting when making war
  */
-enum class MilitaryUnit(val nameRes : String, val techLevel : Int,
-                        val pay : Int, val mercCost : Int, val recruitCost : Int,
-                        val popCost : Int, val melee : Boolean, val ranged : Boolean,
-                        val initiative : Double, val power : Double, val health : Double, val prestige : Double, val loyalty : Double) {
+enum class MilitaryUnitType(val nameRes : String, val techLevel : Int,
+                            val pay : Int, val mercCost : Int, val recruitCost : Int,
+                            val popCost : Int, val melee : Boolean, val ranged : Boolean,
+                            val initiative : Double, val power : Double, val health : Double, val prestige : Double, val loyalty : Double) {
 
     WARRIOR("military_unit_warrior"     ,0     ,10  ,100    ,20     ,10 , true  , false ,0.80,0.10,0.20,0.10,0.9),
     ARCHER("military_unit_archer"       ,10    ,20  ,200    ,40     ,20 , false , true  ,0.95,0.15,0.10,0.20,0.7),
@@ -36,3 +36,9 @@ enum class MilitaryUnit(val nameRes : String, val techLevel : Int,
     ARTILLERY("military_unit_artillery" ,20000 ,4000,10000  ,5000   ,500, false , true  ,0.30,0.70,0.25,0.50,0.7),
 
 }
+
+/** Simulating a single military unit. This is used for estimating specific changing properties of units.
+ *  E.g. when during a battle units are hurt but not killed, their health shrings. Or when they went to a boot camp
+ *  their morale might increase etc.
+ *  This then is a unit specific property (i.e. a newly hired unit of same type has a lower power) */
+data class MilitaryUnit(val type : MilitaryUnitType, val pay : Int, val melee : Boolean, val ranged : Boolean, val initiative : Double, val power : Double, val health : Double, val prestige : Double, val loyalty : Double)

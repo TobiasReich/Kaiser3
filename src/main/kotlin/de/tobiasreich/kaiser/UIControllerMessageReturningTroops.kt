@@ -1,9 +1,6 @@
 package de.tobiasreich.kaiser
 
-import de.tobiasreich.kaiser.game.BattleOutcome
 import de.tobiasreich.kaiser.game.Game
-import de.tobiasreich.kaiser.game.TroopMovement
-import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.ReturningTroopsMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -76,13 +73,12 @@ class UIControllerMessageReturningTroops : Initializable, IMessageController{
 
     /** Integrates the home coming troops in the local military */
     fun integrateTroopsButtonClick(actionEvent: ActionEvent) {
-        val military = Game.currentPlayer.miliarty
+        val military = Game.currentPlayer.military
         message.returningUnits.keys.forEach {
-            val ownedUnits = military[it]
-            if (ownedUnits == null){
+            if (military[it] == null){
                 military[it] = message.returningUnits[it]!!
             } else {
-                military[it] = ownedUnits + message.returningUnits[it]!!
+                military[it]!!.addAll(message.returningUnits[it]!!)
             }
         }
         proceedToNextNews() // For now proceed

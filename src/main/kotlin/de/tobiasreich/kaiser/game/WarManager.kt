@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
 
 /** Object for tracking war declarations.
@@ -17,7 +18,7 @@ object WarManager {
 
     private val returningTroops = mutableListOf<TroopMovement>()
 
-    fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnit, Int>){
+    fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>){
         warDeclarations.add(WarDeclaration(initiator, target, units))
         target.addMessage(WarDeclarationMessage(initiator, units))
     }
@@ -41,7 +42,7 @@ object WarManager {
      *  A value of INDECISIVE suggests a "draw" meaning the outcome is insecure and both are equally likely to win.
      *
      *  POTENTIAL_LOSS and SURE_LOSS values however suggest, the attacker might lose the battle. */
-    fun estimateBattleOutcome(ownMilitary : Map<MilitaryUnit, Int>, otherMilitary : Map<MilitaryUnit, Int>) : BattleOutcome {
+    fun estimateBattleOutcome(ownMilitary : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, otherMilitary : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : BattleOutcome {
         val ownPower = getBattlePower(ownMilitary)
         val otherPower = getBattlePower(otherMilitary)
 
@@ -58,41 +59,34 @@ object WarManager {
 
 
     /** Returns the battle power of an army */
-    fun getBattlePower(units : Map<MilitaryUnit, Int>) : Double {
+    fun getBattlePower(units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : Double {
         var power = 0.0
 
-        units.keys.forEach {
-            val unitPower = it.power * (units[it] ?: 0).toDouble()
+        units.keys.forEach { type ->
+            val unitPower = units[type]!!.sumOf { it.power }
             power +=  unitPower
         }
         return power
     }
 
     /** Returns the attack power of an army */
-    fun getAttackPowerByType(melee : Boolean, units : Map<MilitaryUnit, Int>) : Double {
-        var power = 0.0
-        if (melee){
-            units.keys.filter { it.melee }.forEach {
-                val unitPower = it.power * (units[it] ?: 0).toDouble()
-                power +=  unitPower
-            }
+    fun getAttackPowerByType(melee: Boolean, units: Map<MilitaryUnitType, MutableList<MilitaryUnit>>): Double {
+        val selectedUnits = if (melee) {
+            units.keys.filter { it.melee }
         } else {
-            units.keys.filter { it.ranged }.forEach {
-                val unitPower = it.power * (units[it] ?: 0).toDouble()
-                power +=  unitPower
-            }
+            units.keys.filter { it.ranged }
         }
-
-        return power
+        return selectedUnits.sumOf { type -> units[type]!!.sumOf { it.power } }
     }
 
     /** This "kills" units depending on the damage power they receive */
-    fun tageDamage(units : Map<MilitaryUnit, Int>, power : Double) : Map<MilitaryUnit, Int> {
+    fun tageDamage(units : Map<MilitaryUnitType, MutableList<MilitaryUnit>> , power : Double) : Map<MilitaryUnitType, MutableList<MilitaryUnit>> {
         var power = 0.0
-        units.keys.sorted().forEach {
-            val unitPower = it.power * (units[it] ?: 0).toDouble()
-            power +=  unitPower
-        }
+        //TODO implement
+//        units.keys.sorted().forEach {
+//            val unitPower = it.power * (units[it] ?: 0).toDouble()
+//            power +=  unitPower
+//        }
         return units
     }
 
@@ -123,7 +117,7 @@ enum class BattleOutcome{
 }
 
 /** Data object for tracking war declarations */
-data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnit, Int>)
+data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>)
 
 /** Data object for troop movement.
  *  This is a bundle of units that will arrive at the destination (player) the next time it becomes the player's turn
@@ -131,4 +125,4 @@ data class WarDeclaration(val initiator : Player, val target : Player, val units
  *  NOTE: The reason for that is, so that on a peace treaty, the player does not receive the troops immediately.
  *  That gives another layer of diplomacy since other players might use the situation for their own goals and attack a
  *  player that is at war with another country. */
-data class TroopMovement(val origin : Player, val destination : Player, val units : Map<MilitaryUnit, Int>)
+data class TroopMovement(val origin : Player, val destination : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>)

@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -39,8 +40,8 @@ class UIControllerActionWar : Initializable {
     /** Notifies the view about a purchase so the statistics can be updated */
     private lateinit var updateCallback : () -> Unit
 
-    private var miliartyAtHome = mutableMapOf<MilitaryUnit, Int>()
-    private var miliartyAtWar = mutableMapOf<MilitaryUnit, Int>()
+    private var miliartyAtHome = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
+    private var miliartyAtWar = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
 
     private val players = Game.getAllOtherPlayers()
     private var targetPlayer : Player? = null
@@ -67,7 +68,7 @@ class UIControllerActionWar : Initializable {
         // That might give more strategic options for the attacker!
 
         //Copy all military units to the "at home" category
-        miliartyAtHome = HashMap(Game.currentPlayer.miliarty)
+        miliartyAtHome = HashMap(Game.currentPlayer.military)
 
         drawUnitsAtHome()
         drawUnitsToWar()
@@ -85,28 +86,28 @@ class UIControllerActionWar : Initializable {
 
         miliartyAtHome.keys.sorted().forEach { unitType ->
 
-            for (unit in 0 until (miliartyAtHome[unitType] ?: 0)){
+            for (unit in 0 until miliartyAtHome[unitType]!!.size){
                 println("Unit: $unitType")
                 val imageView = ImageView()
                 imageView.fitWidth = 40.0
                 imageView.fitHeight = 40.0
                 imageView.image = when(unitType) {
-                    MilitaryUnit.WARRIOR -> { GameImageCache.warrior }
-                    MilitaryUnit.ARCHER -> { GameImageCache.archer }
-                    MilitaryUnit.SPEARMAN -> { GameImageCache.spearman}
-                    MilitaryUnit.CAVALRY -> { GameImageCache.cavalry}
-                    MilitaryUnit.CROSSBOW -> { GameImageCache.warrior}
-                    MilitaryUnit.PIKE -> {GameImageCache.warrior}
-                    MilitaryUnit.LANCER -> {GameImageCache.lancer}
-                    MilitaryUnit.LONGSWORD -> {GameImageCache.warrior}
-                    MilitaryUnit.CANNON -> {GameImageCache.cannon}
-                    MilitaryUnit.KNIGHT -> {GameImageCache.warrior}
-                    MilitaryUnit.CRUSADER -> {GameImageCache.warrior}
-                    MilitaryUnit.MUSKETEER -> {GameImageCache.warrior}
-                    MilitaryUnit.ARTILLERY -> {GameImageCache.warrior}
+                    MilitaryUnitType.WARRIOR -> { GameImageCache.warrior }
+                    MilitaryUnitType.ARCHER -> { GameImageCache.archer }
+                    MilitaryUnitType.SPEARMAN -> { GameImageCache.spearman}
+                    MilitaryUnitType.CAVALRY -> { GameImageCache.cavalry}
+                    MilitaryUnitType.CROSSBOW -> { GameImageCache.warrior}
+                    MilitaryUnitType.PIKE -> {GameImageCache.warrior}
+                    MilitaryUnitType.LANCER -> {GameImageCache.lancer}
+                    MilitaryUnitType.LONGSWORD -> {GameImageCache.warrior}
+                    MilitaryUnitType.CANNON -> {GameImageCache.cannon}
+                    MilitaryUnitType.KNIGHT -> {GameImageCache.warrior}
+                    MilitaryUnitType.CRUSADER -> {GameImageCache.warrior}
+                    MilitaryUnitType.MUSKETEER -> {GameImageCache.warrior}
+                    MilitaryUnitType.ARTILLERY -> {GameImageCache.warrior}
                 }
-                imageView.setOnMouseClicked { event ->
-                    moveToBattlefield(unitType)
+                imageView.setOnMouseClicked {
+                    moveToBattlefield(miliartyAtHome[unitType]!!.first())
                 }
                 unitsAtHomeVisualization.children.add(imageView)
             }
@@ -119,45 +120,50 @@ class UIControllerActionWar : Initializable {
 
         miliartyAtWar.keys.sorted().forEach { unitType ->
 
-            for (unit in 0 until (miliartyAtWar[unitType] ?: 0)){
-                println("Unit: $unitType")
+            for (unit in 0 until miliartyAtWar[unitType]!!.size){
                 val imageView = ImageView()
                 imageView.fitWidth = 40.0
                 imageView.fitHeight = 40.0
                 imageView.image = when(unitType) {
-                    MilitaryUnit.WARRIOR -> { GameImageCache.warrior }
-                    MilitaryUnit.ARCHER -> { GameImageCache.archer }
-                    MilitaryUnit.SPEARMAN -> { GameImageCache.spearman}
-                    MilitaryUnit.CAVALRY -> { GameImageCache.cavalry}
-                    MilitaryUnit.CROSSBOW -> { GameImageCache.warrior}
-                    MilitaryUnit.PIKE -> {GameImageCache.warrior}
-                    MilitaryUnit.LANCER -> {GameImageCache.lancer}
-                    MilitaryUnit.LONGSWORD -> {GameImageCache.warrior}
-                    MilitaryUnit.CANNON -> {GameImageCache.cannon}
-                    MilitaryUnit.KNIGHT -> {GameImageCache.warrior}
-                    MilitaryUnit.CRUSADER -> {GameImageCache.warrior}
-                    MilitaryUnit.MUSKETEER -> {GameImageCache.warrior}
-                    MilitaryUnit.ARTILLERY -> {GameImageCache.warrior}
+                    MilitaryUnitType.WARRIOR -> { GameImageCache.warrior }
+                    MilitaryUnitType.ARCHER -> { GameImageCache.archer }
+                    MilitaryUnitType.SPEARMAN -> { GameImageCache.spearman}
+                    MilitaryUnitType.CAVALRY -> { GameImageCache.cavalry}
+                    MilitaryUnitType.CROSSBOW -> { GameImageCache.warrior}
+                    MilitaryUnitType.PIKE -> {GameImageCache.warrior}
+                    MilitaryUnitType.LANCER -> {GameImageCache.lancer}
+                    MilitaryUnitType.LONGSWORD -> {GameImageCache.warrior}
+                    MilitaryUnitType.CANNON -> {GameImageCache.cannon}
+                    MilitaryUnitType.KNIGHT -> {GameImageCache.warrior}
+                    MilitaryUnitType.CRUSADER -> {GameImageCache.warrior}
+                    MilitaryUnitType.MUSKETEER -> {GameImageCache.warrior}
+                    MilitaryUnitType.ARTILLERY -> {GameImageCache.warrior}
                 }
-                imageView.setOnMouseClicked { event ->
-                    moveToHome(unitType)
+                imageView.setOnMouseClicked {
+                    moveToHome(miliartyAtWar[unitType]!!.first())
                 }
                 unitsToWarVisualization.children.add(imageView)
             }
         }
     }
 
-    private fun moveToBattlefield(unitType: MilitaryUnit) {
-        miliartyAtHome[unitType] = miliartyAtHome[unitType]!! - 1
-        miliartyAtWar[unitType] = (miliartyAtWar[unitType]?: 0) + 1
+    private fun moveToBattlefield(unit: MilitaryUnit) {
+        miliartyAtHome[unit.type]!!.remove(unit)
+        if (miliartyAtWar[unit.type] == null){
+            miliartyAtWar[unit.type] = mutableListOf()
+        }
+        miliartyAtWar[unit.type]!!.add(unit)
         drawUnitsAtHome()
         drawUnitsToWar()
         updateToWarButton()
     }
 
-    private fun moveToHome(unitType: MilitaryUnit) {
-        miliartyAtWar[unitType] = miliartyAtWar[unitType]!! - 1
-        miliartyAtHome[unitType] = (miliartyAtHome[unitType]?: 0) + 1
+    private fun moveToHome(unit: MilitaryUnit) {
+        miliartyAtWar[unit.type]!!.remove(unit)
+        if (miliartyAtHome[unit.type] == null){
+            miliartyAtHome[unit.type] = mutableListOf()
+        }
+        miliartyAtHome[unit.type]!!.add(unit)
         drawUnitsAtHome()
         drawUnitsToWar()
         updateToWarButton()
@@ -167,7 +173,7 @@ class UIControllerActionWar : Initializable {
      * AND at least one unit is selected to go to war (one can't declare war
      * without sending at least one unit to the battle field) */
     private fun updateToWarButton(){
-        toWarButton.isDisable = targetPlayer == null || miliartyAtWar.values.sum() <= 0
+        toWarButton.isDisable = targetPlayer == null || miliartyAtWar.values.none{ it.size > 0}
     }
 
     /** Declares war to the target player */
@@ -177,7 +183,7 @@ class UIControllerActionWar : Initializable {
         if (result == FxDialogs.DialogResult.OK){
             println("Declaring war")
             //Set the player's military to the ones remaining "at home"
-            Game.currentPlayer.miliarty = miliartyAtHome
+            Game.currentPlayer.military = miliartyAtHome
             WarManager.declareWar(Game.currentPlayer, targetPlayer!!, miliartyAtWar)
             updateCallback()
             // Close the view (show the

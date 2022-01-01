@@ -82,7 +82,7 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
         declaringPlayerLabel.text = String.format(bundle.getString("war_declaration_message_initiator_message"), playerTitle, declaringPlayer.name, playerCountry)
 
         // War estimation for the defender
-        val outcomeStringResource = when (WarManager.estimateBattleOutcome(Game.currentPlayer.miliarty, message.units)){
+        val outcomeStringResource = when (WarManager.estimateBattleOutcome(Game.currentPlayer.military, message.units)){
             BattleOutcome.EASY_VICTORY -> { "war_declaration_message_estimation_easy_victory" }
             BattleOutcome.LIKELY_VICTORY -> { "war_declaration_message_estimation_potential_victory" }
             BattleOutcome.INDECISIVE -> {"war_declaration_message_estimation_indecisive"}

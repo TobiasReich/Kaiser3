@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
+import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.population.Population
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
@@ -21,9 +22,9 @@ import java.io.IOException
  *  - button to "recruit" as soldier (cheaper but population cost)
  */
 //TODO: Disable the recruit Button in case there are no enough adults
-class UIControllerViewMilitaryRecruitUnit(private val unit: MilitaryUnit, private val population: Population,
-                                          private val military: MutableMap<MilitaryUnit, Int>,
-                                          private val getUnitCallback: (MilitaryUnit, Boolean) -> Boolean
+class UIControllerViewMilitaryRecruitUnit(private val unit: MilitaryUnitType, private val population: Population,
+                                          private val military: MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>,
+                                          private val getUnitCallback: (MilitaryUnitType, Boolean) -> Boolean
 ) : VBox() {
 
     @FXML
@@ -97,7 +98,7 @@ class UIControllerViewMilitaryRecruitUnit(private val unit: MilitaryUnit, privat
         hireCostLabel.text = "${unit.mercCost} ${Game.resourcesBundle.getString("general_currency")}"
         recruitCostLabel.text = "${unit.recruitCost} ${Game.resourcesBundle.getString("general_currency")}\n" +
                 "+ ${unit.popCost} ${Game.resourcesBundle.getString("general_persons_male")}"
-        ownedUnitsLabel.text = (military[unit] ?: 0).toString()
+        ownedUnitsLabel.text = (military[unit]?.size ?: 0).toString()
 
         meleeCB.isSelected = unit.melee
         rangedCB.isSelected = unit.ranged
