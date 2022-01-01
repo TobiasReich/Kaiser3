@@ -41,4 +41,4 @@ enum class MilitaryUnitType(val nameRes : String, val techLevel : Int,
  *  E.g. when during a battle units are hurt but not killed, their health shrings. Or when they went to a boot camp
  *  their morale might increase etc.
  *  This then is a unit specific property (i.e. a newly hired unit of same type has a lower power) */
-data class MilitaryUnit(val type : MilitaryUnitType, val pay : Int, val melee : Boolean, val ranged : Boolean, val initiative : Double, val power : Double, val health : Double, val prestige : Double, val loyalty : Double)
+data class MilitaryUnit(val type : MilitaryUnitType, var pay : Int, var melee : Boolean, var ranged : Boolean, var initiative : Double, var power : Double, var health : Double, var prestige : Double, var loyalty : Double)

@@ -65,8 +65,8 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         })
     )
 
-    private lateinit var attackingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>
-    private lateinit var defendingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private lateinit var attackingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private lateinit var defendingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
 
     /********************************************
      *
@@ -87,7 +87,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
     override fun setMessage(message: ReportMessage) {
         this.message = message as BattleMessage
-        attackingUnits = message.attackingUnits
+        attackingUnits = message.attackingUnits.toMutableMap()
         defendingUnits = message.defendingPlayer.military
         updateView()
     }
@@ -154,24 +154,31 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     private fun executeBattlePhase(){
         // STEP 1: Ranged units attack first
 
-        // 1.1: First shot goes to the defender (in order to make defense a bit easier, attack is always a bit harder)
+        // 1.1: First shot goes to the DEFENDER (in order to make defense a bit easier, attack is always a bit harder)
         // This helps preventing strong players to bash weaker ones since they require more troops to win.
         // War is only one option for solving conflicts, but it shouldn't be too profitable fighting.
-        val defensePowerRanged = WarManager.getAttackPowerByType(false, defendingUnits)
-        println("Ranged DefensePower: $defensePowerRanged")
+        val defenderPowerRanged = WarManager.getAttackPowerByType(false, defendingUnits)
+        println("Ranged Defender Power: $defenderPowerRanged")
 
         // Attacking units receive damage.
-        attackingUnits = WarManager.tageDamage(attackingUnits, defensePowerRanged)
+        attackingUnits = WarManager.tageDamage(attackingUnits, defenderPowerRanged)
 
         // 1.2 Ranged attacking units attack now:
-        val attackPowerRanged = WarManager.getAttackPowerByType(false, attackingUnits)
-        println("Ranged AttackPower: $attackPowerRanged")
-        defendingUnits = WarManager.tageDamage(attackingUnits, attackPowerRanged)
+        val attackerPowerRanged = WarManager.getAttackPowerByType(false, attackingUnits)
+        println("Ranged Attacker Power: $attackerPowerRanged")
+        defendingUnits = WarManager.tageDamage(defendingUnits, attackerPowerRanged)
 
         // +++ Write info to the log +++
 
 
         // STEP 2: Melee units attack (simultaneously) - this is a pure 1 vs 1 fight so no bonus for defense
+        val defenderPowerMelee = WarManager.getAttackPowerByType(true, defendingUnits)
+        val attackerPowerMelee = WarManager.getAttackPowerByType(true, attackingUnits)
+        println("Melee DefenderPower: $defenderPowerMelee")
+        println("Melee AttackerPower: $attackerPowerMelee")
+        attackingUnits = WarManager.tageDamage(attackingUnits, defenderPowerMelee)
+        defendingUnits = WarManager.tageDamage(defendingUnits, attackerPowerMelee)
+
 
         // +++ Write info to the log +++
 
@@ -192,6 +199,18 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         // -> battleTimeline.stop()
         // solve consequences (e.g. units return to player etc.)
         // -> set the "End Battle" button enabled
+
+        if (WarManager.getAttackPowerByType(false, defendingUnits) <= 0){
+            println("Defender got eliminated")
+            battleTimeline.stop()
+        } else if (WarManager.getAttackPowerByType(false, attackingUnits) <= 0){
+            println("Attacker got eliminated")
+            battleTimeline.stop()
+
+        }
+
+        println(" ----- END OF BATTLE PHASE ----- ")
+
     }
 
     private fun executeRangedAttackPhase(){

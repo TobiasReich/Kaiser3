@@ -77,6 +77,8 @@ class Player{
 
 
     /* The units the player owns, grouped by unit */
+    //TODO consider having military a wrapper class so all those conveniences of adding and removing units would be easier to handle
+    // (e.g. not always checking if the list is null...)
     var military = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
 
     /* The bonus / malus for troop morale. Higher values make the units less likely to desert. */

@@ -3,6 +3,7 @@ package de.tobiasreich.kaiser.game
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
+import java.lang.Math.min
 
 /** Object for tracking war declarations.
  *  Every player that declares war to another player will add the war declarations here.
@@ -80,14 +81,34 @@ object WarManager {
     }
 
     /** This "kills" units depending on the damage power they receive */
-    fun tageDamage(units : Map<MilitaryUnitType, MutableList<MilitaryUnit>> , power : Double) : Map<MilitaryUnitType, MutableList<MilitaryUnit>> {
-        var power = 0.0
-        //TODO implement
-//        units.keys.sorted().forEach {
-//            val unitPower = it.power * (units[it] ?: 0).toDouble()
-//            power +=  unitPower
-//        }
-        return units
+    fun tageDamage(attackedUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, power : Double) : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>> {
+        var attackPower = power
+
+        // For every unity type (sorted, beginning at the lowest)
+        attackedUnits.keys.sorted().forEach { type ->
+            val killedUnits = mutableListOf<MilitaryUnit>()
+            val units = attackedUnits[type]!!
+            // if there is still attack power left, reduce it from the unity health
+            units.forEach { unit ->
+                if (attackPower > 0){
+                    val damageTagen = min(unit.health, attackPower)
+                    unit.health -= damageTagen
+                    attackPower -= damageTagen
+                    if(unit.health <= 0){
+                        println("Unit got killed $unit")
+                        killedUnits.add(unit)
+                    }
+                }
+            }
+            units.removeAll(killedUnits)
+            attackedUnits[type] = units
+
+            // If there is no attack power left, we can just return the wounded (but surviving) units
+            if (attackPower <= 0){
+                return attackedUnits
+            }
+        }
+        return attackedUnits
     }
 
 
