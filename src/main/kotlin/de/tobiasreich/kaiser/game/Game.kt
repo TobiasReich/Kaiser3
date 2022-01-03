@@ -9,6 +9,9 @@ object Game {
     // The maximum fraction of resources that a player is allowed to donate
     const val MAX_DONATION_AMOUNT = 0.1
 
+    // Duration (in seconds) how long each phase (day) of the battle field lasts. Default = 1 second
+    var battleSpeed = 1.0
+
     /** Language Bundle for resources */
     lateinit var resourcesBundle : ResourceBundle
 

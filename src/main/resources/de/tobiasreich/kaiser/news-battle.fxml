@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="391.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageBattle">
+<VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageBattle">
    <children>
       <!-- Header -->
       <Label fx:id="battleTitle" text="Die Schlacht beginnt..." underline="true">
@@ -59,10 +59,14 @@
             <Rectangle fx:id="attackerRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
          </children></StackPane>
 
-      <TextFlow fx:id="battleUpdateTextFlow" maxHeight="100.0" maxWidth="500.0" minHeight="100.0" minWidth="500.0" prefHeight="100.0" prefWidth="500.0">
+      <ScrollPane maxHeight="150.0" maxWidth="500.0" minHeight="150.0" minWidth="500.0" prefHeight="150.0" prefWidth="500.0">
+        <content>
+          <VBox fx:id="battleUpdateVBox" />
+        </content>
          <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </VBox.margin></TextFlow>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </ScrollPane>
 
       <Button fx:id="battleEndButton" disable="true" mnemonicParsing="false" onAction="#onBattleOutcomeButtonClick" text="Weiter">
          <VBox.margin>

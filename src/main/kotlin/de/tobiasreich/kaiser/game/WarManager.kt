@@ -71,6 +71,11 @@ object WarManager {
     }
 
     /** Returns the attack power of an army */
+    fun getTotalAttackPower(units: Map<MilitaryUnitType, MutableList<MilitaryUnit>>): Double {
+        return units.keys.sumOf { type -> units[type]!!.sumOf { it.power } }
+    }
+
+    /** Returns the attack power of an army */
     fun getAttackPowerByType(melee: Boolean, units: Map<MilitaryUnitType, MutableList<MilitaryUnit>>): Double {
         val selectedUnits = if (melee) {
             units.keys.filter { it.melee }
@@ -80,10 +85,13 @@ object WarManager {
         return selectedUnits.sumOf { type -> units[type]!!.sumOf { it.power } }
     }
 
-    /** This "kills" units depending on the damage power they receive */
-    fun tageDamage(attackedUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, power : Double) : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>> {
+    /** This "kills" units depending on the damage power they receive.
+     *  This returns a Pair of two values.
+     *  FIRST: The new units (survivors)
+     *  SECOND: The amount of killed soldiers */
+    fun tageDamage(attackedUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, power : Double) : Pair<MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, Int> {
         var attackPower = power
-
+        var killedUnitsCounter = 0
         // For every unity type (sorted, beginning at the lowest)
         attackedUnits.keys.sorted().forEach { type ->
             val killedUnits = mutableListOf<MilitaryUnit>()
@@ -105,10 +113,12 @@ object WarManager {
 
             // If there is no attack power left, we can just return the wounded (but surviving) units
             if (attackPower <= 0){
-                return attackedUnits
+                return Pair(attackedUnits, killedUnits.size)
+            } else {
+                killedUnitsCounter += killedUnits.size
             }
         }
-        return attackedUnits
+        return Pair(attackedUnits, killedUnitsCounter)
     }
 
 

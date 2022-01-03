@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser
 
+import de.tobiasreich.kaiser.game.Game.battleSpeed
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
@@ -13,8 +14,10 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
-import javafx.scene.text.TextFlow
+import javafx.scene.text.*
 import javafx.util.Duration
 import java.net.URL
 import java.util.*
@@ -22,6 +25,9 @@ import java.util.*
 
 /** A battle view showing a battle against another player */
 class UIControllerMessageBattle : Initializable, IMessageController{
+
+    @FXML
+    lateinit var battleUpdateVBox: VBox
 
     @FXML
     lateinit var battleTitle: Label
@@ -34,10 +40,6 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
     @FXML
     lateinit var defenderRectangle: Rectangle
-
-
-    @FXML
-    lateinit var battleUpdateTextFlow: TextFlow
 
     @FXML
     lateinit var defenderAmountUnitsLabel: Label
@@ -60,13 +62,15 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *  This will simulate the battle where the users see an update very second
      *  until the battle is over. */
     private val battleTimeline = Timeline(
-        KeyFrame(Duration.seconds(1.0), {
+        KeyFrame(Duration.seconds(battleSpeed), {
             executeBattlePhase()
         })
     )
 
     private lateinit var attackingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private lateinit var attackerColor : Color
     private lateinit var defendingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private lateinit var defenderColor : Color
 
     /********************************************
      *
@@ -88,24 +92,24 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     override fun setMessage(message: ReportMessage) {
         this.message = message as BattleMessage
         attackingUnits = message.attackingUnits.toMutableMap()
+        attackerColor = message.attackingPlayer.playerColor
         defendingUnits = message.defendingPlayer.military
+        defenderColor = message.defendingPlayer.playerColor
         updateView()
     }
 
     private fun updateView() {
         attackerNameLabel.text = message.attackingPlayer.name
-        attackerNameLabel.style = ("-fx-text-fill: ${message.attackingPlayer.playerColor.toRGBCode()}; ")
-        attackerRectangle.fill = message.attackingPlayer.playerColor
+        attackerNameLabel.style = ("-fx-text-fill: ${attackerColor.toRGBCode()}; ")
+        attackerRectangle.fill = attackerColor
 
         defenderNameLabel.text = message.defendingPlayer.name
-        defenderNameLabel.style = ("-fx-text-fill: ${message.defendingPlayer.playerColor.toRGBCode()}; ")
-        defenderRectangle.fill =  message.defendingPlayer.playerColor
+        defenderNameLabel.style = ("-fx-text-fill: ${defenderColor.toRGBCode()}; ")
+        defenderRectangle.fill = defenderColor
 
     }
 
     private fun updateBattleStatistics() {
-        println("updateBattle stats")
-
         val attackPower = WarManager.getBattlePower(attackingUnits)
         attackerAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), attackPower)
 
@@ -139,6 +143,8 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *
      *************************************************************************************/
 
+    var attackPhase = 0
+
     /** This will be one "phase" of the battle.
      *  A battle can have multiple battles in case the goal is not reached
      *  (e.g. if units are still alive)
@@ -152,39 +158,17 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *   They might come back after the battle so the looser is not punished that hard as if all units were killed for nothing.
      */
     private fun executeBattlePhase(){
-        // STEP 1: Ranged units attack first
+        logBattleMsg(String.format(bundle.getString("battle_view_new_phase"), attackPhase+1))
 
-        // 1.1: First shot goes to the DEFENDER (in order to make defense a bit easier, attack is always a bit harder)
-        // This helps preventing strong players to bash weaker ones since they require more troops to win.
-        // War is only one option for solving conflicts, but it shouldn't be too profitable fighting.
-        val defenderPowerRanged = WarManager.getAttackPowerByType(false, defendingUnits)
-        println("Ranged Defender Power: $defenderPowerRanged")
-
-        // Attacking units receive damage.
-        attackingUnits = WarManager.tageDamage(attackingUnits, defenderPowerRanged)
-
-        // 1.2 Ranged attacking units attack now:
-        val attackerPowerRanged = WarManager.getAttackPowerByType(false, attackingUnits)
-        println("Ranged Attacker Power: $attackerPowerRanged")
-        defendingUnits = WarManager.tageDamage(defendingUnits, attackerPowerRanged)
-
-        // +++ Write info to the log +++
+        /** Ranged and Melee are alternating with the ranged weapons shooting first */
+        if (attackPhase %2 == 0){
+            executeRangedAttackPhase()
+        } else {
+            executeMeleeAttacks()
+        }
 
 
-        // STEP 2: Melee units attack (simultaneously) - this is a pure 1 vs 1 fight so no bonus for defense
-        val defenderPowerMelee = WarManager.getAttackPowerByType(true, defendingUnits)
-        val attackerPowerMelee = WarManager.getAttackPowerByType(true, attackingUnits)
-        println("Melee DefenderPower: $defenderPowerMelee")
-        println("Melee AttackerPower: $attackerPowerMelee")
-        attackingUnits = WarManager.tageDamage(attackingUnits, defenderPowerMelee)
-        defendingUnits = WarManager.tageDamage(defendingUnits, attackerPowerMelee)
-
-
-        // +++ Write info to the log +++
-
-        // Step 3: Battle outcome
-
-        // Step 3.1: Check deserting units
+        // Check deserting units
 
         // +++ Write info to the log +++
 
@@ -193,28 +177,109 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
         // Step 3.3: Check for victory
 
-        // +++ Write info to the log +++ (e.g. "next phase" or "victory" etc.)
-
-        // If battle is over?
-        // -> battleTimeline.stop()
-        // solve consequences (e.g. units return to player etc.)
-        // -> set the "End Battle" button enabled
-
-        if (WarManager.getAttackPowerByType(false, defendingUnits) <= 0){
-            println("Defender got eliminated")
+        if (WarManager.getTotalAttackPower(defendingUnits) <= 0){
+            logBattleMsg(bundle.getString("battle_view_battle_is_over"))
+            logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), attackerColor)
             battleTimeline.stop()
-        } else if (WarManager.getAttackPowerByType(false, attackingUnits) <= 0){
-            println("Attacker got eliminated")
-            battleTimeline.stop()
+            // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+            battleEndButton.isDisable = false
+            // TODO: Send the attacker's units back home
 
+        } else if (WarManager.getTotalAttackPower(attackingUnits) <= 0){
+            logBattleMsg(bundle.getString("battle_view_battle_is_over"))
+            logBattleMsg(String.format(bundle.getString("battle_view_defender_won"), attackPhase+1), defenderColor)
+            battleTimeline.stop()
+            // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+            battleEndButton.isDisable = false
+            // No units required to send home (the attacker lost!)
         }
 
-        println(" ----- END OF BATTLE PHASE ----- ")
-
+        // in any case, increment the phase so next time the other "group" is fighting
+        attackPhase++
     }
 
+
+    /** Executes the RANGED attacks */
     private fun executeRangedAttackPhase(){
+        // 1) First shot goes to the DEFENDER (in order to make defense a bit easier, attack is always a bit harder)
+        // This helps to prevent strong players to bash weaker ones since they require more troops to win.
+        // War is only one option for solving conflicts, but it shouldn't be too profitable fighting.
+        val defenderPowerRanged = WarManager.getAttackPowerByType(false, defendingUnits)
+        //println("Ranged Defender Power: $defenderPowerRanged")
 
+        // >>> LOG: "Defender is shooting"
+        // logBattleMsg(bundle.getString("battle_view_defender_range_attacking"))
+
+        // Attacking units receive damage.
+        val attackDamage = WarManager.tageDamage(attackingUnits, defenderPowerRanged)
+        attackingUnits = attackDamage.first
+        // >>> Log: "Attacker received damage. x units killed"
+        if (attackDamage.second > 1) {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_many"), attackDamage.second), attackerColor )
+        } else {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_one"), attackDamage.second), attackerColor )
+        }
+
+        // 2) Ranged attacking units attack now:
+        val attackerPowerRanged = WarManager.getAttackPowerByType(false, attackingUnits)
+        // >>> LOG: "Attacker is shooting"
+        //logBattleMsg(bundle.getString("battle_view_attacker_range_attacking"))
+
+        //println("Ranged Attacker Power: $attackerPowerRanged")
+        val defenderDamage = WarManager.tageDamage(defendingUnits, attackerPowerRanged)
+        defendingUnits = defenderDamage.first
+
+        // >>> Log: "Defender got damage. x units killed"
+        if (defenderDamage.second > 1) {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_many"), defenderDamage.second), defenderColor )
+        } else {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_one"), defenderDamage.second), defenderColor )
+        }
     }
+
+
+    /** Executes the MELEE attacks */
+    private fun executeMeleeAttacks(){
+        // Melee units attack (simultaneously) - this is a pure 1 vs 1 fight so no bonus for defense
+
+        // >>> Log: "Melee units attacking..."
+        //logBattleMsg(bundle.getString("battle_view_melee_attacking"))
+
+        val defenderPowerMelee = WarManager.getAttackPowerByType(true, defendingUnits)
+        val attackerPowerMelee = WarManager.getAttackPowerByType(true, attackingUnits)
+        //println("Melee DefenderPower: $defenderPowerMelee")
+        //println("Melee AttackerPower: $attackerPowerMelee")
+        val meleeDamageAttacker = WarManager.tageDamage(attackingUnits, defenderPowerMelee)
+        attackingUnits = meleeDamageAttacker.first
+
+        val meleeDamageDefender = WarManager.tageDamage(defendingUnits, attackerPowerMelee)
+        defendingUnits = meleeDamageDefender.first
+
+        // >>> Log: "Attacker got damage. x units killed"
+        if (meleeDamageAttacker.second > 1) {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_many"), meleeDamageAttacker.second), attackerColor )
+        } else {
+            logBattleMsg(String.format(bundle.getString("battle_view_units_died_one"), meleeDamageAttacker.second), attackerColor )
+        }
+
+        // >>> Log: "Defender got damage. x units killed"
+        if (meleeDamageDefender.second > 1) {
+            logBattleMsg( String.format(bundle.getString("battle_view_units_died_many"), meleeDamageDefender.second), defenderColor )
+        } else {
+            logBattleMsg( String.format(bundle.getString("battle_view_units_died_one"), meleeDamageDefender.second), defenderColor )
+        }
+    }
+
+
+    /** Adds a message to the "battle log" scroll view */
+    private fun logBattleMsg(message : String, color : Color? = null){
+        val messageText = Text(message)
+        color?.let {
+            messageText.fill = it
+        }
+        println("Battle log: $message")
+        battleUpdateVBox.children.add(0, messageText)
+    }
+
 
 }
