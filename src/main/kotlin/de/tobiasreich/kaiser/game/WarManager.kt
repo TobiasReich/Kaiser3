@@ -136,6 +136,28 @@ object WarManager {
         return troopMovements
     }
 
+
+    /** This calculates troops potentially deserting the battlefield */
+    fun calculateDesertingTroops(troops : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>) : Pair<MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, Int> {
+        var desertedUnitsCounter = 0
+
+        troops.keys.forEach { type ->
+            val desertedUnits = mutableListOf<MilitaryUnit>()
+            val units = troops[type]!!
+
+            units.forEach { unit ->
+                if (Math.random() > unit.loyalty){
+                    desertedUnits.add(unit)
+                }
+            }
+
+            troops[type]!!.removeAll(desertedUnits)
+            desertedUnitsCounter += desertedUnits.size
+        }
+
+        return Pair(troops, desertedUnitsCounter)
+    }
+
 }
 
 

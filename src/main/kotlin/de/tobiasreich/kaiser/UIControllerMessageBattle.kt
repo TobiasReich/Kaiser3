@@ -72,6 +72,8 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     private lateinit var defendingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
     private lateinit var defenderColor : Color
 
+    var attackPhase = 0
+
     /********************************************
      *
      *             Game Menu items
@@ -96,6 +98,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         defendingUnits = message.defendingPlayer.military
         defenderColor = message.defendingPlayer.playerColor
         updateView()
+        updateBattleStatistics()
     }
 
     private fun updateView() {
@@ -143,7 +146,6 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *
      *************************************************************************************/
 
-    var attackPhase = 0
 
     /** This will be one "phase" of the battle.
      *  A battle can have multiple battles in case the goal is not reached
@@ -154,8 +156,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *  it could end when half it's own troops are slaughtered already. No clear victory would
      *  be needed)
      *
-     *  TODO: Consider units fleeing when the battle looks bad!
-     *   They might come back after the battle so the looser is not punished that hard as if all units were killed for nothing.
+     *  TODO: Units fleeing might come back after the battle so the looser is not punished that hard as if all units were killed for nothing.
      */
     private fun executeBattlePhase(){
         logBattleMsg(String.format(bundle.getString("battle_view_new_phase"), attackPhase+1))
@@ -167,10 +168,8 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             executeMeleeAttacks()
         }
 
-
         // Check deserting units
-
-        // +++ Write info to the log +++
+        solveDeserting()
 
         // Step 3.2: update view
         updateBattleStatistics()
@@ -269,6 +268,32 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             logBattleMsg( String.format(bundle.getString("battle_view_units_died_one"), meleeDamageDefender.second), defenderColor )
         }
     }
+
+    /** Calculates how many units of the military were deserting, updating the view and the military
+     *  NOTE: Units only desert if the other troops are more than twice as powerful! */
+    private fun solveDeserting() {
+        val attackerPower = WarManager.getTotalAttackPower(attackingUnits)
+        val defenderPower = WarManager.getTotalAttackPower(defendingUnits)
+
+        // Units only desert if the other troops are more than twice as powerful
+        if (attackerPower > defenderPower * 2.0){
+            // defender units deserting
+            val defenderDeserting = WarManager.calculateDesertingTroops(defendingUnits)
+            defendingUnits = defenderDeserting.first
+            if (defenderDeserting.second > 0) {
+                logBattleMsg(String.format(bundle.getString("battle_view_units_deserted"), defenderDeserting.second), defenderColor)
+            }
+
+        } else if (defenderPower > attackerPower * 2.0){
+            // attacking units deserting
+            val attackerDeserting = WarManager.calculateDesertingTroops(attackingUnits)
+            attackingUnits = attackerDeserting.first
+            if (attackerDeserting.second > 0) {
+                logBattleMsg(String.format(bundle.getString("battle_view_units_deserted"), attackerDeserting.second), attackerColor)
+            }
+        }
+    }
+
 
 
     /** Adds a message to the "battle log" scroll view */
