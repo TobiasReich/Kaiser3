@@ -5,6 +5,7 @@ import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -19,6 +20,9 @@ import java.util.*
 
 /** Controller, specific for the Land actions */
 class UIControllerActionWar : Initializable {
+
+    @FXML
+    lateinit var warGoalSelectionCB: ComboBox<String>
 
     @FXML
     lateinit var toWarButton: Button
@@ -45,9 +49,12 @@ class UIControllerActionWar : Initializable {
 
     private val players = Game.getAllOtherPlayers()
     private var targetPlayer : Player? = null
+    private var warGoal : WarGoal = WarGoal.KILL_UNITS
 
 
     override fun initialize(p0: URL?, bundle: ResourceBundle) {
+
+        // Target Player ComboBox
         val playerNames = FXCollections.observableArrayList<String>()
         Game.getAllOtherPlayers().forEach {
             playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
@@ -62,6 +69,24 @@ class UIControllerActionWar : Initializable {
             println("Index: $selectedIndex / $targetPlayer")
             updateToWarButton()
         }
+
+        // War Goal ComboBox
+        val warGoals = FXCollections.observableArrayList<String>()
+
+        WarGoal.values().forEach {
+            warGoals.add(bundle.getString(it.stringResource))
+        }
+
+        warGoalSelectionCB.items = warGoals
+        warGoalSelectionCB.selectionModel.select(0)
+
+        // Listener to changes of the selected player
+        warGoalSelectionCB.valueProperty().addListener { _, _, _ ->
+            val selectedIndex = warGoalSelectionCB.selectionModel.selectedIndex
+            warGoal = WarGoal.values()[selectedIndex]
+            println("War Goal Index: $selectedIndex / $targetPlayer")
+        }
+
 
         //TODO Add "War goal" option for different types of wars
         // E.g. steal land, rob money, burn buildings, kill people.
@@ -190,7 +215,7 @@ class UIControllerActionWar : Initializable {
             println("Declaring war")
             //Set the player's military to the ones remaining "at home"
             Game.currentPlayer.military = miliartyAtHome
-            WarManager.declareWar(Game.currentPlayer, targetPlayer!!, miliartyAtWar)
+            WarManager.declareWar(Game.currentPlayer, targetPlayer!!, miliartyAtWar, warGoal)
             updateCallback()
             // Close the view (show the
         } else {

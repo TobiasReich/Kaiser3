@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser.game
 
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
 import java.lang.Math.min
 
@@ -19,8 +20,8 @@ object WarManager {
 
     private val returningTroops = mutableListOf<TroopMovement>()
 
-    fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>){
-        warDeclarations.add(WarDeclaration(initiator, target, units))
+    fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, warGoal: WarGoal){
+        warDeclarations.add(WarDeclaration(initiator, target, units, warGoal))
         target.addMessage(WarDeclarationMessage(initiator, units))
     }
 
@@ -170,7 +171,7 @@ enum class BattleOutcome{
 }
 
 /** Data object for tracking war declarations */
-data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>)
+data class WarDeclaration(val initiator : Player, val target : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, val warGoal: WarGoal)
 
 /** Data object for troop movement.
  *  This is a bundle of units that will arrive at the destination (player) the next time it becomes the player's turn
