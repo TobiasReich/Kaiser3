@@ -96,7 +96,7 @@ class UIControllerMessageWarDeclarationReaction : Initializable, IMessageControl
     /** The player does not accept the peace offer.
      *  Starts the battle! */
     fun startWarButtonClick(actionEvent: ActionEvent) {
-        Game.currentPlayer.addMessageToFrontOfList(BattleMessage(Game.currentPlayer, message.returningUnits, message.reactingPlayer))
+        Game.currentPlayer.addMessageToFrontOfList(BattleMessage(Game.currentPlayer, message.returningUnits, message.reactingPlayer, message.warGoal))
         proceedToNextNews() // For now proceed
     }
 

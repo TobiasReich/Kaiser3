@@ -20,9 +20,12 @@ object WarManager {
 
     private val returningTroops = mutableListOf<TroopMovement>()
 
+    /** This declares a war.
+     *  - store that in the war declarations (so the next time this player starts the turn, we can solve it)
+     *  - send a WarDeclarationMessage to the target of the war declaration */
     fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, warGoal: WarGoal){
         warDeclarations.add(WarDeclaration(initiator, target, units, warGoal))
-        target.addMessage(WarDeclarationMessage(initiator, units))
+        target.addMessage(WarDeclarationMessage(initiator, units, warGoal))
     }
 
     /** Gets the next war declaration FOR the given player. */
@@ -45,8 +48,8 @@ object WarManager {
      *
      *  POTENTIAL_LOSS and SURE_LOSS values however suggest, the attacker might lose the battle. */
     fun estimateBattleOutcome(ownMilitary : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, otherMilitary : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : BattleOutcome {
-        val ownPower = getBattlePower(ownMilitary)
-        val otherPower = getBattlePower(otherMilitary)
+        val ownPower = getTotalAttackPower(ownMilitary)
+        val otherPower = getTotalAttackPower(otherMilitary)
 
         val estimate = when{
             ownPower > otherPower * 5 -> { BattleOutcome.EASY_VICTORY }    // Having more than 5 times the other's troops
@@ -57,18 +60,6 @@ object WarManager {
         }
 
         return estimate
-    }
-
-
-    /** Returns the battle power of an army */
-    fun getBattlePower(units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : Double {
-        var power = 0.0
-
-        units.keys.forEach { type ->
-            val unitPower = units[type]!!.sumOf { it.power }
-            power +=  unitPower
-        }
-        return power
     }
 
     /** Returns the attack power of an army */

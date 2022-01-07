@@ -120,14 +120,14 @@ class UIControllerMessageWarDeclaration : Initializable, IMessageController{
      *  Just proceed with the next messages */
     fun acceptWarButtonClick(actionEvent: ActionEvent) {
         // Add a battle message to the attacking player. The battle starts with the attacker's turn
-        message.declaringPlayer.addMessage(BattleMessage(message.declaringPlayer, message.units, Game.currentPlayer))
+        message.declaringPlayer.addMessage(BattleMessage(message.declaringPlayer, message.units, Game.currentPlayer, message.warGoal))
         proceedToNextNews()
     }
 
 
     /** Player wants to make a peace offer by offering [peaceOfferAmount] amount of money */
     fun makePeaceOfferButtonClick(actionEvent: ActionEvent) {
-        message.declaringPlayer.addMessage(WarDeclarationReactionMessage(Game.currentPlayer, peaceOfferAmount, message.units))
+        message.declaringPlayer.addMessage(WarDeclarationReactionMessage(Game.currentPlayer, peaceOfferAmount, message.units, message.warGoal))
         proceedToNextNews()
     }
 }

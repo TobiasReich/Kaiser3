@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.Game.battleSpeed
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.BattleMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -68,8 +69,10 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     )
 
     private lateinit var attackingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private var attackPowerAtStart = 0.0
     private lateinit var attackerColor : Color
     private lateinit var defendingUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>
+    private var defendingPowerAtStart = 0.0
     private lateinit var defenderColor : Color
 
     var attackPhase = 0
@@ -94,8 +97,11 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     override fun setMessage(message: ReportMessage) {
         this.message = message as BattleMessage
         attackingUnits = message.attackingUnits.toMutableMap()
+        attackPowerAtStart = WarManager.getTotalAttackPower(attackingUnits)
         attackerColor = message.attackingPlayer.playerColor
+
         defendingUnits = message.defendingPlayer.military
+        attackPowerAtStart = WarManager.getTotalAttackPower(defendingUnits)
         defenderColor = message.defendingPlayer.playerColor
         updateView()
         updateBattleStatistics()
@@ -113,10 +119,10 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     }
 
     private fun updateBattleStatistics() {
-        val attackPower = WarManager.getBattlePower(attackingUnits)
+        val attackPower = WarManager.getTotalAttackPower(attackingUnits)
         attackerAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), attackPower)
 
-        val defensePower = WarManager.getBattlePower(defendingUnits)
+        val defensePower = WarManager.getTotalAttackPower(defendingUnits)
         defenderAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), defensePower)
 
         val totalPower = attackPower + defensePower
@@ -176,21 +182,54 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
         // Step 3.3: Check for victory
 
-        if (WarManager.getTotalAttackPower(defendingUnits) <= 0){
-            logBattleMsg(bundle.getString("battle_view_battle_is_over"))
-            logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), attackerColor)
-            battleTimeline.stop()
-            // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-            battleEndButton.isDisable = false
-            // TODO: Send the attacker's units back home
+        val attackPower = WarManager.getTotalAttackPower(attackingUnits)
+        val defensePower = WarManager.getTotalAttackPower(defendingUnits)
 
-        } else if (WarManager.getTotalAttackPower(attackingUnits) <= 0){
-            logBattleMsg(bundle.getString("battle_view_battle_is_over"))
-            logBattleMsg(String.format(bundle.getString("battle_view_defender_won"), attackPhase+1), defenderColor)
-            battleTimeline.stop()
-            // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-            battleEndButton.isDisable = false
-            // No units required to send home (the attacker lost!)
+        if (message.warGoal == WarGoal.KILL_UNITS){
+            // If there was another goal than killing all units the battle does not go until the end
+
+            // If at least one party has only half it's original health, the battle is over and the goal is reached.
+
+            if (attackPower <= attackPowerAtStart / 2.0  || attackPower <= 0){
+                // The attackers have lost more than half their power -> They retreat
+                // The attackers failed in their goal and will return
+
+                battleTimeline.stop()
+                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+                battleEndButton.isDisable = false
+                // TODO: Send the attacker's units back home
+                return
+            } else if (defensePower <= defendingPowerAtStart / 2.0 || defensePower <= 0){
+                // The defenders have lost more than half their power -> They retreat.
+                // Attackers will return with their goal achieved
+
+                battleTimeline.stop()
+                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+                battleEndButton.isDisable = false
+                // TODO: Send the attacker's units back home
+                return
+            }
+
+        } else {
+            // If there is another WarGoal aside from the "ordinary war" (WarGoal.KILL_UNITS)
+
+            if (attackPower <= 0){
+                logBattleMsg(bundle.getString("battle_view_battle_is_over"))
+                logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), attackerColor)
+                battleTimeline.stop()
+                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+                battleEndButton.isDisable = false
+                // TODO: Send the attacker's units back home
+                return
+            } else if (defensePower <= 0){
+                logBattleMsg(bundle.getString("battle_view_battle_is_over"))
+                logBattleMsg(String.format(bundle.getString("battle_view_defender_won"), attackPhase+1), defenderColor)
+                battleTimeline.stop()
+                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
+                battleEndButton.isDisable = false
+                // No units required to send home (the attacker lost!)
+                return
+            }
         }
 
         // in any case, increment the phase so next time the other "group" is fighting

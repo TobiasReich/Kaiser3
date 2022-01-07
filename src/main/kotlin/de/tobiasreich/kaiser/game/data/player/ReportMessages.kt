@@ -9,6 +9,7 @@ import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.military.SabotageType
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.population.Person
 import javafx.fxml.FXMLLoader
 
@@ -55,7 +56,7 @@ class SabotageMessage(val sabotagingPlayer: Player, val sabotageType: SabotageTy
 }
 
 /** A message about a war declaration */
-class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : ReportMessage {
+class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, val warGoal: WarGoal) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-war-declaration.fxml"), Game.resourcesBundle)
     }
@@ -65,7 +66,7 @@ class WarDeclarationMessage(val declaringPlayer: Player, val units : Map<Militar
  *  Note: this message includes the returning units. These are needed so the player - should the peace treaty be accepted -
  *  can re-include the own units again.
  */
-class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOfferAmount : Int, val returningUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : ReportMessage {
+class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOfferAmount : Int, val returningUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, val warGoal: WarGoal) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-war-declaration-reaction.fxml"), Game.resourcesBundle)
     }
@@ -80,7 +81,7 @@ class ReturningTroopsMessage(val originPlayer: Player, val returningUnits : Map<
 
 /** A message about a troops coming back from the battlefield  */
 class BattleMessage(val attackingPlayer: Player, val attackingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>,
-                    val defendingPlayer: Player) : ReportMessage {
+                    val defendingPlayer: Player, val warGoal: WarGoal) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-battle.fxml"), Game.resourcesBundle)
     }
