@@ -68,7 +68,13 @@ class UIControllerActionWar : Initializable {
         // That might give more strategic options for the attacker!
 
         //Copy all military units to the "at home" category
-        miliartyAtHome = HashMap(Game.currentPlayer.military)
+        Game.currentPlayer.military.keys.forEach {
+            // For every key create a new ArrayList with the same elements.
+            // This is needed since we don't want to move on the original map.
+            // In case the user changes something we don't want the original
+            // list messed up! (e.g. units moved to "to sent")
+            miliartyAtHome[it] = Game.currentPlayer.military[it]!!.toMutableList()
+        }
 
         drawUnitsAtHome()
         drawUnitsToWar()
