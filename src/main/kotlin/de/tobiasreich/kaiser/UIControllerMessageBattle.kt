@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game.battleSpeed
+import de.tobiasreich.kaiser.game.TroopMovement
 import de.tobiasreich.kaiser.game.WarManager
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
@@ -26,6 +27,9 @@ import java.util.*
 
 /** A battle view showing a battle against another player */
 class UIControllerMessageBattle : Initializable, IMessageController{
+
+    @FXML
+    lateinit var startBattleButton: Button
 
     @FXML
     lateinit var battleUpdateVBox: VBox
@@ -76,6 +80,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     private lateinit var defenderColor : Color
 
     var attackPhase = 0
+    var battleEnded = false
 
     /********************************************
      *
@@ -132,6 +137,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
 
     fun onBeginBattleButtonClick(actionEvent: ActionEvent) {
+        startBattleButton.isDisable = true
         battleEndButton.isDisable = false
         battleTimeline.play() // Start the timeline which executes a "frame" every second
     }
@@ -194,6 +200,13 @@ class UIControllerMessageBattle : Initializable, IMessageController{
                 // The attackers have lost more than half their power -> They retreat
                 // The attackers failed in their goal and will return
 
+                // If they are not completely eradicated, the left over units return
+                if (attackPower > 0) {
+                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
+                }
+
+                // No need for troop movement of the defenders, they are home already anyway
+
                 battleTimeline.stop()
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
                 battleEndButton.isDisable = false
@@ -202,6 +215,13 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             } else if (defensePower <= defendingPowerAtStart / 2.0 || defensePower <= 0){
                 // The defenders have lost more than half their power -> They retreat.
                 // Attackers will return with their goal achieved
+
+                // Left over units return if at least some are alive
+                if (attackPower > 0) {
+                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
+                }
+
+                // No need for troop movement of the defenders, they are home already anyway
 
                 battleTimeline.stop()
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
@@ -216,6 +236,9 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             if (attackPower <= 0){
                 logBattleMsg(bundle.getString("battle_view_battle_is_over"))
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), attackerColor)
+
+                // No need for troop movement of the defenders, they are home already anyway, attackers are dead anyway
+
                 battleTimeline.stop()
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
                 battleEndButton.isDisable = false
@@ -224,6 +247,12 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             } else if (defensePower <= 0){
                 logBattleMsg(bundle.getString("battle_view_battle_is_over"))
                 logBattleMsg(String.format(bundle.getString("battle_view_defender_won"), attackPhase+1), defenderColor)
+
+                // Left over units return if at least some are alive
+                if (attackPower > 0) {
+                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
+                }
+
                 battleTimeline.stop()
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
                 battleEndButton.isDisable = false
