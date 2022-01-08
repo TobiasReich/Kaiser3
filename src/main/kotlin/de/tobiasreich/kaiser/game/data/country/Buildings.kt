@@ -2,6 +2,7 @@ package de.tobiasreich.kaiser.game.data.country
 
 import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.data.population.Population
+import kotlin.math.max
 
 /** Configuration of buildings existing in a country */
 class Buildings {
@@ -74,13 +75,43 @@ class Buildings {
         println("Used buildings: Mills: $usedMills, Granaries: $usedGranaries, Markets: $usedMarkets")
     }
 
-    /** Destroys one of the player's mills.
-     *  TODO We might want to "redraw" the map after that.
-     */
-    fun destroyMill() {
-        if(mills > 1){
-            mills -= 1
-        }
+    /** Destroys one of the player's mills. */
+    fun destroyMill(amount: Int) {
+        mills = max(mills - amount, 0)
+    }
+
+    /** Destroys one of the player's granaries. */
+    fun destroyGranaries(amount: Int) {
+        granaries = max(granaries - amount, 0)
+    }
+
+    /** Destroys one of the player's markets. */
+    fun destroyMarkets(amount: Int) {
+        markets = max(markets - amount, 0)
+    }
+
+
+    /** Destroys one of the player's palace pieces. */
+    fun destroyPalace(amount: Int) {
+        palacePieces = max(palacePieces - amount, 0)
+    }
+
+
+    /** Destroys one of the player's cathedral pieces. */
+    fun destroyCathedral(amount: Int) {
+        cathedralPieces = max(cathedralPieces - amount, 0)
+    }
+
+
+    /** Destroys one of the player's warehouses. */
+    fun destroyWarehouses(amount: Int) {
+        warehouses = max(warehouses - amount, 0)
+    }
+
+
+    /** Destroys one of the player's schools. */
+    fun destroySchools(amount: Int) {
+        schools = max(schools - amount, 0)
     }
 
     // Other buildings:

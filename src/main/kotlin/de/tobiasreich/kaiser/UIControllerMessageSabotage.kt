@@ -91,7 +91,7 @@ class UIControllerMessageSabotage : Initializable, IMessageController{
                     player.money = (player.money.toDouble() * 0.9).toInt()
                 }
                 SabotageType.BURN_MILLS -> {
-                    player.land.buildings.destroyMill()
+                    player.land.buildings.destroyMill(1)
                     player.land.buildings.updateUsedBuildings(player.population)
                 }
                 SabotageType.START_REVOLT -> {

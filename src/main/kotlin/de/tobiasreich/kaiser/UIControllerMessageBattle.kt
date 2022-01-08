@@ -24,6 +24,7 @@ import javafx.scene.text.*
 import javafx.util.Duration
 import java.net.URL
 import java.util.*
+import kotlin.math.min
 
 
 /** A battle view showing a battle against another player */
@@ -378,17 +379,26 @@ class UIControllerMessageBattle : Initializable, IMessageController{
                     logBattleMsg(String.format(bundle.getString("battle_view_outcome_conquer"), conqueredLand), attackerColor)
                 }
                 WarGoal.BURN_BUILDINGS -> {
-                    // For better balancing: max 10 % of all the buildings could be burned
-                    val burnedGranaries = (message.defendingPlayer.land.buildings.granaries * warSuccessFactor * 0.1).toInt()
-                    val burnedMills = (message.defendingPlayer.land.buildings.mills * warSuccessFactor * 0.1).toInt()
-                    val burnedMarkets = (message.defendingPlayer.land.buildings.markets * warSuccessFactor * 0.1).toInt()
-                    val burnedPalace = (message.defendingPlayer.land.buildings.palacePieces * warSuccessFactor * 0.1).toInt()
-                    val burnedCathedral = (message.defendingPlayer.land.buildings.cathedralPieces * warSuccessFactor * 0.1).toInt()
+                    val buildings = message.defendingPlayer.land.buildings
 
-                    val totalBuildingsBurned = burnedGranaries + burnedMills + burnedMarkets + burnedPalace + burnedCathedral
+                    // For better balancing: max 10 % of all the buildings could be burned
+                    val destroyedMills = (buildings.mills * warSuccessFactor * 0.1).toInt()
+                    val destroyedGranaries = (buildings.granaries * warSuccessFactor * 0.1).toInt()
+                    val destroyedMarkets = (buildings.markets * warSuccessFactor * 0.1).toInt()
+
+                    // Palace and Cathedral can destroy a maximum of 1 piece per battle, on chances depending on their success factor
+                    val destroyedPalace = if (warSuccessFactor > Math.random()) { 1 } else { 0 }
+                    val destroyedCathedral = if (warSuccessFactor > Math.random()) { 1 } else { 0 }
+
+                    buildings.destroyMill(destroyedMills)
+                    buildings.destroyGranaries(destroyedGranaries)
+                    buildings.destroyMarkets(destroyedMarkets)
+                    buildings.destroyPalace(destroyedPalace)
+                    buildings.destroyCathedral(destroyedCathedral)
+
+                    val totalBuildingsBurned = destroyedGranaries + destroyedMills + destroyedMarkets + destroyedPalace + destroyedCathedral
                     victoryValue = totalBuildingsBurned
 
-                    //TODO: Destroy these buildings at the defending player; update used buildings
                     logBattleMsg(String.format(bundle.getString("battle_view_outcome_burn"), totalBuildingsBurned), attackerColor)
                 }
             }
