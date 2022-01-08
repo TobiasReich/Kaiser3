@@ -86,9 +86,16 @@ class BattleMessage(val attackingPlayer: Player, val attackingUnits : Map<Milita
         return FXMLLoader(Main::class.java.getResource("news-battle.fxml"), Game.resourcesBundle)
     }
 }
-/** A message about an outcome of a battle, sent do the defender (the attacker sees the battle directly in the turn) */
-class BattleOutcomeMessage(val attackingPlayer: Player, val remainingUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>,
-                           val unitLosses : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : ReportMessage {
+
+/** A message about an outcome of a battle, sent do the defender (the attacker sees the battle directly in the turn)
+ *  @param attackingPlayer - the player who was leading the attack
+ *  @param remainingPowerFraction - the fraction of the units coming back (e.g. 0.5 means only 50% of the units came back from war)
+ *  @param warGoal - the goal of the attacker in order to present what happened
+ *  @param attackerVictory - whether the attacker won the battle or not (thus true means the message means a loss to the defender)
+ *  @param victoryValue - the amount of "resources" robbed by the attacker
+ */
+class BattleOutcomeMessage(val attackingPlayer: Player, val remainingPowerFraction : Double,
+                           val warGoal : WarGoal, val attackerVictory : Boolean, val victoryValue: Int) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-battle-summary.fxml"), Game.resourcesBundle)
     }

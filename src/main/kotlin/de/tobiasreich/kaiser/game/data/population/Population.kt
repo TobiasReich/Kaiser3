@@ -271,11 +271,11 @@ class Population {
         mood = calculatedMood.coerceAtMost(100).coerceAtLeast(0)
     }
 
-    /** Removes random amount people equally distributed (if possible) */
+    /** Removes amount adults */
     fun removeAdults(amount: Int) : List<Person>{
         val slaves = mutableListOf<Person>()
         slaves.addAll(adults.subList(0,amount))
-        println("Slaves donated: ${slaves.size}")
+        println("Adults 'lost'': ${slaves.size}")
         adults.removeAll(slaves)
         return slaves
     }

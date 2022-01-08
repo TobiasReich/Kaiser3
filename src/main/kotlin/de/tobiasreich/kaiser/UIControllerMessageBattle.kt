@@ -7,6 +7,7 @@ import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.BattleMessage
+import de.tobiasreich.kaiser.game.data.player.BattleOutcomeMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.animation.KeyFrame
@@ -106,10 +107,10 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         attackerColor = message.attackingPlayer.playerColor
 
         defendingUnits = message.defendingPlayer.military
-        attackPowerAtStart = WarManager.getTotalAttackPower(defendingUnits)
+        defendingPowerAtStart = WarManager.getTotalAttackPower(defendingUnits)
         defenderColor = message.defendingPlayer.playerColor
         updateView()
-        updateBattleStatistics()
+        updateBattleStatistics(attackPowerAtStart, defendingPowerAtStart)
     }
 
     private fun updateView() {
@@ -123,16 +124,15 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
     }
 
-    private fun updateBattleStatistics() {
-        val attackPower = WarManager.getTotalAttackPower(attackingUnits)
-        attackerAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), attackPower)
 
-        val defensePower = WarManager.getTotalAttackPower(defendingUnits)
+    /** Shows the Attack Power of both sides and updates the attack power graph */
+    private fun updateBattleStatistics(attackPower: Double, defensePower: Double) {
+        attackerAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), attackPower)
         defenderAmountUnitsLabel.text = String.format(bundle.getString("battle_view_attack_power"), defensePower)
 
         val totalPower = attackPower + defensePower
         val fraction = 500 / totalPower // 1 unit of Power is represented by that amount pixels
-        attackerRectangle.width = attackPower * fraction // Defender is always the rest so no need for calculation
+        attackerRectangle.width = attackPower * fraction // Defender is always "the rest" so no need for calculation
     }
 
 
@@ -142,15 +142,6 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         battleTimeline.play() // Start the timeline which executes a "frame" every second
     }
 
-    fun onBattleOutcomeButtonClick(actionEvent: ActionEvent) {
-        // TODO if battle is over, end the view
-        // -> Make a BattleOutcomeMessage message to the defender (attacker not needed)
-        // -> send remaining attacker Troops home -> WarManager.addTroopMovement()
-
-        battleTimeline.stop() //TODO for now we stop when pressing the button. This will happen at the battle phases in the future
-
-        proceedToNextNews()
-    }
 
     /*************************************************************************************
      *
@@ -183,46 +174,42 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         // Check deserting units
         solveDeserting()
 
-        // Step 3.2: update view
-        updateBattleStatistics()
-
-        // Step 3.3: Check victory conditions
 
         val attackPower = WarManager.getTotalAttackPower(attackingUnits)
         val defensePower = WarManager.getTotalAttackPower(defendingUnits)
+
+        // Step 3.2: update view
+        updateBattleStatistics(attackPower, defensePower)
+
+        // Step 3.3: Check victory conditions
 
         // War goal was not killing all units -> Battles go until half the units died
         if (message.warGoal != WarGoal.KILL_UNITS){
 
             if (attackPower <= attackPowerAtStart / 2.0  || attackPower <= 0){
-                // Attackers lost more than half their power -> Attackers retreat
-                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                endWarLogic(attackPower)
+                // Attackers lost more than half their power -> Attackers RETREAT
+                endWarLogic(attackPower, defensePower,false)
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_lost_other_goal"), attackPhase+1), attackerColor)
                 return
 
             } else if (defensePower <= defendingPowerAtStart / 2.0 || defensePower <= 0){
-                // Defenders have lost more than half their power -> Defenders surrender
+                // Defenders have lost more than half their power -> Defenders SURRENDER
                 // Attackers return with their goal achieved
-                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                endWarLogic(attackPower)
+                endWarLogic(attackPower, defensePower,true)
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_won_other_goal"), attackPhase+1), attackerColor)
                 return
             }
 
         } else {
             // WarGoal is "ordinary war" (WarGoal.KILL_UNITS)
-
             if (attackPower <= 0){
-                endWarLogic(attackPower)
+                endWarLogic(attackPower, defensePower,false)
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_lost"), attackPhase+1), attackerColor)
-                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
                 return
 
             } else if (defensePower <= 0){
-                endWarLogic(attackPower)
+                endWarLogic(attackPower, defensePower,true)
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), defenderColor)
-                // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
                 return
             }
         }
@@ -302,6 +289,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         }
     }
 
+
     /** Calculates how many units of the military were deserting, updating the view and the military
      *  NOTE: Units only desert if the other troops are more than twice as powerful! */
     private fun solveDeserting() {
@@ -328,7 +316,6 @@ class UIControllerMessageBattle : Initializable, IMessageController{
     }
 
 
-
     /** Adds a message to the "battle log" scroll view */
     private fun logBattleMsg(message : String, color : Color? = null){
         val messageText = Text(message)
@@ -344,16 +331,93 @@ class UIControllerMessageBattle : Initializable, IMessageController{
      *  Stops the battle timeLine.
      *  If the attack units are not completely eradicated -> send the troops back home.
      *  Enables the button to end the view */
-    private fun endWarLogic(attackPower : Double){
+    private fun endWarLogic(attackPower : Double, defenderPower : Double, victory: Boolean){
+        battleTimeline.stop()
+
+        // Calculate the lost military power of the defender for the BOM
+        val remainingDefenderMilitaryPowerFraction = defenderPower / defendingPowerAtStart
+
         logBattleMsg(bundle.getString("battle_view_battle_is_over"))
 
-        battleTimeline.stop()
+        // Get the BattleOutcomeMessage that can be sent to the defender
+        val bom = if (victory) {
+
+            // Depends on how many troops the attacker has lost.
+            // E.g. At start: 10, now: 4 -> 4 / 10 = 0.4
+            // Their goal is therefore reached by 40% only
+            val warSuccessFactor = attackPower / attackPowerAtStart
+            println("War Success Factor: $warSuccessFactor")
+
+            // The numeric value the attacker has won (e.g. stolen money, conquered land...)
+            var victoryValue = 0
+
+            when (message.warGoal) {
+                WarGoal.KILL_UNITS -> {
+                    /* Nothing to do */
+                }
+                WarGoal.STEAL_MONEY -> {
+                    val stolenMoney = if (message.defendingPlayer.money > 0){
+                        (message.defendingPlayer.money.toDouble() * warSuccessFactor).toInt()
+                    } else { 0 }
+                    message.defendingPlayer.money -= stolenMoney // Directly remove the money in case others attack, too!
+                    victoryValue = stolenMoney
+                    logBattleMsg(String.format(bundle.getString("battle_view_outcome_steal_money"), stolenMoney), attackerColor)
+                }
+                WarGoal.GET_SLAVES -> {
+                    val kidnappedPopulation = (message.defendingPlayer.population.adults.size.toDouble() * warSuccessFactor).toInt()
+                    message.defendingPlayer.population.removeAdults(kidnappedPopulation) // Directly remove the money in case others attack, too!
+                    message.defendingPlayer.land.buildings.updateUsedBuildings(message.defendingPlayer.population) // Update buildings in use
+                    victoryValue = kidnappedPopulation
+                    logBattleMsg(String.format(bundle.getString("battle_view_outcome_slaves"), kidnappedPopulation), attackerColor)
+                }
+                WarGoal.CONQUER -> {
+                    // For better balancing: max 10 % of the owned land can be stolen
+                    val conqueredLand = (message.defendingPlayer.land.landSize.toDouble() * warSuccessFactor * 0.1).toInt()
+                    message.defendingPlayer.land.removeLand(conqueredLand, message.defendingPlayer.population) // Update land and building usage directly
+                    victoryValue = conqueredLand
+                    logBattleMsg(String.format(bundle.getString("battle_view_outcome_conquer"), conqueredLand), attackerColor)
+                }
+                WarGoal.BURN_BUILDINGS -> {
+                    // For better balancing: max 10 % of all the buildings could be burned
+                    val burnedGranaries = (message.defendingPlayer.land.buildings.granaries * warSuccessFactor * 0.1).toInt()
+                    val burnedMills = (message.defendingPlayer.land.buildings.mills * warSuccessFactor * 0.1).toInt()
+                    val burnedMarkets = (message.defendingPlayer.land.buildings.markets * warSuccessFactor * 0.1).toInt()
+                    val burnedPalace = (message.defendingPlayer.land.buildings.palacePieces * warSuccessFactor * 0.1).toInt()
+                    val burnedCathedral = (message.defendingPlayer.land.buildings.cathedralPieces * warSuccessFactor * 0.1).toInt()
+
+                    val totalBuildingsBurned = burnedGranaries + burnedMills + burnedMarkets + burnedPalace + burnedCathedral
+                    victoryValue = totalBuildingsBurned
+
+                    //TODO: Destroy these buildings at the defending player; update used buildings
+                    logBattleMsg(String.format(bundle.getString("battle_view_outcome_burn"), totalBuildingsBurned), attackerColor)
+                }
+            }
+
+            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, victoryValue)
+
+        } else {
+            // Defending player had won this battle (victory value is 0 since nothing is stolen etc.). However killed units are killed.
+            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, 0)
+        }
+
+        // Message the defending player about the battle outcome
+        message.defendingPlayer.addMessageToFrontOfList(bom)
+
+
         // If they are not completely eradicated, the leftover units return
         // No need for troop movement of the defenders, they are home already anyway
         if (attackPower > 0) {
             WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
         }
+
         battleEndButton.isDisable = false
+    }
+
+
+    /** Click on "End Battle" Button.
+     *  This is only available after the battle has finished */
+    fun onBattleOutcomeButtonClick(actionEvent: ActionEvent) {
+        proceedToNextNews()
     }
 
 }
