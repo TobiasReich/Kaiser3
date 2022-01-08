@@ -186,83 +186,48 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         // Step 3.2: update view
         updateBattleStatistics()
 
-        // Step 3.3: Check for victory
+        // Step 3.3: Check victory conditions
 
         val attackPower = WarManager.getTotalAttackPower(attackingUnits)
         val defensePower = WarManager.getTotalAttackPower(defendingUnits)
 
-        if (message.warGoal == WarGoal.KILL_UNITS){
-            // If there was another goal than killing all units the battle does not go until the end
-
-            // If at least one party has only half it's original health, the battle is over and the goal is reached.
+        // War goal was not killing all units -> Battles go until half the units died
+        if (message.warGoal != WarGoal.KILL_UNITS){
 
             if (attackPower <= attackPowerAtStart / 2.0  || attackPower <= 0){
-                // The attackers have lost more than half their power -> They retreat
-                // The attackers failed in their goal and will return
-
-                // If they are not completely eradicated, the left over units return
-                if (attackPower > 0) {
-                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
-                }
-
-                // No need for troop movement of the defenders, they are home already anyway
-
-                battleTimeline.stop()
+                // Attackers lost more than half their power -> Attackers retreat
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                battleEndButton.isDisable = false
-                // TODO: Send the attacker's units back home
+                endWarLogic(attackPower)
+                logBattleMsg(String.format(bundle.getString("battle_view_attacker_lost_other_goal"), attackPhase+1), attackerColor)
                 return
+
             } else if (defensePower <= defendingPowerAtStart / 2.0 || defensePower <= 0){
-                // The defenders have lost more than half their power -> They retreat.
-                // Attackers will return with their goal achieved
-
-                // Left over units return if at least some are alive
-                if (attackPower > 0) {
-                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
-                }
-
-                // No need for troop movement of the defenders, they are home already anyway
-
-                battleTimeline.stop()
+                // Defenders have lost more than half their power -> Defenders surrender
+                // Attackers return with their goal achieved
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                battleEndButton.isDisable = false
-                // TODO: Send the attacker's units back home
+                endWarLogic(attackPower)
+                logBattleMsg(String.format(bundle.getString("battle_view_attacker_won_other_goal"), attackPhase+1), attackerColor)
                 return
             }
 
         } else {
-            // If there is another WarGoal aside from the "ordinary war" (WarGoal.KILL_UNITS)
+            // WarGoal is "ordinary war" (WarGoal.KILL_UNITS)
 
             if (attackPower <= 0){
-                logBattleMsg(bundle.getString("battle_view_battle_is_over"))
-                logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), attackerColor)
-
-                // No need for troop movement of the defenders, they are home already anyway, attackers are dead anyway
-
-                battleTimeline.stop()
+                endWarLogic(attackPower)
+                logBattleMsg(String.format(bundle.getString("battle_view_attacker_lost"), attackPhase+1), attackerColor)
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                battleEndButton.isDisable = false
-                // TODO: Send the attacker's units back home
                 return
+
             } else if (defensePower <= 0){
-                logBattleMsg(bundle.getString("battle_view_battle_is_over"))
-                logBattleMsg(String.format(bundle.getString("battle_view_defender_won"), attackPhase+1), defenderColor)
-
-                // Left over units return if at least some are alive
-                if (attackPower > 0) {
-                    WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
-                }
-
-                battleTimeline.stop()
+                endWarLogic(attackPower)
+                logBattleMsg(String.format(bundle.getString("battle_view_attacker_won"), attackPhase+1), defenderColor)
                 // TODO: Make a battle outcome message to the defending player (this is technically still the attacker's turn)
-                battleEndButton.isDisable = false
-                // No units required to send home (the attacker lost!)
                 return
             }
         }
 
-        // in any case, increment the phase so next time the other "group" is fighting
-        attackPhase++
+        attackPhase++ // The battle continues: increment battle phase
     }
 
 
@@ -374,5 +339,21 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         battleUpdateVBox.children.add(0, messageText)
     }
 
+
+    /** Write the log message
+     *  Stops the battle timeLine.
+     *  If the attack units are not completely eradicated -> send the troops back home.
+     *  Enables the button to end the view */
+    private fun endWarLogic(attackPower : Double){
+        logBattleMsg(bundle.getString("battle_view_battle_is_over"))
+
+        battleTimeline.stop()
+        // If they are not completely eradicated, the leftover units return
+        // No need for troop movement of the defenders, they are home already anyway
+        if (attackPower > 0) {
+            WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
+        }
+        battleEndButton.isDisable = false
+    }
 
 }
