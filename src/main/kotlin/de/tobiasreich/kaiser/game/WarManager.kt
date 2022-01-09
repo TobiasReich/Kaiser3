@@ -3,7 +3,9 @@ package de.tobiasreich.kaiser.game
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.military.WarGoal
+import de.tobiasreich.kaiser.game.data.player.ReturningTroopsMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
+import de.tobiasreich.kaiser.game.data.population.Person
 import java.lang.Math.min
 
 /** Object for tracking war declarations.
@@ -81,7 +83,7 @@ object WarManager {
      *  This returns a Pair of two values.
      *  FIRST: The new units (survivors)
      *  SECOND: The amount of killed soldiers */
-    fun tageDamage(attackedUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, power : Double) : Pair<MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, Int> {
+    fun takeDamage(attackedUnits : MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, power : Double) : Pair<MutableMap<MilitaryUnitType, MutableList<MilitaryUnit>>, Int> {
         var attackPower = power
         var killedUnitsCounter = 0
         // For every unity type (sorted, beginning at the lowest)
@@ -166,8 +168,22 @@ data class WarDeclaration(val initiator : Player, val target : Player, val units
 
 /** Data object for troop movement.
  *  This is a bundle of units that will arrive at the destination (player) the next time it becomes the player's turn
+ *  They can bring goods from the battlefield
+ *  - Money & conquered Land will be integrated by the "victoryAmount"
+ *  - Slaves will be the list of persons that gets added
+ *
+ *  The war goal defines what they were targeting. NULL means, they went home without any battle (e.g. peace was accepted)
  *
  *  NOTE: The reason for that is, so that on a peace treaty, the player does not receive the troops immediately.
  *  That gives another layer of diplomacy since other players might use the situation for their own goals and attack a
  *  player that is at war with another country. */
-data class TroopMovement(val origin : Player, val destination : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>)
+data class TroopMovement(val origin : Player, val destination : Player, val units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>,
+                         val warGoal: WarGoal?, val victoryAmount : Int, val slaves : List<Person>?){
+
+    /** Creates a ReturningTroopsMessage out of a Troop Movement.
+     *  This is needed since the troop movement, when arriving one turn later, becomes a Message for the turn start. */
+    fun toReturningTroopsMessage() : ReturningTroopsMessage {
+        return ReturningTroopsMessage(origin, units, warGoal, victoryAmount, slaves)
+    }
+
+}

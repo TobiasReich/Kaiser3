@@ -35,6 +35,11 @@
          </VBox.margin>
       </Line>
 
+      <Label fx:id="warSpoilsSummary" text="Es wurden xxxx Taler erbeutet.">
+         <padding>
+            <Insets bottom="25.0" />
+         </padding></Label>
+
       <Button mnemonicParsing="false" onAction="#integrateTroopsButtonClick" text="%returning_troops_message_accept_button" />
    </children>
 </VBox>

@@ -211,7 +211,7 @@ class Player{
 
         // Check for troops returning from the battlefield
         WarManager.getAllReturningTroops(this).forEach{
-            messageList.add(ReturningTroopsMessage(it.origin, it.units))
+            messageList.add(it.toReturningTroopsMessage())
         }
 
         // Only show the update messages if the flag is not true

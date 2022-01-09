@@ -95,18 +95,18 @@ class UIControllerMessageWarDeclarationReaction : Initializable, IMessageControl
 
     /** The player does not accept the peace offer.
      *  Starts the battle! */
-    fun startWarButtonClick(actionEvent: ActionEvent) {
+    fun startWarButtonClick() {
         Game.currentPlayer.addMessageToFrontOfList(BattleMessage(Game.currentPlayer, message.returningUnits, message.reactingPlayer, message.warGoal))
-        proceedToNextNews() // For now proceed
+        proceedToNextNews()
     }
 
     /** Player accepts peace offer.
      *  Troops are coming home in the next turn. */
-    fun acceptPeaceOfferButtonClick(actionEvent: ActionEvent) {
+    fun acceptPeaceOfferButtonClick() {
         //TODO Add peace treaty between both players
 
-        // Integrate military from the battlefield (they are coming back)
-        WarManager.addTroopMovement(TroopMovement(message.reactingPlayer, Game.currentPlayer, message.returningUnits))
-        proceedToNextNews() // For now proceed
+        // Military is coming home from the battlefield
+        WarManager.addTroopMovement(TroopMovement(message.reactingPlayer, Game.currentPlayer, message.returningUnits, null, 0, null))
+        proceedToNextNews()
     }
 }

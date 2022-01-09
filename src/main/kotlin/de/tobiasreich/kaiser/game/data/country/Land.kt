@@ -394,6 +394,14 @@ class Land {
         return floor(landAvailable.toDouble() / building.landNeeded.toDouble()).toInt()
     }
 
+
+    /** Adds "empty" land to the alerady existing one.
+     *  Since adding does not destroy buildings, there is no calculation to be made. */
+    fun addLand(amount: Int){
+        this.landSize += amount
+    }
+
+
     /** Removes land from the given player.
      *  All buildings on this piece of land are destroyed
      *  (Meaning, if there were 10 mills but after that there

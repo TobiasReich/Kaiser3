@@ -9,6 +9,7 @@ import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.BattleMessage
 import de.tobiasreich.kaiser.game.data.player.BattleOutcomeMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
+import de.tobiasreich.kaiser.game.data.population.Person
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -24,7 +25,6 @@ import javafx.scene.text.*
 import javafx.util.Duration
 import java.net.URL
 import java.util.*
-import kotlin.math.min
 
 
 /** A battle view showing a battle against another player */
@@ -233,7 +233,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         // logBattleMsg(bundle.getString("battle_view_defender_range_attacking"))
 
         // Attacking units receive damage.
-        val attackDamage = WarManager.tageDamage(attackingUnits, defenderPowerRanged)
+        val attackDamage = WarManager.takeDamage(attackingUnits, defenderPowerRanged)
         attackingUnits = attackDamage.first
         // >>> Log: "Attacker received damage. x units killed"
         if (attackDamage.second > 1) {
@@ -248,7 +248,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         //logBattleMsg(bundle.getString("battle_view_attacker_range_attacking"))
 
         //println("Ranged Attacker Power: $attackerPowerRanged")
-        val defenderDamage = WarManager.tageDamage(defendingUnits, attackerPowerRanged)
+        val defenderDamage = WarManager.takeDamage(defendingUnits, attackerPowerRanged)
         defendingUnits = defenderDamage.first
 
         // >>> Log: "Defender got damage. x units killed"
@@ -271,10 +271,10 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         val attackerPowerMelee = WarManager.getAttackPowerByType(true, attackingUnits)
         //println("Melee DefenderPower: $defenderPowerMelee")
         //println("Melee AttackerPower: $attackerPowerMelee")
-        val meleeDamageAttacker = WarManager.tageDamage(attackingUnits, defenderPowerMelee)
+        val meleeDamageAttacker = WarManager.takeDamage(attackingUnits, defenderPowerMelee)
         attackingUnits = meleeDamageAttacker.first
 
-        val meleeDamageDefender = WarManager.tageDamage(defendingUnits, attackerPowerMelee)
+        val meleeDamageDefender = WarManager.takeDamage(defendingUnits, attackerPowerMelee)
         defendingUnits = meleeDamageDefender.first
 
         // >>> Log: "Attacker got damage. x units killed"
@@ -342,6 +342,10 @@ class UIControllerMessageBattle : Initializable, IMessageController{
 
         logBattleMsg(bundle.getString("battle_view_battle_is_over"))
 
+        // The numeric value the attacker has won (e.g. stolen money, conquered land...)
+        var victoryValue = 0
+        var robbedSlaves : List<Person>? = null
+
         // Get the BattleOutcomeMessage that can be sent to the defender
         val bom = if (victory) {
 
@@ -350,9 +354,6 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             // Their goal is therefore reached by 40% only
             val warSuccessFactor = attackPower / attackPowerAtStart
             println("War Success Factor: $warSuccessFactor")
-
-            // The numeric value the attacker has won (e.g. stolen money, conquered land...)
-            var victoryValue = 0
 
             when (message.warGoal) {
                 WarGoal.KILL_UNITS -> {
@@ -368,9 +369,9 @@ class UIControllerMessageBattle : Initializable, IMessageController{
                 }
                 WarGoal.GET_SLAVES -> {
                     val kidnappedPopulation = (message.defendingPlayer.population.adults.size.toDouble() * warSuccessFactor).toInt()
-                    message.defendingPlayer.population.removeAdults(kidnappedPopulation) // Directly remove the money in case others attack, too!
+                    robbedSlaves = message.defendingPlayer.population.removeAdults(kidnappedPopulation) // Directly remove the money in case others attack, too!
+                    victoryValue = robbedSlaves.size
                     message.defendingPlayer.land.buildings.updateUsedBuildings(message.defendingPlayer.population) // Update buildings in use
-                    victoryValue = kidnappedPopulation
                     logBattleMsg(String.format(bundle.getString("battle_view_outcome_slaves"), kidnappedPopulation), attackerColor)
                 }
                 WarGoal.CONQUER -> {
@@ -405,11 +406,11 @@ class UIControllerMessageBattle : Initializable, IMessageController{
                 }
             }
 
-            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, victoryValue)
+            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, victoryValue, robbedSlaves)
 
         } else {
             // Defending player had won this battle (victory value is 0 since nothing is stolen etc.). However killed units are killed.
-            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, 0)
+            BattleOutcomeMessage(message.attackingPlayer, remainingDefenderMilitaryPowerFraction, message.warGoal, victory, 0, robbedSlaves)
         }
 
         // Message the defending player about the battle outcome
@@ -419,7 +420,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
         // If they are not completely eradicated, the leftover units return
         // No need for troop movement of the defenders, they are home already anyway
         if (attackPower > 0) {
-            WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits))
+            WarManager.addTroopMovement(TroopMovement(message.defendingPlayer, message.attackingPlayer, attackingUnits, message.warGoal, victoryValue, robbedSlaves))
         }
 
         battleEndButton.isDisable = false

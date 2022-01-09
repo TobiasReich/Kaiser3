@@ -73,7 +73,8 @@ class WarDeclarationReactionMessage(val reactingPlayer: Player, val peaceOfferAm
 }
 
 /** A message about a troops coming back from the battlefield  */
-class ReturningTroopsMessage(val originPlayer: Player, val returningUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>) : ReportMessage {
+class ReturningTroopsMessage(val originPlayer: Player, val returningUnits : Map<MilitaryUnitType, MutableList<MilitaryUnit>>,
+                             val warGoal: WarGoal?, val victoryAmount : Int, val slaves: List<Person>?) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-returning-troops.fxml"), Game.resourcesBundle)
     }
@@ -95,7 +96,7 @@ class BattleMessage(val attackingPlayer: Player, val attackingUnits : Map<Milita
  *  @param victoryValue - the amount of "resources" robbed by the attacker
  */
 class BattleOutcomeMessage(val attackingPlayer: Player, val remainingPowerFraction : Double,
-                           val warGoal : WarGoal, val attackerVictory : Boolean, val victoryValue: Int) : ReportMessage {
+                           val warGoal : WarGoal, val attackerVictory : Boolean, val victoryValue: Int, val slaves : List<Person>?) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-battle-outcome.fxml"), Game.resourcesBundle)
     }

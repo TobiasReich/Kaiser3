@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.ReturningTroopsMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -23,6 +24,9 @@ class UIControllerMessageReturningTroops : Initializable, IMessageController{
 
     @FXML
     lateinit var originPlayerLabel: Label
+
+    @FXML
+    lateinit var warSpoilsSummary: Label
 
 
     /** The Message to generate the info shown to the user */
@@ -54,9 +58,6 @@ class UIControllerMessageReturningTroops : Initializable, IMessageController{
     }
 
     private fun updateView() {
-        println("Show War declaration")
-
-        // Who is declaring war?
         val originPlayer = message.originPlayer
         val playerTitle = if (originPlayer.isMale){
             Game.resourcesBundle.getString(originPlayer.playerTitle.resourceNameMale)
@@ -68,11 +69,38 @@ class UIControllerMessageReturningTroops : Initializable, IMessageController{
         playerTopLine.stroke = originPlayer.playerColor
         playerBottomLine.stroke = originPlayer.playerColor
         originPlayerLabel.text = String.format(bundle.getString("returning_troops_message_origin_message"), playerTitle, originPlayer.name, playerCountry)
+
+        // Add resources from war spoils
+        val spoilsMessage = when(message.warGoal){
+            WarGoal.KILL_UNITS -> {
+                "" /* No resources to add. */
+            }
+            WarGoal.STEAL_MONEY -> {
+                Game.currentPlayer.money += message.victoryAmount
+                String.format(bundle.getString("returning_troops_message_war_spoils_money"), message.victoryAmount)
+            }
+            WarGoal.GET_SLAVES -> {
+                Game.currentPlayer.population.addAdults(message.slaves ?: mutableListOf())
+                String.format(bundle.getString("returning_troops_message_war_spoils_slaves"), message.victoryAmount)
+            }
+            WarGoal.CONQUER -> {
+                Game.currentPlayer.land.addLand(message.victoryAmount)
+                String.format(bundle.getString("returning_troops_message_war_spoils_conquer"), message.victoryAmount)
+            }
+            WarGoal.BURN_BUILDINGS -> {
+                "" /* No resources to add. */
+            }
+            null -> {
+                "" /* Troops did not go to war, nothing to add.*/
+            }
+        }
+        warSpoilsSummary.text = spoilsMessage
     }
 
 
-    /** Integrates the home coming troops in the local military */
-    fun integrateTroopsButtonClick(actionEvent: ActionEvent) {
+    /** Integrates the home coming troops in the local military and adds their acquired resources. */
+    fun integrateTroopsButtonClick() {
+        // Integrate military
         val military = Game.currentPlayer.military
         message.returningUnits.keys.forEach {
             if (military[it] == null){
@@ -81,6 +109,7 @@ class UIControllerMessageReturningTroops : Initializable, IMessageController{
                 military[it]!!.addAll(message.returningUnits[it]!!)
             }
         }
-        proceedToNextNews() // For now proceed
+
+        proceedToNextNews()
     }
 }
