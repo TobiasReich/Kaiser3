@@ -35,7 +35,15 @@
             <Insets bottom="25.0" />
          </VBox.margin>
       </Label>
-      <Label fx:id="militaryLossesLabel" text="Es gab große Verluste" />
+
+      <Label fx:id="militaryLossesLabel" text="Es gab große Verluste">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+      <Label fx:id="civilLossesLabel" text="Eure Schatzkammern wurden geplündert.">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
 
       <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter">
          <VBox.margin>

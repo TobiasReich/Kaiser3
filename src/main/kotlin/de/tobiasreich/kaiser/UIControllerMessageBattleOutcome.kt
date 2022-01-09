@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser
 
+import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.BattleOutcomeMessage
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -12,6 +13,9 @@ import java.util.*
 
 /** This basically shows the empty screen where the news are presented, once the player starts the turn */
 class UIControllerMessageBattleOutcome : Initializable, IMessageController{
+
+    @FXML
+    lateinit var civilLossesLabel: Label
 
     @FXML
     lateinit var battleAttackerLabel: Label
@@ -74,6 +78,23 @@ class UIControllerMessageBattleOutcome : Initializable, IMessageController{
             militaryLossesLabel.text = bundle.getString("battle_outcome_losses_hard")
         }
 
+        when (message.warGoal){
+            WarGoal.KILL_UNITS -> {
+                civilLossesLabel.text = bundle.getString("battle_outcome_civil_losses_none")
+            }
+            WarGoal.STEAL_MONEY -> {
+                civilLossesLabel.text = String.format(bundle.getString("battle_outcome_civil_losses_money"), message.victoryValue)
+            }
+            WarGoal.GET_SLAVES -> {
+                civilLossesLabel.text = String.format(bundle.getString("battle_outcome_civil_losses_slaves"), message.victoryValue)
+            }
+            WarGoal.CONQUER -> {
+                civilLossesLabel.text = String.format(bundle.getString("battle_outcome_civil_losses_conquer"), message.victoryValue)
+            }
+            WarGoal.BURN_BUILDINGS -> {
+                civilLossesLabel.text = String.format(bundle.getString("battle_outcome_civil_losses_buildings"), message.victoryValue)
+            }
+        }
     }
 
 }
