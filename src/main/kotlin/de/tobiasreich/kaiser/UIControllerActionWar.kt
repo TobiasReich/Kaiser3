@@ -36,10 +36,6 @@ class UIControllerActionWar : Initializable {
     @FXML
     lateinit var unitsAtHomeVisualization: HBox
 
-    @FXML
-    fun onButtonSomethingClick(actionEvent: ActionEvent) {
-        //Some button clicked
-    }
 
     /** Notifies the view about a purchase so the statistics can be updated */
     private lateinit var updateCallback : () -> Unit
@@ -51,8 +47,10 @@ class UIControllerActionWar : Initializable {
     private var targetPlayer : Player? = null
     private var warGoal : WarGoal = WarGoal.KILL_UNITS
 
+    private lateinit var bundle: ResourceBundle
 
     override fun initialize(p0: URL?, bundle: ResourceBundle) {
+        this.bundle = bundle
 
         // Target Player ComboBox
         val playerNames = FXCollections.observableArrayList<String>()
@@ -222,6 +220,11 @@ class UIControllerActionWar : Initializable {
             println("No war declared")
             //Nothing to do for now
         }
+    }
+
+    fun onWarHelpClicked() {
+        ViewController.showInfoPopUp(warGoalSelectionCB, bundle.getString("war_view_help_war_goal_title"), bundle.getString("war_view_help_war_goal_help"))
+        ViewController.showInfoPopUp(toWarButton, bundle.getString("war_view_help_war_declaration_title"), bundle.getString("war_view_help_war_declaration_help"))
     }
 
 }
