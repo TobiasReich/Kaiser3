@@ -190,6 +190,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
             if (attackPower <= attackPowerAtStart / 2.0  || attackPower <= 0){
                 // Attackers lost more than half their power -> Attackers RETREAT
                 endWarLogic(attackPower, defensePower,false)
+                logBattleMsg(bundle.getString("battle_view_battle_is_over_attacker_retreat"), attackerColor) // Your troops retreat
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_lost_other_goal"), attackPhase+1), attackerColor)
                 return
 
@@ -197,6 +198,7 @@ class UIControllerMessageBattle : Initializable, IMessageController{
                 // Defenders have lost more than half their power -> Defenders SURRENDER
                 // Attackers return with their goal achieved
                 endWarLogic(attackPower, defensePower,true)
+                logBattleMsg(bundle.getString("battle_view_battle_is_over_defender_retreat"), defenderColor) // Defender troops retreat
                 logBattleMsg(String.format(bundle.getString("battle_view_attacker_won_other_goal"), attackPhase+1), attackerColor)
                 return
             }
