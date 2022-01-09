@@ -9,7 +9,7 @@
 <VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageBattle">
    <children>
       <!-- Header -->
-      <Label fx:id="battleTitle" text="Die Schlacht beginnt..." underline="true">
+      <Label fx:id="battleTitle" text="%battle_view_title" underline="true">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

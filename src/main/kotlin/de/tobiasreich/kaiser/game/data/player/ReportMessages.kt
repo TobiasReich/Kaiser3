@@ -97,6 +97,6 @@ class BattleMessage(val attackingPlayer: Player, val attackingUnits : Map<Milita
 class BattleOutcomeMessage(val attackingPlayer: Player, val remainingPowerFraction : Double,
                            val warGoal : WarGoal, val attackerVictory : Boolean, val victoryValue: Int) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
-        return FXMLLoader(Main::class.java.getResource("news-battle-summary.fxml"), Game.resourcesBundle)
+        return FXMLLoader(Main::class.java.getResource("news-battle-outcome.fxml"), Game.resourcesBundle)
     }
 }

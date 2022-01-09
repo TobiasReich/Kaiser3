@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageBattleOutcome">
+   <children>
+      <!-- Header -->
+      <Label text="%battle_outcome_view_title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </VBox.margin>
+      </Label>
+
+      <Label text="%battle_outcome_summary_title">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+      <Label fx:id="battleAttackerLabel" text="Name aus Name">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin></Label>
+
+
+      <Label fx:id="battleOutcomeLabel" text="%battle_outcome_view_title">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="militaryLossesLabel" text="Es gab große Verluste" />
+
+      <Button mnemonicParsing="false" onAction="#onNewsButtonClick" text="Weiter">
+         <VBox.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </VBox.margin></Button>
+   </children>
+</VBox>
