@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -15,12 +16,22 @@ import javafx.scene.control.Label
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
+import javafx.scene.layout.HBox
+import javafx.scene.layout.Priority
 import java.net.URL
 import java.util.*
 
 
 class UIControllerGame : Initializable {
 
+    @FXML
+    lateinit var gameHeaderBox: HBox
+
+    @FXML
+    lateinit var gameHeaderYearLabel: Label
+
+    @FXML
+    lateinit var gameHeaderPlayerNameLabel: Label
 
     // ------------------------------- Action Buttons (Left panel) -------------------------------
     @FXML
@@ -249,6 +260,7 @@ class UIControllerGame : Initializable {
      */
     private fun updateViews(){
         // updateLandView()
+        updateHeaderView()
         updatePopulationGraph()
         updateUnemploymentGraph()
 
@@ -290,6 +302,18 @@ class UIControllerGame : Initializable {
 
         employmentChart.data = pieChartData
     }
+
+
+    //TODO Show the real name and title
+    //TODO Might also more info like a "profile picture", the current rank in the game etc.
+    /** Updates the title view on top showing the current player and the current year */
+    private fun updateHeaderView() {
+        gameHeaderPlayerNameLabel.text = "Herzog X aus dem Fernen Land"
+        gameHeaderBox.style= ("-fx-background-color: ${Game.currentPlayer.playerColor.toRGBCode()}; ")
+        //gameHeaderPlayerNameLabel.style = ("-fx-text-fill: ${Game.currentPlayer.playerColor.toRGBCode()}; ")
+        gameHeaderYearLabel.text = Game.currentYear.toString()
+    }
+
 
     private fun updatePopulationGraph(){
         populationChart.data.clear()
