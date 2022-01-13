@@ -159,7 +159,7 @@ class Player{
         return if(isMale){
             bundle.getString(playerTitle.resourceNameMale)
         } else {
-            bundle.getString(playerTitle.resourceNameMale)
+            bundle.getString(playerTitle.resourceNameFemale)
         }
     }
 

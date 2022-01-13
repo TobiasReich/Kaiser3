@@ -308,7 +308,8 @@ class UIControllerGame : Initializable {
     //TODO Might also more info like a "profile picture", the current rank in the game etc.
     /** Updates the title view on top showing the current player and the current year */
     private fun updateHeaderView() {
-        gameHeaderPlayerNameLabel.text = "Herzog X aus dem Fernen Land"
+        val player = Game.currentPlayer
+        gameHeaderPlayerNameLabel.text = String.format(bundle.getString("game_header_player_name_country"), player.getGenderTitle(bundle), player.name, bundle.getString(player.country.nameResource))
         gameHeaderBox.style= ("-fx-background-color: ${Game.currentPlayer.playerColor.toRGBCode()}; ")
         //gameHeaderPlayerNameLabel.style = ("-fx-text-fill: ${Game.currentPlayer.playerColor.toRGBCode()}; ")
         gameHeaderYearLabel.text = Game.currentYear.toString()
