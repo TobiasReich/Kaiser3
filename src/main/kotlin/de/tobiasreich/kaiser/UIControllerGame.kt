@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
-import javafx.scene.layout.Priority
 import java.net.URL
 import java.util.*
 
@@ -215,6 +214,20 @@ class UIControllerGame : Initializable {
         }
         rootBorderPane.center = militaryScene
     }
+
+
+    fun onDiplomacyButtonClick(actionEvent: ActionEvent) {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-diplomacy.fxml"), Game.resourcesBundle)
+        val diplomacyScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
+        val controller = fxmlLoader.getController<UIControllerActionDiplomacy>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            showLandView()
+            updateViews()
+        }
+        rootBorderPane.center = diplomacyScene
+    }
+
 
     /** War view */
     fun onWarButtonClick(actionEvent: ActionEvent) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root alignment="CENTER_LEFT" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       
+       <ImageView fx:id="treatyTypeImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@img/icon_contracts.png">
+               </Image>
+           </image>
+         <HBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </HBox.margin>
+       </ImageView>
+      <Label fx:id="treatyTypeLabel" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Friedensvertrag">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label text="%diplomacy_treaty_view_between">
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin></Label>
+      <Label fx:id="treatyInitiatorLabel" text="Herzog X">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label text="%diplomacy_treaty_view_and">
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin></Label>
+      <Label fx:id="treatyReceiverLabel" text="Baron Y">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin></Label>
+   </children>
+</fx:root>

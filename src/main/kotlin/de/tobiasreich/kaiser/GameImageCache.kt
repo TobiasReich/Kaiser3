@@ -32,4 +32,10 @@ object GameImageCache {
     val lancer: Image = Image(javaClass.getResource("img/icon_unit_lancer.png")!!.toExternalForm())
     val cavalry: Image = Image(javaClass.getResource("img/icon_unit_cavalry.png")!!.toExternalForm())
 
+
+    // Icons for treaties
+    val treatyPeace: Image = Image(javaClass.getResource("img/icon_peace.png")!!.toExternalForm())
+    val treatyTrade: Image = Image(javaClass.getResource("img/icon_trade.png")!!.toExternalForm())
+    val treatyAlliance: Image = Image(javaClass.getResource("img/icon_alliance.png")!!.toExternalForm())
+
 }

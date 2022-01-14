@@ -115,14 +115,14 @@
                   <Font size="11.0" />
                </font>
                 </Button>
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Verträge">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onDiplomacyButtonClick" prefWidth="125.0" text="Verträge">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_diplomacy_button" />
                     </tooltip>
                     <graphic>
                         <ImageView fx:id="diplomacyButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_contracts.png">
                                 </Image>
                             </image>
                         </ImageView>

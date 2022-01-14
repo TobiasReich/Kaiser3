@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionDiplomacy">
+   <children>
+      <Label text="%diplomacy_view_title">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Label>
+
+      <Label text="%diplomacy_view_current_treaties">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin></Label>
+      <ScrollPane maxHeight="250.0" minHeight="250.0" prefHeight="250.0">
+        <content>
+           <VBox fx:id="playerTreatiesVBox" />
+        </content>
+      </ScrollPane>
+
+
+
+      <Label text="%diplomacy_view_offer_treaty">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin></Label>
+
+      <HBox alignment="CENTER" prefWidth="200.0">
+         <children>
+            <ComboBox fx:id="playerSelectionCB" prefWidth="150.0" />
+
+            <ComboBox fx:id="treatyTypeCB" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ComboBox>
+      
+            <Button fx:id="offerTreatyButton" disable="true" mnemonicParsing="false" onAction="#onOfferTreatyButtonClick" text="%diplomacy_view_send_offer" />
+         </children>
+      </HBox>
+
+   </children>
+</VBox>

@@ -53,7 +53,7 @@ class UIControllerActionDonations : Initializable {
         this.bundle = bundle!!
 
         val playerNames = FXCollections.observableArrayList<String>()
-        Game.getAllOtherPlayers().forEach {
+        players.forEach {
             playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
         }
 
