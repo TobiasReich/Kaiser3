@@ -4,6 +4,7 @@ import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
 import de.tobiasreich.kaiser.game.data.military.WarGoal
 import de.tobiasreich.kaiser.game.data.player.ReturningTroopsMessage
+import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
 import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
 import de.tobiasreich.kaiser.game.data.population.Person
 import java.lang.Math.min
@@ -30,7 +31,7 @@ object DiplomacyManager {
     /** This makes a treaty proposal sent to the receiver of that treaty as a "message".
      *  That player then can accept or decline it. */
     fun addProposal(treaty : Treaty){
-        //TODO Send a Treaty Proposal Message to the receiver of that Treaty
+        treaty.receiver.addMessage(TreatyOfferMessage(treaty.initiator, treaty.type))
         treatyProposals.add(treaty)
     }
 

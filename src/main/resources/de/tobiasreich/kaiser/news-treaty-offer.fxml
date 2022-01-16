@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageTreatyOffer">
+   <children>
+      <!-- Header -->
+      <Label text="%treaty_offer_message_title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </Label>
+
+      <Line fx:id="playerTopLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+      <Label fx:id="offeringPlayerLabel" text="X Y von Z meldet sich bei euch." textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+
+      <Line fx:id="playerBottomLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+      <Label fx:id="offeredTypeLabel" text="Ein Friedensangebot" />
+
+      <Label text="%treaty_offer_message_return_question" />
+      <HBox alignment="CENTER">
+         <children>
+            <Button fx:id="acceptTreatyButton" onAction="#onAcceptTreatyButtonClick" mnemonicParsing="false" text="%treaty_offer_message_return_answer_accept">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="rejectTreatyButton" onAction="#onRejectTreatyButtonClick" mnemonicParsing="false" text="%treaty_offer_message_return_answer_decline">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+
+
+   </children>
+</VBox>
