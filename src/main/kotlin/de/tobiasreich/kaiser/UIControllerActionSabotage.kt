@@ -109,8 +109,9 @@ class UIControllerActionSabotage : Initializable {
     fun onStartSabotageButtonClick(actionEvent: ActionEvent) {
         val targetPlayer = selectedPlayer!!
         val sabotage = selectedSabotage!!
-
-        val result = ViewController.showModalDialog()
+        val dialogTitle = bundle.getString("sabotage_view_offer_dialog_title")
+        val dialogMessage = bundle.getString("sabotage_view_offer_dialog_message")
+        val result = ViewController.showModalDialog(dialogTitle, dialogMessage)
 
         if (result == FxDialogs.DialogResult.OK){
             println("Donation made")

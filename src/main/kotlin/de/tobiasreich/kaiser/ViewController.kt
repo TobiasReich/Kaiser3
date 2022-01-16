@@ -65,8 +65,8 @@ object ViewController {
         popOver.show(view)
     }
 
-    fun showModalDialog() : FxDialogs.DialogResult {
-        val result = FxDialogs.showConfirm("Title","Message")
+    fun showModalDialog(title : String, message : String) : FxDialogs.DialogResult {
+        val result = FxDialogs.showConfirm(title,message)
         println("Result from Dialog was $result")
         return result
     }
