@@ -1,10 +1,12 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.*
+import de.tobiasreich.kaiser.game.utils.FxDialogs
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
 import java.net.URL
 import java.util.*
@@ -20,6 +22,9 @@ import java.util.*
  *    - Let every other leader know that these two countries are allies. Can be a warning for others - but also an invitation for war!
  */
 class UIControllerActionDiplomacy : Initializable {
+
+    @FXML
+    lateinit var playerTreatyProposalsVBox: VBox
 
     @FXML
     lateinit var playerTreatiesVBox: VBox
@@ -94,12 +99,21 @@ class UIControllerActionDiplomacy : Initializable {
     private fun updateTreatyList() {
         println("adding treaty views")
         playerTreatiesVBox.children.clear()
+        DiplomacyManager.getAllCurrentTreatiesForPlayer(currentPlayer, null).forEach {
+            // Add a Treaty View
+            println("Adding TreatyView for: $it")
+            val treatyView = UIControllerViewTreaty(it, currentPlayer)
+            playerTreatiesVBox.children.add(treatyView)
+        }
+
+        playerTreatyProposalsVBox.children.clear()
         DiplomacyManager.getAllProposalsForPlayer(currentPlayer, null).forEach {
             // Add a Treaty View
             println("Adding TreatyView for: $it")
-            val treatyView = UIControllerViewTreaty(it)
-            playerTreatiesVBox.children.add(treatyView)
+            val treatyView = UIControllerViewTreaty(it, currentPlayer)
+            playerTreatyProposalsVBox.children.add(treatyView)
         }
+
     }
 
 
@@ -110,11 +124,26 @@ class UIControllerActionDiplomacy : Initializable {
 
 
     fun onOfferTreatyButtonClick() {
-        val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!)
-        println("Adding new Treaty $treaty")
-        //TODO this is for testing only. Later, a treaty will not be accepted immediately but merely proposed. Then accepted by the other player.
-        DiplomacyManager.acceptProposal(treaty)
-        updateTreatyList()
+        val result = ViewController.showModalDialog()
+
+        if (result == FxDialogs.DialogResult.OK){
+            val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!)
+            println("Offering a new treaty: $treaty")
+            DiplomacyManager.addProposal(treaty)
+//            println("Adding new Treaty $treaty")
+//            DiplomacyManager.acceptProposal(treaty)
+            updateTreatyList() // Update list for showing pending treaties?
+        } else {
+            println("No treaty offered")
+            //Nothing to do for now
+        }
+
+
+
+    }
+
+    fun onDiplomacyHelpClicked(mouseEvent: MouseEvent) {
+        ViewController.showInfoPopUp(treatyTypeCB, bundle.getString("diplomacy_treaty_treaty_type_help_title"), bundle.getString("diplomacy_treaty_treaty_type_help_help"))
     }
 
 }

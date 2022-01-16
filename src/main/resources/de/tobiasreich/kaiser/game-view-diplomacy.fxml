@@ -5,7 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionDiplomacy">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="800.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerActionDiplomacy">
    <children>
       <Label text="%diplomacy_view_title">
          <font>
@@ -19,19 +21,37 @@
       <Label text="%diplomacy_view_current_treaties">
          <VBox.margin>
             <Insets bottom="25.0" top="25.0" />
-         </VBox.margin></Label>
-      <ScrollPane maxHeight="250.0" minHeight="250.0" prefHeight="250.0">
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <ScrollPane maxHeight="200.0" maxWidth="750.0" minHeight="200.0" minWidth="750.0" prefHeight="200.0" prefWidth="750.0">
         <content>
            <VBox fx:id="playerTreatiesVBox" />
         </content>
       </ScrollPane>
 
+      <Label text="%diplomacy_view_current_treaty_proposals">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <ScrollPane hbarPolicy="NEVER" maxHeight="100.0" maxWidth="750.0" minHeight="100.0" minWidth="750.0" prefHeight="100.0" prefWidth="750.0">
+         <content>
+            <VBox fx:id="playerTreatyProposalsVBox" />
+         </content>
+      </ScrollPane>
 
 
       <Label text="%diplomacy_view_offer_treaty">
          <VBox.margin>
             <Insets bottom="25.0" top="25.0" />
-         </VBox.margin></Label>
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
 
       <HBox alignment="CENTER" prefWidth="200.0">
          <children>
@@ -44,6 +64,15 @@
             </ComboBox>
       
             <Button fx:id="offerTreatyButton" disable="true" mnemonicParsing="false" onAction="#onOfferTreatyButtonClick" text="%diplomacy_view_send_offer" />
+            <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onDiplomacyHelpClicked" pickOnBounds="true"
+                       preserveRatio="true">
+               <image>
+                  <Image url="@img/icon_info.png"/>
+               </image>
+               <HBox.margin>
+                  <Insets left="25.0"/>
+               </HBox.margin>
+            </ImageView>
          </children>
       </HBox>
 

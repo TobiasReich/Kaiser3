@@ -215,7 +215,7 @@ class UIControllerActionWar : Initializable {
             Game.currentPlayer.military = miliartyAtHome
             WarManager.declareWar(Game.currentPlayer, targetPlayer!!, miliartyAtWar, warGoal)
             updateCallback()
-            // Close the view (show the
+            // Close the view?
         } else {
             println("No war declared")
             //Nothing to do for now

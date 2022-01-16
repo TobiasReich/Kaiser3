@@ -24,7 +24,9 @@ object WarManager {
 
     /** This declares a war.
      *  - store that in the war declarations (so the next time this player starts the turn, we can solve it)
-     *  - send a WarDeclarationMessage to the target of the war declaration */
+     *  - send a WarDeclarationMessage to the target of the war declaration
+     *  TODO If the target of the war declaration has a peace treaty with the initiating player, warn all other players about the breach of peacy treaty!
+     *  */
     fun declareWar(initiator : Player, target : Player, units : Map<MilitaryUnitType, MutableList<MilitaryUnit>>, warGoal: WarGoal){
         warDeclarations.add(WarDeclaration(initiator, target, units, warGoal))
         target.addMessage(WarDeclarationMessage(initiator, units, warGoal))

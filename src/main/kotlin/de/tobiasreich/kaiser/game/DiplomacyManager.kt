@@ -17,6 +17,7 @@ import java.lang.Math.min
  *    - Allows sharing produced goods and therefore make money (for both countries)
  *  - Declare Alliances
  *    - Let every other leader know that these two countries are allies. Can be a warning for others - but also an invitation for war!
+ *    //TODO If one country is target of a war declaration that has an alliance with others, the alliance partners should get notified as well.
  */
 object DiplomacyManager {
 
@@ -30,6 +31,7 @@ object DiplomacyManager {
      *  That player then can accept or decline it. */
     fun addProposal(treaty : Treaty){
         //TODO Send a Treaty Proposal Message to the receiver of that Treaty
+        treatyProposals.add(treaty)
     }
 
     /** Accepts a proposal that was made by another player. */
@@ -42,6 +44,15 @@ object DiplomacyManager {
 
     /** Returns a list of all treaties the player is involved in (initiator and receiver) */
     fun getAllProposalsForPlayer(player: Player, type: TreatyType?) : List<Treaty> {
+        return if (type != null){
+            treatyProposals.filter { it.type == type && (it.initiator == player || it.receiver == player) }
+        } else {
+            treatyProposals.filter { it.initiator == player || it.receiver == player }
+        }
+    }
+
+    /** Returns a list of all treaties that are proposed by / from this player */
+    fun getAllCurrentTreatiesForPlayer(player: Player, type: TreatyType?) : List<Treaty> {
         return if (type != null){
             acceptedTreaties.filter { it.type == type && (it.initiator == player || it.receiver == player) }
         } else {

@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.Player
 import de.tobiasreich.kaiser.game.Treaty
 import de.tobiasreich.kaiser.game.TreatyType
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
@@ -13,7 +14,7 @@ import javafx.scene.layout.HBox
 import java.io.IOException
 
 
-class UIControllerViewTreaty(private val treaty: Treaty) : HBox() {
+class UIControllerViewTreaty(private val treaty: Treaty, private val currentPlayer: Player) : HBox() {
 
     @FXML
     lateinit var treatyTypeImageView: ImageView
@@ -39,10 +40,20 @@ class UIControllerViewTreaty(private val treaty: Treaty) : HBox() {
             throw RuntimeException(exception)
         }
 
-        treatyInitiatorLabel.text = "${treaty.initiator.name} (${Game.resourcesBundle.getString(treaty.initiator.country.nameResource)})"
+        // Initiator of the treaty (if its the current player, show only "you" instead of full name)
+        treatyInitiatorLabel.text = if (treaty.initiator == currentPlayer) {
+            Game.resourcesBundle.getString("diplomacy_treaty_player_yourself")
+        } else {
+            "${treaty.initiator.name} (${Game.resourcesBundle.getString(treaty.initiator.country.nameResource)})"
+        }
         treatyInitiatorLabel.style = ("-fx-text-fill: ${treaty.initiator.playerColor.toRGBCode()}; ")
 
-        treatyReceiverLabel.text = "${treaty.receiver.name} (${Game.resourcesBundle.getString(treaty.receiver.country.nameResource)})"
+        // Receiver of the treaty (if its the current player, show only "you" instead of full name)
+        treatyReceiverLabel.text = if (treaty.receiver == currentPlayer) {
+            Game.resourcesBundle.getString("diplomacy_treaty_player_yourself")
+        } else {
+            "${treaty.receiver.name} (${Game.resourcesBundle.getString(treaty.receiver.country.nameResource)})"
+        }
         treatyReceiverLabel.style = ("-fx-text-fill: ${treaty.receiver.playerColor.toRGBCode()}; ")
 
         treatyTypeLabel.text = Game.resourcesBundle.getString(treaty.type.stringResource)

@@ -219,12 +219,12 @@ class UIControllerGame : Initializable {
     fun onDiplomacyButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-diplomacy.fxml"), Game.resourcesBundle)
         val diplomacyScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
-        val controller = fxmlLoader.getController<UIControllerActionDiplomacy>()
-        controller.setCallback{
-            //Update the view so the user sees the available money
-            showLandView()
-            updateViews()
-        }
+//        val controller = fxmlLoader.getController<UIControllerActionDiplomacy>()
+//        controller.setCallback{
+//            //Update the view so the user sees the available money
+//           // showLandView()
+//            updateViews()
+//        }
         rootBorderPane.center = diplomacyScene
     }
 
