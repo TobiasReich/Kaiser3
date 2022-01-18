@@ -3,6 +3,7 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.TreatyType
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
+import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
@@ -57,6 +58,19 @@ class UIControllerMessageTreatyOffer : Initializable, IMessageController{
     }
 
     private fun updateView() {
+        // Requesting player
+        val requestingPlayerTitle = if (message.requestingPlayer.isMale){
+            bundle.getString(message.requestingPlayer.playerTitle.resourceNameMale)
+        } else {
+            bundle.getString(message.requestingPlayer.playerTitle.resourceNameFemale)
+        }
+        val playerCountry = bundle.getString(message.requestingPlayer.country.nameResource)
+        offeringPlayerLabel.style = ("-fx-text-fill: ${message.requestingPlayer.playerColor.toRGBCode()}; ")
+        playerTopLine.stroke = message.requestingPlayer.playerColor
+        playerBottomLine.stroke = message.requestingPlayer.playerColor
+        offeringPlayerLabel.text = String.format(bundle.getString("treaty_offer_message_message"), requestingPlayerTitle, message.requestingPlayer.name, playerCountry)
+
+        // Type of treaty
         offeredTypeLabel.text = when(message.type){
             TreatyType.PEACE -> bundle.getString("treaty_offer_message_treaty_peace")
             TreatyType.TRADE -> bundle.getString("treaty_offer_message_treaty_trade")

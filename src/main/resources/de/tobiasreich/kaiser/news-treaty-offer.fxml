@@ -35,17 +35,20 @@
          </VBox.margin>
       </Line>
 
-      <Label fx:id="offeredTypeLabel" text="Ein Friedensangebot" />
+      <Label fx:id="offeredTypeLabel" text="Ein Friedensangebot">
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin></Label>
 
       <Label text="%treaty_offer_message_return_question" />
       <HBox alignment="CENTER">
          <children>
-            <Button fx:id="acceptTreatyButton" onAction="#onAcceptTreatyButtonClick" mnemonicParsing="false" text="%treaty_offer_message_return_answer_accept">
+            <Button fx:id="acceptTreatyButton" mnemonicParsing="false" onAction="#onAcceptTreatyButtonClick" text="%treaty_offer_message_return_answer_accept">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="rejectTreatyButton" onAction="#onRejectTreatyButtonClick" mnemonicParsing="false" text="%treaty_offer_message_return_answer_decline">
+            <Button fx:id="rejectTreatyButton" mnemonicParsing="false" onAction="#onRejectTreatyButtonClick" text="%treaty_offer_message_return_answer_decline">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
