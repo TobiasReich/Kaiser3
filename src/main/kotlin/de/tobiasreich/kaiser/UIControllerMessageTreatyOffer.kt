@@ -1,8 +1,10 @@
 package de.tobiasreich.kaiser
 
+import de.tobiasreich.kaiser.game.Game
 import de.tobiasreich.kaiser.game.TreatyType
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
+import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -80,13 +82,13 @@ class UIControllerMessageTreatyOffer : Initializable, IMessageController{
 
     fun onRejectTreatyButtonClick() {
         println("reject treaty")
-        //TODO sent response message to the initiating player
+        message.requestingPlayer.addMessage(TreatyOfferResponseMessage(Game.currentPlayer, message.type, false))
         proceedToNextNews()
     }
 
     fun onAcceptTreatyButtonClick() {
         println("accept treaty")
-        //TODO sent response message to the initiating player
+        message.requestingPlayer.addMessage(TreatyOfferResponseMessage(Game.currentPlayer, message.type, true))
         proceedToNextNews()
     }
 

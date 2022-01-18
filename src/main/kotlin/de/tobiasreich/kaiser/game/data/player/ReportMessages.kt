@@ -109,3 +109,10 @@ class TreatyOfferMessage(val requestingPlayer: Player, val type : TreatyType) : 
         return FXMLLoader(Main::class.java.getResource("news-treaty-offer.fxml"), Game.resourcesBundle)
     }
 }
+
+/** A message about a treaty offer (any type) */
+class TreatyOfferResponseMessage(val respondingPlayer: Player, val type : TreatyType, val accepted: Boolean) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-treaty-offer-response.fxml"), Game.resourcesBundle)
+    }
+}
