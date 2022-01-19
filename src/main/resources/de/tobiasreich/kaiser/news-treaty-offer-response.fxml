@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
@@ -34,14 +35,41 @@
             <Insets bottom="25.0" top="25.0" />
          </VBox.margin>
       </Line>
-
-      <Label fx:id="responseLabel" text="Ein Friedensangebot">
+      <HBox alignment="CENTER">
+         <children>
+            <StackPane>
+               <children>
+                  <ImageView fx:id="treatyIV" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_contracts.png">
+                        </Image>
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="treatyStateIV" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/icon_blocked.png">
+                        </Image>
+                     </image>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
+               </HBox.margin>
+            </StackPane>
+      
+            <Label fx:id="responseLabel" text="Ein Friedensangebot">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
          <VBox.margin>
-            <Insets bottom="25.0" />
+            <Insets bottom="25.0" top="25.0" />
          </VBox.margin>
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Label>
+      </HBox>
 
       <Button mnemonicParsing="false" onAction="#proceedToNextNews" text="%treaty_offer_response_message_button_text">
       </Button>

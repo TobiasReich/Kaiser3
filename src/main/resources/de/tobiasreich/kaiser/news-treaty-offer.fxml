@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
@@ -34,11 +35,27 @@
             <Insets bottom="25.0" top="25.0" />
          </VBox.margin>
       </Line>
-
-      <Label fx:id="offeredTypeLabel" text="Ein Friedensangebot">
+      <HBox alignment="CENTER">
+         <children>
+            <ImageView fx:id="treatyIV" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/icon_contracts.png">
+                  </Image>
+               </image>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label fx:id="offeredTypeLabel" text="Ein Friedensangebot">
+            <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
          <VBox.margin>
-            <Insets bottom="25.0" />
-         </VBox.margin></Label>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </HBox>
 
       <Label text="%treaty_offer_message_return_question" />
       <HBox alignment="CENTER">

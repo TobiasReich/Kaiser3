@@ -10,12 +10,16 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.image.ImageView
 import javafx.scene.shape.Line
 import java.net.URL
 import java.util.*
 
 /** This shows the message that another player is requesting an offer. */
 class UIControllerMessageTreatyOffer : Initializable, IMessageController{
+
+    @FXML
+    lateinit var treatyIV: ImageView
 
     @FXML
     lateinit var rejectTreatyButton: Button
@@ -77,10 +81,20 @@ class UIControllerMessageTreatyOffer : Initializable, IMessageController{
 
         // Type of treaty
         offeredTypeLabel.text = when(message.treaty.type){
-            TreatyType.PEACE -> bundle.getString("treaty_offer_message_treaty_peace")
-            TreatyType.TRADE -> bundle.getString("treaty_offer_message_treaty_trade")
-            TreatyType.ALLIANCE -> bundle.getString("treaty_offer_message_treaty_alliance")
+            TreatyType.PEACE -> {
+                treatyIV.image = GameImageCache.treatyPeace
+                bundle.getString("treaty_offer_message_treaty_peace")
+            }
+            TreatyType.TRADE -> {
+                treatyIV.image = GameImageCache.treatyTrade
+                bundle.getString("treaty_offer_message_treaty_trade")
+            }
+            TreatyType.ALLIANCE -> {
+                treatyIV.image = GameImageCache.treatyAlliance
+                bundle.getString("treaty_offer_message_treaty_alliance")
+            }
         }
+
     }
 
 

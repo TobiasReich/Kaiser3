@@ -38,4 +38,6 @@ object GameImageCache {
     val treatyTrade: Image = Image(javaClass.getResource("img/icon_trade.png")!!.toExternalForm())
     val treatyAlliance: Image = Image(javaClass.getResource("img/icon_alliance.png")!!.toExternalForm())
 
+    val blockedSymbol: Image = Image(javaClass.getResource("img/icon_blocked.png")!!.toExternalForm())
+
 }

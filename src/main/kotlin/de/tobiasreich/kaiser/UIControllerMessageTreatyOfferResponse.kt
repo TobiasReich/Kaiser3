@@ -7,12 +7,19 @@ import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
+import javafx.scene.image.ImageView
 import javafx.scene.shape.Line
 import java.net.URL
 import java.util.*
 
 /** This shows the message that another player is requesting an offer. */
 class UIControllerMessageTreatyOfferResponse : Initializable, IMessageController{
+
+    @FXML
+    lateinit var treatyStateIV: ImageView
+
+    @FXML
+    lateinit var treatyIV: ImageView
 
     @FXML
     lateinit var responseLabel: Label
@@ -69,16 +76,36 @@ class UIControllerMessageTreatyOfferResponse : Initializable, IMessageController
         // Type of treaty
         if (message.accepted){
             responseLabel.text = when (message.treaty.type) {
-                TreatyType.PEACE -> bundle.getString("treaty_offer_response_message_peace_accepted")
-                TreatyType.TRADE -> bundle.getString("treaty_offer_response_message_trade_accepted")
-                TreatyType.ALLIANCE -> bundle.getString("treaty_offer_response_message_alliance_accepted")
+                TreatyType.PEACE -> {
+                    treatyIV.image = GameImageCache.treatyPeace
+                    bundle.getString("treaty_offer_response_message_peace_accepted")
+                }
+                TreatyType.TRADE -> {
+                    treatyIV.image = GameImageCache.treatyTrade
+                    bundle.getString("treaty_offer_response_message_trade_accepted")
+                }
+                TreatyType.ALLIANCE -> {
+                    treatyIV.image = GameImageCache.treatyAlliance
+                    bundle.getString("treaty_offer_response_message_alliance_accepted")
+                }
             }
+            treatyStateIV.isVisible = false
         } else {
             responseLabel.text = when (message.treaty.type) {
-                TreatyType.PEACE -> bundle.getString("treaty_offer_response_message_peace_rejected")
-                TreatyType.TRADE -> bundle.getString("treaty_offer_response_message_trade_rejected")
-                TreatyType.ALLIANCE -> bundle.getString("treaty_offer_response_message_alliance_rejected")
+                TreatyType.PEACE -> {
+                    treatyIV.image = GameImageCache.treatyPeace
+                    bundle.getString("treaty_offer_response_message_peace_rejected")
+                }
+                TreatyType.TRADE -> {
+                    treatyIV.image = GameImageCache.treatyTrade
+                    bundle.getString("treaty_offer_response_message_trade_rejected")
+                }
+                TreatyType.ALLIANCE -> {
+                    treatyIV.image = GameImageCache.treatyAlliance
+                    bundle.getString("treaty_offer_response_message_alliance_rejected")
+                }
             }
+            treatyStateIV.isVisible = true
         }
     }
 
