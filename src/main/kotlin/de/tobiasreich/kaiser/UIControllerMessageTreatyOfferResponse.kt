@@ -6,7 +6,6 @@ import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
 import de.tobiasreich.kaiser.game.utils.FXUtils.FxUtils.toRGBCode
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.shape.Line
 import java.net.URL
@@ -22,12 +21,6 @@ class UIControllerMessageTreatyOfferResponse : Initializable, IMessageController
     lateinit var respondingPlayerLabel: Label
 
     @FXML
-    lateinit var rejectTreatyButton: Button
-
-    @FXML
-    lateinit var acceptTreatyButton: Button
-
-      @FXML
     lateinit var playerTopLine: Line
 
     @FXML
@@ -51,44 +44,42 @@ class UIControllerMessageTreatyOfferResponse : Initializable, IMessageController
         this.bundle = bundle
     }
 
+
     override fun setMessage(message: ReportMessage) {
         println("set treaty offer Message")
         this.message = message as TreatyOfferResponseMessage
         updateView()
-        //TODO if it got accepted, add the treaty
     }
 
+
     private fun updateView() {
+        val respondingPlayer = message.treaty.receiver
         // Requesting player
-        val requestingPlayerTitle = if (message.respondingPlayer.isMale){
-            bundle.getString(message.respondingPlayer.playerTitle.resourceNameMale)
+        val requestingPlayerTitle = if (respondingPlayer.isMale){
+            bundle.getString(respondingPlayer.playerTitle.resourceNameMale)
         } else {
-            bundle.getString(message.respondingPlayer.playerTitle.resourceNameFemale)
+            bundle.getString(respondingPlayer.playerTitle.resourceNameFemale)
         }
-        val playerCountry = bundle.getString(message.respondingPlayer.country.nameResource)
-        respondingPlayerLabel.style = ("-fx-text-fill: ${message.respondingPlayer.playerColor.toRGBCode()}; ")
-        playerTopLine.stroke = message.respondingPlayer.playerColor
-        playerBottomLine.stroke = message.respondingPlayer.playerColor
-        respondingPlayerLabel.text = String.format(bundle.getString("treaty_offer_response_message_message"), requestingPlayerTitle, message.respondingPlayer.name, playerCountry)
+        val playerCountry = bundle.getString(respondingPlayer.country.nameResource)
+        respondingPlayerLabel.style = ("-fx-text-fill: ${respondingPlayer.playerColor.toRGBCode()}; ")
+        playerTopLine.stroke = respondingPlayer.playerColor
+        playerBottomLine.stroke = respondingPlayer.playerColor
+        respondingPlayerLabel.text = String.format(bundle.getString("treaty_offer_response_message_message"), requestingPlayerTitle, respondingPlayer.name, playerCountry)
 
         // Type of treaty
         if (message.accepted){
-            responseLabel.text = when (message.type) {
+            responseLabel.text = when (message.treaty.type) {
                 TreatyType.PEACE -> bundle.getString("treaty_offer_response_message_peace_accepted")
                 TreatyType.TRADE -> bundle.getString("treaty_offer_response_message_trade_accepted")
                 TreatyType.ALLIANCE -> bundle.getString("treaty_offer_response_message_alliance_accepted")
             }
         } else {
-            responseLabel.text = when (message.type) {
+            responseLabel.text = when (message.treaty.type) {
                 TreatyType.PEACE -> bundle.getString("treaty_offer_response_message_peace_rejected")
                 TreatyType.TRADE -> bundle.getString("treaty_offer_response_message_trade_rejected")
                 TreatyType.ALLIANCE -> bundle.getString("treaty_offer_response_message_alliance_rejected")
             }
         }
-    }
-
-    fun onProceedButtonClick() {
-        proceedToNextNews()
     }
 
 }

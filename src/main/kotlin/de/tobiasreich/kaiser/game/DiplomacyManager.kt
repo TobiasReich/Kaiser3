@@ -1,13 +1,7 @@
 package de.tobiasreich.kaiser.game
 
-import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
-import de.tobiasreich.kaiser.game.data.military.MilitaryUnitType
-import de.tobiasreich.kaiser.game.data.military.WarGoal
-import de.tobiasreich.kaiser.game.data.player.ReturningTroopsMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
-import de.tobiasreich.kaiser.game.data.player.WarDeclarationMessage
-import de.tobiasreich.kaiser.game.data.population.Person
-import java.lang.Math.min
+import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
 
 /** Object for tracking diplomatic relationships.
  *
@@ -31,17 +25,30 @@ object DiplomacyManager {
     /** This makes a treaty proposal sent to the receiver of that treaty as a "message".
      *  That player then can accept or decline it. */
     fun addProposal(treaty : Treaty){
-        treaty.receiver.addMessage(TreatyOfferMessage(treaty.initiator, treaty.type))
+        treaty.receiver.addMessage(TreatyOfferMessage(treaty))
         treatyProposals.add(treaty)
     }
 
-    /** Accepts a proposal that was made by another player. */
-    fun acceptProposal(treaty: Treaty){
-        //TODO send a "Proposal Accepted Message" to the initiator
 
+    /** Accepts a proposal that was made by another player.
+     *  This automatically deletes the proposal and sends a message to the initiator of the proposal. */
+    fun acceptProposal(treaty: Treaty){
         // Add the treaty to the list
+        println("accept treaty")
         acceptedTreaties.add(treaty)
+        treaty.initiator.addMessage(TreatyOfferResponseMessage(treaty, true))
+        treatyProposals.remove(treaty)
     }
+
+
+    /** Rejects a proposal that was made by another player.
+     *  This means basically just deleting the proposal and sending an info message back to the initiator. */
+    fun rejectProposal(treaty: Treaty){
+        println("reject treaty")
+        treatyProposals.remove(treaty)
+        treaty.initiator.addMessage(TreatyOfferResponseMessage(treaty, false))
+    }
+
 
     /** Returns a list of all treaties the player is involved in (initiator and receiver) */
     fun getAllProposalsForPlayer(player: Player, type: TreatyType?) : List<Treaty> {

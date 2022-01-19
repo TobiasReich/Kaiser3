@@ -1,6 +1,6 @@
 package de.tobiasreich.kaiser
 
-import de.tobiasreich.kaiser.game.Game
+import de.tobiasreich.kaiser.game.DiplomacyManager
 import de.tobiasreich.kaiser.game.TreatyType
 import de.tobiasreich.kaiser.game.data.player.ReportMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
@@ -53,42 +53,45 @@ class UIControllerMessageTreatyOffer : Initializable, IMessageController{
         this.bundle = bundle
     }
 
+
     override fun setMessage(message: ReportMessage) {
         println("set treaty offer Message")
         this.message = message as TreatyOfferMessage
         updateView()
     }
 
+
     private fun updateView() {
+        val messageSender = message.treaty.initiator
         // Requesting player
-        val requestingPlayerTitle = if (message.requestingPlayer.isMale){
-            bundle.getString(message.requestingPlayer.playerTitle.resourceNameMale)
+        val requestingPlayerTitle = if (messageSender.isMale){
+            bundle.getString(messageSender.playerTitle.resourceNameMale)
         } else {
-            bundle.getString(message.requestingPlayer.playerTitle.resourceNameFemale)
+            bundle.getString(messageSender.playerTitle.resourceNameFemale)
         }
-        val playerCountry = bundle.getString(message.requestingPlayer.country.nameResource)
-        offeringPlayerLabel.style = ("-fx-text-fill: ${message.requestingPlayer.playerColor.toRGBCode()}; ")
-        playerTopLine.stroke = message.requestingPlayer.playerColor
-        playerBottomLine.stroke = message.requestingPlayer.playerColor
-        offeringPlayerLabel.text = String.format(bundle.getString("treaty_offer_message_message"), requestingPlayerTitle, message.requestingPlayer.name, playerCountry)
+        val playerCountry = bundle.getString(messageSender.country.nameResource)
+        offeringPlayerLabel.style = ("-fx-text-fill: ${messageSender.playerColor.toRGBCode()}; ")
+        playerTopLine.stroke = messageSender.playerColor
+        playerBottomLine.stroke = messageSender.playerColor
+        offeringPlayerLabel.text = String.format(bundle.getString("treaty_offer_message_message"), requestingPlayerTitle, messageSender.name, playerCountry)
 
         // Type of treaty
-        offeredTypeLabel.text = when(message.type){
+        offeredTypeLabel.text = when(message.treaty.type){
             TreatyType.PEACE -> bundle.getString("treaty_offer_message_treaty_peace")
             TreatyType.TRADE -> bundle.getString("treaty_offer_message_treaty_trade")
             TreatyType.ALLIANCE -> bundle.getString("treaty_offer_message_treaty_alliance")
         }
     }
 
+
     fun onRejectTreatyButtonClick() {
-        println("reject treaty")
-        message.requestingPlayer.addMessage(TreatyOfferResponseMessage(Game.currentPlayer, message.type, false))
+        DiplomacyManager.rejectProposal(message.treaty)
         proceedToNextNews()
     }
 
+
     fun onAcceptTreatyButtonClick() {
-        println("accept treaty")
-        message.requestingPlayer.addMessage(TreatyOfferResponseMessage(Game.currentPlayer, message.type, true))
+        DiplomacyManager.acceptProposal(message.treaty)
         proceedToNextNews()
     }
 

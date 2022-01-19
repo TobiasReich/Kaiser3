@@ -38,9 +38,12 @@
       <Label fx:id="responseLabel" text="Ein Friedensangebot">
          <VBox.margin>
             <Insets bottom="25.0" />
-         </VBox.margin></Label>
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
 
-      <Button mnemonicParsing="false" onAction="#onProceedButtonClick" text="%treaty_offer_response_message_button_text">
+      <Button mnemonicParsing="false" onAction="#proceedToNextNews" text="%treaty_offer_response_message_button_text">
       </Button>
 
 

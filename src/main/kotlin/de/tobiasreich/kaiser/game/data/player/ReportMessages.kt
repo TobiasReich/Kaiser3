@@ -1,10 +1,7 @@
 package de.tobiasreich.kaiser.game.data.player
 
 import de.tobiasreich.kaiser.Main
-import de.tobiasreich.kaiser.game.Game
-import de.tobiasreich.kaiser.game.Player
-import de.tobiasreich.kaiser.game.ResourceType
-import de.tobiasreich.kaiser.game.TreatyType
+import de.tobiasreich.kaiser.game.*
 import de.tobiasreich.kaiser.game.data.country.HarvestCondition
 import de.tobiasreich.kaiser.game.data.country.HarvestEvent
 import de.tobiasreich.kaiser.game.data.military.MilitaryUnit
@@ -104,14 +101,14 @@ class BattleOutcomeMessage(val attackingPlayer: Player, val remainingPowerFracti
 }
 
 /** A message about a treaty offer (any type) */
-class TreatyOfferMessage(val requestingPlayer: Player, val type : TreatyType) : ReportMessage {
+class TreatyOfferMessage(val treaty : Treaty) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-treaty-offer.fxml"), Game.resourcesBundle)
     }
 }
 
 /** A message about a treaty offer (any type) */
-class TreatyOfferResponseMessage(val respondingPlayer: Player, val type : TreatyType, val accepted: Boolean) : ReportMessage {
+class TreatyOfferResponseMessage(val treaty : Treaty, val accepted: Boolean) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {
         return FXMLLoader(Main::class.java.getResource("news-treaty-offer-response.fxml"), Game.resourcesBundle)
     }
