@@ -126,9 +126,9 @@ class UIControllerActionDiplomacy : Initializable {
     fun onOfferTreatyButtonClick() {
         val dialogTitle = bundle.getString("diplomacy_treaty_offer_dialog_title")
         val dialogMessage = bundle.getString("diplomacy_treaty_offer_dialog_message")
-        val result = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
 
-        if (result == FxDialogs.DialogResult.OK){
+        if (dialogAccepted){
             val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!)
             println("Offering a new treaty: $treaty")
             DiplomacyManager.addProposal(treaty)

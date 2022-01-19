@@ -17,10 +17,6 @@ object FxDialogs {
         OK,
         CANCEL,
     }
-    const val YES = "Yes"
-    const val NO = "No"
-    const val OK = "OK"
-    const val CANCEL = "Cancel"
 
     fun showInformation(title: String?, message: String?) {
         val alert = Alert(Alert.AlertType.INFORMATION)
@@ -75,35 +71,25 @@ object FxDialogs {
         alert.showAndWait()
     }
 
-    fun showConfirm(title: String, message: String, vararg options: String?): DialogResult {
-        var confirmOptions = options
+
+    /** Shows a dialog that prints a title and a context String.
+     *  Allowing the user to either ACCEPT or  REJECT the dialog question.
+     *  NOTE: This has always 2 choices. Use another method if you only want to present something without choice! */
+    fun showConfirm(title: String, message: String): Boolean {
         val alert = Alert(Alert.AlertType.CONFIRMATION)
-        alert.initStyle(StageStyle.UTILITY)
         alert.initModality(Modality.APPLICATION_MODAL)
         alert.title = ""
         alert.headerText = title
         alert.contentText = message
 
-        if (confirmOptions == null || confirmOptions.isEmpty()) {
-            confirmOptions = arrayOf<String?>(OK, CANCEL)
-        }
-        val buttons: MutableList<ButtonType> = ArrayList()
-        for (option in confirmOptions) {
-            buttons.add(ButtonType(option))
-        }
-        alert.buttonTypes.setAll(buttons)
+        alert.buttonTypes.clear()
+        alert.buttonTypes.addAll(ButtonType.OK, ButtonType.CANCEL)
+        //If wanted, deactivate default behavior for a Button like this
+        //val yesButton = alert.dialogPane.lookupButton(ButtonType.YES) as Button
+        //yesButton.isDefaultButton = false
+
         val result = alert.showAndWait()
-        return if (!result.isPresent) {
-            println("Cancel")
-            DialogResult.CANCEL
-        } else {
-            //println(result.get().text)
-            return if (result.get().text == OK){
-                DialogResult.OK
-            } else {
-                DialogResult.CANCEL
-            }
-        }
+        return result.isPresent && result.get() == ButtonType.OK
     }
 
     fun showTextInput(title: String?, message: String?, defaultValue: String?): String? {

@@ -209,9 +209,9 @@ class UIControllerActionWar : Initializable {
     fun startWar(actionEvent: ActionEvent) {
         val dialogTitle = bundle.getString("war_view_offer_dialog_title")
         val dialogMessage = bundle.getString("war_view_offer_dialog_message")
-        val result = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
 
-        if (result == FxDialogs.DialogResult.OK){
+        if (dialogAccepted){
             println("Declaring war")
             //Set the player's military to the ones remaining "at home"
             Game.currentPlayer.military = miliartyAtHome

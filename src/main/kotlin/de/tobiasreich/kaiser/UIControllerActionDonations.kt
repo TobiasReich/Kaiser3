@@ -178,9 +178,9 @@ class UIControllerActionDonations : Initializable {
     fun onSendDonationButtonClick(actionEvent: ActionEvent) {
         val dialogTitle = bundle.getString("donation_view_offer_dialog_title")
         val dialogMessage = bundle.getString("donation_view_offer_dialog_message")
-        val result = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
 
-        if (result == FxDialogs.DialogResult.OK){
+        if (dialogAccepted){
             println("Donation made")
             Game.currentPlayer.donateResource(selectedPlayer!!, selectedResource!!, donationAmount)
             updateCallback()
