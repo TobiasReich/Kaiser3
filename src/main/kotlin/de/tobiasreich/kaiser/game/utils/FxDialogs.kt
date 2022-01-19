@@ -11,13 +11,6 @@ import java.io.StringWriter
 
 object FxDialogs {
 
-    enum class DialogResult{
-        YES,
-        NO,
-        OK,
-        CANCEL,
-    }
-
     fun showInformation(title: String?, message: String?) {
         val alert = Alert(Alert.AlertType.INFORMATION)
         alert.initStyle(StageStyle.UTILITY)
@@ -72,7 +65,7 @@ object FxDialogs {
     }
 
 
-    /** Shows a dialog that prints a title and a context String.
+    /** Shows a dialog that prints a title and a context String with a question mark icon (CONFIRMATION).
      *  Allowing the user to either ACCEPT or  REJECT the dialog question.
      *  NOTE: This has always 2 choices. Use another method if you only want to present something without choice! */
     fun showConfirm(title: String, message: String): Boolean {
@@ -83,13 +76,16 @@ object FxDialogs {
         alert.contentText = message
 
         alert.buttonTypes.clear()
-        alert.buttonTypes.addAll(ButtonType.OK, ButtonType.CANCEL)
+        alert.buttonTypes.addAll(ButtonType.YES, ButtonType.NO)
         //If wanted, deactivate default behavior for a Button like this
         //val yesButton = alert.dialogPane.lookupButton(ButtonType.YES) as Button
         //yesButton.isDefaultButton = false
+        // Change the text of the buttons like this:
+        //val okButton = alert.dialogPane.lookupButton(ButtonType.OK) as Button
+        //okButton.text = "Accept."
 
         val result = alert.showAndWait()
-        return result.isPresent && result.get() == ButtonType.OK
+        return result.isPresent && result.get() == ButtonType.YES
     }
 
     fun showTextInput(title: String?, message: String?, defaultValue: String?): String? {
