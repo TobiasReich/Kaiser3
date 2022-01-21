@@ -1,6 +1,7 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.*
+import de.tobiasreich.kaiser.game.DiplomacyManager.TREATY_EXPIRATION_TIME_YEARS
 import de.tobiasreich.kaiser.game.utils.FxDialogs
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
@@ -129,7 +130,7 @@ class UIControllerActionDiplomacy : Initializable {
         val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
 
         if (dialogAccepted){
-            val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!)
+            val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!, Game.currentYear + TREATY_EXPIRATION_TIME_YEARS)
             println("Offering a new treaty: $treaty")
             DiplomacyManager.addProposal(treaty)
 //            println("Adding new Treaty $treaty")

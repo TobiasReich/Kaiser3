@@ -16,6 +16,9 @@ import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
  */
 object DiplomacyManager {
 
+    // Treaties are valid for 10 years (for now)
+    const val TREATY_EXPIRATION_TIME_YEARS = 10
+
     // List of Treaties (can be of all type). Use a filter if you want specific ones.
     private val acceptedTreaties = mutableListOf<Treaty>()
 
@@ -81,7 +84,7 @@ object DiplomacyManager {
 }
 
 
-data class Treaty(val type : TreatyType, val initiator : Player, val receiver : Player)
+data class Treaty(val type : TreatyType, val initiator : Player, val receiver : Player, val expirationYear : Int)
 
 enum class TreatyType(val stringResource : String){
     PEACE("treaty_type_peace"),

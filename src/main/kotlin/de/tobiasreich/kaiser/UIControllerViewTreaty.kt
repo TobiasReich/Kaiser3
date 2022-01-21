@@ -23,6 +23,9 @@ class UIControllerViewTreaty(private val treaty: Treaty, private val currentPlay
     lateinit var treatyTypeLabel: Label
 
     @FXML
+    lateinit var treatyExpirationYearLabel: Label
+
+    @FXML
     lateinit var treatyInitiatorLabel: Label
 
     @FXML
@@ -62,6 +65,8 @@ class UIControllerViewTreaty(private val treaty: Treaty, private val currentPlay
             TreatyType.TRADE -> GameImageCache.treatyTrade
             TreatyType.ALLIANCE -> GameImageCache.treatyAlliance
         }
+
+        treatyExpirationYearLabel.text = treaty.expirationYear.toString()
     }
 
 }
