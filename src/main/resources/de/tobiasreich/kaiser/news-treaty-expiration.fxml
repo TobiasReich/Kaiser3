@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageTreatyExpiration">
+   <children>
+      <!-- Header -->
+      <Label text="%treaty_offer_expiration_message_title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </Label>
+
+      <Line fx:id="playerTopLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+      <Label fx:id="respondingPlayerLabel" text="X Y von Z meldet sich bei euch." textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+
+      <Line fx:id="playerBottomLine" endX="200.0" startX="-200.0" strokeLineCap="ROUND" strokeWidth="5.0">
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </Line>
+
+
+      <Label text="%treaty_offer_expiration_message_action" textAlignment="CENTER">
+         <padding>
+            <Insets bottom="25.0" top="25.0" />
+         </padding></Label>
+
+      <Button mnemonicParsing="false" onAction="#proceedToNextNews" text="%treaty_offer_expiration_button_ok">
+      </Button>
+
+
+   </children>
+</VBox>

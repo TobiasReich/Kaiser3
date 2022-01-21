@@ -24,7 +24,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <ScrollPane maxHeight="200.0" maxWidth="800.0" minHeight="200.0" minWidth="800.0" prefHeight="200.0" prefWidth="800.0">
+      <ScrollPane maxHeight="200.0" maxWidth="1000.0" minHeight="200.0" minWidth="1000.0" prefHeight="200.0" prefWidth="1000.0">
         <content>
            <VBox fx:id="playerTreatiesVBox" />
         </content>
@@ -37,7 +37,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <ScrollPane hbarPolicy="NEVER" maxHeight="100.0" maxWidth="800.0" minHeight="100.0" minWidth="800.0" prefHeight="100.0" prefWidth="800.0">
+      <ScrollPane hbarPolicy="NEVER" maxHeight="100.0" maxWidth="1000.0" minHeight="100.0" minWidth="1000.0" prefHeight="100.0" prefWidth="1000.0">
          <content>
             <VBox fx:id="playerTreatyProposalsVBox" />
          </content>

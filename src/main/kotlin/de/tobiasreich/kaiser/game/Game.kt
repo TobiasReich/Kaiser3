@@ -46,8 +46,9 @@ object Game {
         println("----- NEXT PLAYER (#$nextPlayerIndex) -----")
 
         if (nextPlayerIndex == 0){
-            currentYear++
             println("----- NEW YEAR -----")
+            currentYear++
+            DiplomacyManager.cleanupTreaties(currentYear)
         }
 
         currentPlayer = players[nextPlayerIndex]

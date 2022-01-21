@@ -113,3 +113,10 @@ class TreatyOfferResponseMessage(val treaty : Treaty, val accepted: Boolean) : R
         return FXMLLoader(Main::class.java.getResource("news-treaty-offer-response.fxml"), Game.resourcesBundle)
     }
 }
+
+/** A message about a treaty offer (any type) */
+class TreatyExpirationMessage(val treaty : Treaty) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-treaty-expiration.fxml"), Game.resourcesBundle)
+    }
+}

@@ -1,5 +1,6 @@
 package de.tobiasreich.kaiser.game
 
+import de.tobiasreich.kaiser.game.data.player.TreatyExpirationMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
 
@@ -62,6 +63,7 @@ object DiplomacyManager {
         }
     }
 
+
     /** Returns a list of all treaties that are proposed by / from this player */
     fun getAllCurrentTreatiesForPlayer(player: Player, type: TreatyType?) : List<Treaty> {
         return if (type != null){
@@ -70,6 +72,23 @@ object DiplomacyManager {
             acceptedTreaties.filter { it.initiator == player || it.receiver == player }
         }
     }
+
+    /** Call this when ever a year passes.
+     *  This will cleanup all treaties that have an expiration year equal or smaller the given one */
+    fun cleanupTreaties(year : Int){
+        val expiredTreaties = acceptedTreaties.filter { it.expirationYear <= year }
+
+        expiredTreaties.forEach { treaty ->
+            //1. Remove it from the acceptedTreaties
+            acceptedTreaties.remove(treaty)
+            //2. Send message to Initiator
+            treaty.initiator.addMessage(TreatyExpirationMessage(treaty))
+            //3. Send message to Receiver
+            treaty.receiver.addMessage(TreatyExpirationMessage(treaty))
+        }
+
+    }
+
 
     /** Cancels a treaty with another player
      *
