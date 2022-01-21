@@ -26,21 +26,28 @@
          <HBox.margin>
             <Insets left="10.0" right="10.0" />
          </HBox.margin></Label>
-      <Label fx:id="treatyInitiatorLabel" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" text="Herzog X" HBox.hgrow="NEVER">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Label>
-      <Label text="%diplomacy_treaty_view_and">
-         <HBox.margin>
-            <Insets left="10.0" right="10.0" />
-         </HBox.margin></Label>
-      <Label fx:id="treatyReceiverLabel" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" text="Baron Y" HBox.hgrow="NEVER">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-         <HBox.margin>
-            <Insets right="10.0" />
-         </HBox.margin></Label>
+      <HBox alignment="CENTER_LEFT" prefWidth="550.0">
+         <children>
+            <Label fx:id="treatyInitiatorLabel" text="Herzog X">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="%diplomacy_treaty_view_and">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="treatyReceiverLabel" text="Baron Y">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@img/icon_calendar.png">

@@ -3,6 +3,8 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.config.IPlayerConfigChange
 import de.tobiasreich.kaiser.config.PlayerConfig
 import de.tobiasreich.kaiser.game.Game
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
@@ -14,6 +16,11 @@ import java.io.IOException
 
 
 class UIControllerViewPlayerConfig(private val playerConfig : PlayerConfig, private val callback : IPlayerConfigChange) : VBox() {
+
+    companion object{
+        const val MAX_PLAYER_NAME_LENGTH = 30
+    }
+
 
     @FXML
     lateinit var playerConfigCountryLabel: Label
@@ -65,7 +72,11 @@ class UIControllerViewPlayerConfig(private val playerConfig : PlayerConfig, priv
         }
 
         playerConfigNameTF.addEventHandler(KeyEvent.ANY, tabListener)
-
+        playerConfigNameTF.textProperty().addListener { _, _, _ ->
+            if (playerConfigNameTF.text.length > MAX_PLAYER_NAME_LENGTH) {
+                playerConfigNameTF.text = playerConfigNameTF.text.substring(0, MAX_PLAYER_NAME_LENGTH)
+            }
+        }
         updateView()
     }
 
