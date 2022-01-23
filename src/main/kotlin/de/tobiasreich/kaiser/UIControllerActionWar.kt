@@ -14,7 +14,6 @@ import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
 import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
-import de.tobiasreich.kaiser.game.utils.FxDialogs
 import java.net.URL
 import java.util.*
 
@@ -43,7 +42,7 @@ class UIControllerActionWar : Initializable {
     private var miliartyAtHome = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
     private var miliartyAtWar = mutableMapOf<MilitaryUnitType, MutableList<MilitaryUnit>>()
 
-    private val players = Game.getAllOtherPlayers()
+    private val players = Game.getAllButCurrentPlayer()
     private var targetPlayer : Player? = null
     private var warGoal : WarGoal = WarGoal.KILL_UNITS
 
@@ -54,7 +53,7 @@ class UIControllerActionWar : Initializable {
 
         // Target Player ComboBox
         val playerNames = FXCollections.observableArrayList<String>()
-        Game.getAllOtherPlayers().forEach {
+        Game.getAllButCurrentPlayer().forEach {
             playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
         }
 

@@ -2,7 +2,6 @@ package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.*
 import de.tobiasreich.kaiser.game.DiplomacyManager.TREATY_EXPIRATION_TIME_YEARS
-import de.tobiasreich.kaiser.game.utils.FxDialogs
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -46,7 +45,7 @@ class UIControllerActionDiplomacy : Initializable {
     private lateinit var bundle: ResourceBundle
 
     private val currentPlayer = Game.currentPlayer
-    private val players = Game.getAllOtherPlayers()
+    private val players = Game.getAllButCurrentPlayer()
     private var selectedPlayer : Player? = null
     private var treatyType : TreatyType? = null
 

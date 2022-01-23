@@ -1,17 +1,13 @@
 package de.tobiasreich.kaiser
 
 import de.tobiasreich.kaiser.game.Game
-import de.tobiasreich.kaiser.game.Game.MAX_DONATION_AMOUNT
 import de.tobiasreich.kaiser.game.Player
-import de.tobiasreich.kaiser.game.ResourceType
 import de.tobiasreich.kaiser.game.data.military.SabotageType
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
-import javafx.scene.input.MouseEvent
-import de.tobiasreich.kaiser.game.utils.FxDialogs
 import java.net.URL
 import java.util.*
 
@@ -37,7 +33,7 @@ class UIControllerActionSabotage : Initializable {
 
     private lateinit var bundle: ResourceBundle
 
-    private val players = Game.getAllOtherPlayers()
+    private val players = Game.getAllButCurrentPlayer()
     private var selectedPlayer : Player? = null
     private var selectedSabotage : SabotageType? = null
 
@@ -47,7 +43,7 @@ class UIControllerActionSabotage : Initializable {
 
         // ----- PLAYER SELECTION -----
         val playerNames = FXCollections.observableArrayList<String>()
-        Game.getAllOtherPlayers().forEach {
+        Game.getAllButCurrentPlayer().forEach {
             playerNames.add("${it.name} (${bundle.getString(it.country.nameResource)})")
         }
 

@@ -3,6 +3,7 @@ package de.tobiasreich.kaiser.game
 import de.tobiasreich.kaiser.game.data.player.TreatyExpirationMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferMessage
 import de.tobiasreich.kaiser.game.data.player.TreatyOfferResponseMessage
+import de.tobiasreich.kaiser.game.data.player.TreatyRumorsMessage
 
 /** Object for tracking diplomatic relationships.
  *
@@ -40,7 +41,19 @@ object DiplomacyManager {
         // Add the treaty to the list
         println("accept treaty")
         acceptedTreaties.add(treaty)
+
+        // Inform proposing player
         treaty.initiator.addMessage(TreatyOfferResponseMessage(treaty, true))
+
+        // Inform all other players
+        // TODO Consider not informing about all treaties. (maybe depending on the espionage level towards these players?)
+        //if (treaty.type == TreatyType.PEACE || treaty.type == TreatyType.ALLIANCE) {
+            val otherPlayers = Game.getAllOtherPlayers(setOf(treaty.initiator, treaty.receiver))
+            otherPlayers.forEach {
+                it.addMessage(TreatyRumorsMessage(treaty, true))
+            }
+        //}
+
         treatyProposals.remove(treaty)
     }
 
@@ -85,6 +98,15 @@ object DiplomacyManager {
             treaty.initiator.addMessage(TreatyExpirationMessage(treaty))
             //3. Send message to Receiver
             treaty.receiver.addMessage(TreatyExpirationMessage(treaty))
+
+            // Inform all other players
+            // TODO Consider not informing about all treaties. (maybe depending on the espionage level towards these players?)
+            //if (treaty.type == TreatyType.PEACE || treaty.type == TreatyType.ALLIANCE) {
+            val otherPlayers = Game.getAllOtherPlayers(setOf(treaty.initiator, treaty.receiver))
+            otherPlayers.forEach {
+                it.addMessage(TreatyRumorsMessage(treaty, false))
+            }
+            //}
         }
 
     }

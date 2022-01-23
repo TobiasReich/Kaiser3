@@ -114,6 +114,13 @@ class TreatyOfferResponseMessage(val treaty : Treaty, val accepted: Boolean) : R
     }
 }
 
+/** A message containing rumors about a treaty between two (other) countries */
+class TreatyRumorsMessage(val treaty : Treaty, val wasStarted : Boolean) : ReportMessage {
+    override fun getViewLoader(): FXMLLoader {
+        return FXMLLoader(Main::class.java.getResource("news-treaty-rumor.fxml"), Game.resourcesBundle)
+    }
+}
+
 /** A message about a treaty offer (any type) */
 class TreatyExpirationMessage(val treaty : Treaty) : ReportMessage {
     override fun getViewLoader(): FXMLLoader {

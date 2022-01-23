@@ -62,8 +62,13 @@ object Game {
 
 
     /** Returning a list of players that are not the current player */
-    fun getAllOtherPlayers() : List<Player>{
+    fun getAllButCurrentPlayer() : List<Player>{
         return players.filter { it != currentPlayer }
+    }
+
+    /** Returning a list of players that are not the current player */
+    fun getAllOtherPlayers(ignoredPlayers : Set<Player>) : Set<Player>{
+        return players.subtract(ignoredPlayers)
     }
 
     // ---------------------------------------------------------

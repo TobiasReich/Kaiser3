@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="264.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tobiasreich.kaiser.UIControllerMessageTreatyRumor">
+   <children>
+      <!-- Header -->
+      <Label text="%treaty_rumor_message_title" underline="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </Label>
+      
+      <Label text="%treaty_rumor_intro_text" />
+
+      <HBox alignment="CENTER">
+         <children>
+      
+            <Label fx:id="tratyCountry1" text="Land X" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+
+            <Label text="%treaty_rumor_country_and">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding></Label>
+
+            <Label fx:id="tratyCountry2" text="Land Y" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+
+         </children>
+         <VBox.margin>
+            <Insets bottom="25.0" top="25.0" />
+         </VBox.margin>
+      </HBox>
+
+
+      <Label fx:id="tratyRumorLabel" text="%treaty_offer_expiration_message_action" textAlignment="CENTER">
+         <padding>
+            <Insets bottom="25.0" />
+         </padding></Label>
+
+      <Button mnemonicParsing="false" onAction="#proceedToNextNews" text="%treaty_rumor_proceed_button_action">
+      </Button>
+
+
+   </children>
+</VBox>

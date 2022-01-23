@@ -10,7 +10,6 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
-import de.tobiasreich.kaiser.game.utils.FxDialogs
 import java.net.URL
 import java.util.*
 
@@ -43,7 +42,7 @@ class UIControllerActionDonations : Initializable {
 
     private lateinit var bundle: ResourceBundle
 
-    private val players = Game.getAllOtherPlayers()
+    private val players = Game.getAllButCurrentPlayer()
     private var selectedPlayer : Player? = null
     private var selectedResource : ResourceType? = null
     private var donationAmount: Int = 0
