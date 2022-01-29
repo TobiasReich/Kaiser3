@@ -177,7 +177,7 @@ class UIControllerActionDonations : Initializable {
     fun onSendDonationButtonClick(actionEvent: ActionEvent) {
         val dialogTitle = bundle.getString("donation_view_offer_dialog_title")
         val dialogMessage = bundle.getString("donation_view_offer_dialog_message")
-        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showConfirmationDialog(dialogTitle, dialogMessage)
 
         if (dialogAccepted){
             println("Donation made")

@@ -124,9 +124,18 @@ class UIControllerActionDiplomacy : Initializable {
 
 
     fun onOfferTreatyButtonClick() {
+        // If there is a treaty already proposed, there is no need in making another one
+        // Inform the player about this, then return
+        if (DiplomacyManager.hasTreaty(currentPlayer, selectedPlayer!!, treatyType!!, true)){
+            val dialogTitle = bundle.getString("diplomacy_treaty_offer_duplicate_dialog_title")
+            val dialogMessage = bundle.getString("diplomacy_treaty_offer_duplicate_dialog_message")
+            ViewController.showInfoDialog(dialogTitle, dialogMessage)
+            return
+        }
+
         val dialogTitle = bundle.getString("diplomacy_treaty_offer_dialog_title")
         val dialogMessage = bundle.getString("diplomacy_treaty_offer_dialog_message")
-        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showConfirmationDialog(dialogTitle, dialogMessage)
 
         if (dialogAccepted){
             val treaty = Treaty(treatyType!!, currentPlayer, selectedPlayer!!, Game.currentYear + TREATY_EXPIRATION_TIME_YEARS)

@@ -208,7 +208,7 @@ class UIControllerActionWar : Initializable {
     fun startWar(actionEvent: ActionEvent) {
         val dialogTitle = bundle.getString("war_view_offer_dialog_title")
         val dialogMessage = bundle.getString("war_view_offer_dialog_message")
-        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showConfirmationDialog(dialogTitle, dialogMessage)
 
         if (dialogAccepted){
             println("Declaring war")

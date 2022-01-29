@@ -3,10 +3,7 @@ package de.tobiasreich.kaiser
 import de.tobiasreich.kaiser.game.Game
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
-import javafx.scene.Parent
-import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.ButtonType
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
@@ -65,13 +62,16 @@ object ViewController {
         popOver.show(view)
     }
 
-    /** Shows a dialog with the given title and message.
+    /** Shows a "question" dialog with the given title and message that requires a confirmation by the user.
      *  @return boolean true if dialog was accepted */
-    fun showModalDialog(title : String, message : String) : Boolean {
+    fun showConfirmationDialog(title : String, message : String) : Boolean {
         return FxDialogs.showConfirm(title,message)
     }
 
-    private fun showDialog(type: AlertType, modality : Modality) {
-        FxDialogs.showConfirm("Title","Message")
+    /** Shows a dialog with the given title and message.
+     *  @return boolean true if dialog was accepted */
+    fun showInfoDialog(title : String, message : String) {
+        FxDialogs.showInformation(title,message)
     }
+
 }

@@ -11,14 +11,7 @@ import java.io.StringWriter
 
 object FxDialogs {
 
-    fun showInformation(title: String?, message: String?) {
-        val alert = Alert(Alert.AlertType.INFORMATION)
-        alert.initStyle(StageStyle.UTILITY)
-        alert.title = "Information"
-        alert.headerText = title
-        alert.contentText = message
-        alert.showAndWait()
-    }
+
 
     fun showWarning(title: String?, message: String?) {
         val alert = Alert(Alert.AlertType.WARNING)
@@ -64,6 +57,19 @@ object FxDialogs {
         alert.showAndWait()
     }
 
+
+    /** Shows an information Dialog.
+     *  The user has only one button. This can only be accepted.
+     *  No return value is specified (unlike the confirm, there is no YES/NO option) s*/
+    fun showInformation(title: String?, message: String?) {
+        val alert = Alert(Alert.AlertType.INFORMATION)
+        alert.initModality(Modality.APPLICATION_MODAL)
+        //alert.initStyle(StageStyle.UTILITY)
+        alert.title = ""
+        alert.headerText = title
+        alert.contentText = message
+        alert.showAndWait()
+    }
 
     /** Shows a dialog that prints a title and a context String with a question mark icon (CONFIRMATION).
      *  Allowing the user to either ACCEPT or  REJECT the dialog question.

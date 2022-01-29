@@ -107,7 +107,7 @@ class UIControllerActionSabotage : Initializable {
         val sabotage = selectedSabotage!!
         val dialogTitle = bundle.getString("sabotage_view_offer_dialog_title")
         val dialogMessage = bundle.getString("sabotage_view_offer_dialog_message")
-        val dialogAccepted = ViewController.showModalDialog(dialogTitle, dialogMessage)
+        val dialogAccepted = ViewController.showConfirmationDialog(dialogTitle, dialogMessage)
 
         if (dialogAccepted){
             println("Donation made")

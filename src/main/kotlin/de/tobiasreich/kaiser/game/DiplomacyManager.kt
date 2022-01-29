@@ -108,7 +108,25 @@ object DiplomacyManager {
             }
             //}
         }
+    }
 
+    /** Checks if there is already a treaty of that type.
+     *  This is defined as
+     *  - both players must be involved
+     *  - treaty type has to be the same
+     *
+     *  If includeProposals is true, it will also check proposed (but not yet accepted) treaties.
+     *  Use this flag in order to avoid multiple identical treaty proposals */
+    fun hasTreaty(player1 : Player, player2: Player, type : TreatyType, includeProposals : Boolean) : Boolean {
+        if (acceptedTreaties.any {(it.initiator == player1 || it.receiver == player1) && (it.initiator == player2 || it.receiver == player2) && it.type == type } ){
+            return true
+        }
+        if (includeProposals){
+            if (treatyProposals.any {(it.initiator == player1 || it.receiver == player1) && (it.initiator == player2 || it.receiver == player2) && it.type == type } ){
+                return true
+            }
+        }
+        return false
     }
 
 
