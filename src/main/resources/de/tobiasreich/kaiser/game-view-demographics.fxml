@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="510.0" prefWidth="791.0" BorderPane.alignment="CENTER"
+      xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="de.tobiasreich.kaiser.UIControllerActionDemographics">
+    <children>
+
+        <Label text="%demographics_view_title">
+            <font>
+                <Font size="18.0"/>
+            </font>
+            <VBox.margin>
+                <Insets bottom="20.0" top="25.0"/>
+            </VBox.margin>
+        </Label>
+
+    </children>
+</VBox>

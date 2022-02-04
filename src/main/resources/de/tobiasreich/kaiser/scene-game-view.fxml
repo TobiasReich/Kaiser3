@@ -204,14 +204,14 @@
 
                 <Separator />
 
-                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onTaxButtonClick" prefWidth="125.0" text="Demographie">
+                <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onDemographicsButtonClick" prefWidth="125.0" text="Demographie">
                     <tooltip>
                         <Tooltip text="%tooltip_game_action_statistics_demographics_button" />
                     </tooltip>
                     <graphic>
                         <ImageView fx:id="demographicsButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@img/icon_coin.png">
+                                <Image url="@img/icon_report.png">
                                 </Image>
                             </image>
                         </ImageView>

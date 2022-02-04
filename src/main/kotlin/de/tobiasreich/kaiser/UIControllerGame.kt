@@ -23,6 +23,11 @@ import java.util.*
 
 class UIControllerGame : Initializable {
 
+    companion object {
+        const val VIEW_CONTAINER_WIDTH = 1100.0
+        const val VIEW_CONTAINER_HEIGHT = 800.0
+    }
+
     @FXML
     lateinit var gameHeaderBox: HBox
 
@@ -145,19 +150,19 @@ class UIControllerGame : Initializable {
 
     fun onFoodButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-food.fxml"), Game.resourcesBundle)
-        val foodScene = SubScene(fxmlLoader.load(), 630.0, 300.0)
+        val foodScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         rootBorderPane.center = foodScene
     }
 
     fun onLandButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-land.fxml"), Game.resourcesBundle)
-        val landScene = SubScene(fxmlLoader.load(), 300.0, 200.0)
+        val landScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         rootBorderPane.center = landScene
     }
 
     fun onTaxButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-laws.fxml"), Game.resourcesBundle)
-        val taxScene = SubScene(fxmlLoader.load(), 800.0, 600.0)
+        val taxScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionLaws>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -168,7 +173,7 @@ class UIControllerGame : Initializable {
 
     fun onBuildingsButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-buildings.fxml"), Game.resourcesBundle)
-        val buildingsScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val buildingsScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionBuildings>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -180,7 +185,7 @@ class UIControllerGame : Initializable {
 
     fun onDonateButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-donation.fxml"), Game.resourcesBundle)
-        val donationScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val donationScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionDonations>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -193,7 +198,7 @@ class UIControllerGame : Initializable {
     /** When the player clicks on the sabotage button */
     fun onSabotageButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-sabotage.fxml"), Game.resourcesBundle)
-        val donationScene = SubScene(fxmlLoader.load(), 750.0, 650.0)
+        val donationScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionSabotage>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -206,7 +211,7 @@ class UIControllerGame : Initializable {
     /** Shows the military action when the user clicks on the military-button */
     fun onMilitaryButtonClick(actionEvent: ActionEvent) {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-military.fxml"), Game.resourcesBundle)
-        val militaryScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
+        val militaryScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionMilitary>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -216,9 +221,9 @@ class UIControllerGame : Initializable {
     }
 
 
-    fun onDiplomacyButtonClick(actionEvent: ActionEvent) {
+    fun onDiplomacyButtonClick() {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-diplomacy.fxml"), Game.resourcesBundle)
-        val diplomacyScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
+        val diplomacyScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
 //        val controller = fxmlLoader.getController<UIControllerActionDiplomacy>()
 //        controller.setCallback{
 //            //Update the view so the user sees the available money
@@ -230,9 +235,9 @@ class UIControllerGame : Initializable {
 
 
     /** War view */
-    fun onWarButtonClick(actionEvent: ActionEvent) {
+    fun onWarButtonClick() {
         val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-war.fxml"), Game.resourcesBundle)
-        val warScene = SubScene(fxmlLoader.load(), 1100.0, 800.0)
+        val warScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
         val controller = fxmlLoader.getController<UIControllerActionWar>()
         controller.setCallback{
             //Update the view so the user sees the available money
@@ -242,8 +247,23 @@ class UIControllerGame : Initializable {
         rootBorderPane.center = warScene
     }
 
+
+    /** Shows a demographics summary */
+    fun onDemographicsButtonClick() {
+        val fxmlLoader = FXMLLoader(Main::class.java.getResource("game-view-demographics.fxml"), Game.resourcesBundle)
+        val demographicsScene = SubScene(fxmlLoader.load(), VIEW_CONTAINER_WIDTH, VIEW_CONTAINER_HEIGHT)
+        val controller = fxmlLoader.getController<UIControllerActionDemographics>()
+        controller.setCallback{
+            //Update the view so the user sees the available money
+            showLandView()
+            updateViews()
+        }
+        rootBorderPane.center = demographicsScene
+    }
+
+
     /** Shows the "map" of the own country */
-    fun onShowMapButtonClick(actionEvent: ActionEvent) {
+    fun onShowMapButtonClick() {
         showLandView()
     }
 
@@ -352,7 +372,5 @@ class UIControllerGame : Initializable {
     fun onPopulationChartClicked(mouseEvent: MouseEvent) {
         ViewController.showInfoPopUp(populationChart, bundle.getString("game_summary_population_title"),bundle.getString("game_summary_population_info"))
     }
-
-
 
 }
